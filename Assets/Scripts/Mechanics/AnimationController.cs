@@ -15,11 +15,11 @@ namespace Platformer.Mechanics
         /// <summary>
         /// Max horizontal speed.
         /// </summary>
-        public float maxSpeed = 7;
+        public float maxSpeed = 6;
         /// <summary>
         /// Max jump velocity
         /// </summary>
-        public float jumpTakeOffSpeed = 7;
+        public float jumpTakeOffSpeed = 3.5f;
 
         /// <summary>
         /// Used to indicated desired direction of travel.
