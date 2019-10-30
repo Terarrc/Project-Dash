@@ -69,13 +69,15 @@ public class Unit : MonoBehaviour, IControls
 
 		transform.position = new Vector3(positionX, positionY);
 
-        // Overlap ground check
-        // Make a rectangle out of two edges (Vector 2) and if that rectangle overlaps with layer (8) it returns true
-        var hitboxHalf = boxCollider.bounds.size.x / 2;
-        isGrounded = Physics2D.OverlapArea(
-            new Vector2(transform.position.x - hitboxHalf, transform.position.y), 
-            new Vector2(transform.position.x + hitboxHalf, transform.position.y - 0.02f), 1 << 8);
-
+		// Overlap ground check
+		// Make a rectangle out of two edges (Vector 2) and if that rectangle overlaps with layer (8) it returns true
+		if (boxCollider)
+		{
+			var hitboxHalf = boxCollider.bounds.size.x / 2;
+			isGrounded = Physics2D.OverlapArea(
+				new Vector2(transform.position.x - hitboxHalf, transform.position.y),
+				new Vector2(transform.position.x + hitboxHalf, transform.position.y - 0.02f), 1 << 8);
+		}
     }
 
     // ========================================================================
