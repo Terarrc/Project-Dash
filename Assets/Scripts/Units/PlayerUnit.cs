@@ -16,7 +16,12 @@ public class PlayerUnit : Unit
 
     }
 
-	public new void Jump()
+    public new bool Move(Vector2 direction, float ratio = 1)
+    {
+
+    }
+
+    public new void Jump()
 	{
 
 	}

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IControls
 {
-	bool Move(Vector3 direction, float ratio = 1);
+	bool Move(Vector2 direction, float ratio = 1);
 	bool Jump();
 	bool StopJump();
 }
