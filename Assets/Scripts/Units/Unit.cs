@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour, IControls
 {
-    //all of the Unit's component
+    // All of the Unit's component
     protected Rigidbody2D body;
     protected BoxCollider2D boxCollider;
     protected SpriteRenderer sprite;
 
-    //On wake, get Unit's components
+    // On wake, get Unit's components
     void Awake()
     {
         body = GetComponent<Rigidbody2D>();
@@ -32,17 +32,17 @@ public class Unit : MonoBehaviour, IControls
 	// ========================================================================
 	// Controls
 	// ========================================================================
-	public bool Move(Vector2 direction, float ratio)
+	public virtual bool Move(Vector2 direction, float ratio)
+	{
+        return false;
+	}
+
+	public virtual bool Jump()
 	{
 		return false;
 	}
 
-	public bool Jump()
-	{
-		return false;
-	}
-
-	public bool StopJump()
+	public virtual bool StopJump()
 	{
 		return false;
 	}

@@ -16,13 +16,13 @@ public class PlayerUnit : Unit
 		
     }
 
-	public new bool Move(Vector2 direction, float ratio)
+	public override bool Move(Vector2 direction, float ratio)
 	{
 		// No analog control
 		ratio = 1f;
 
 		// No vertical movement
-		direction.x = 0;
+		direction.y = 0;
 
 		// Check if move or stop
 		if (direction == Vector2.zero)
@@ -35,8 +35,10 @@ public class PlayerUnit : Unit
 		{
 			direction.Normalize();
 
-			// gameobjectspeed = movespeed * direction * ratio
+            Vector2 force = direction * ratio * 5;
+            body.AddForce(force);
 
+			// gameobjectspeed = movespeed * direction * ratio
 			return true;
 		}
 	}
