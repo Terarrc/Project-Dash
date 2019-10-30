@@ -11,9 +11,9 @@ public class Unit : MonoBehaviour, IControls
 	protected Animator animator;
 
 	// Physic variable
-	public float moveSpeedX = 6, moveSpeedY = 6;
-	public float jumpSpeed = 9;
-	public float accelerationX = 100, accelerationY = 100;
+	public float moveSpeedX, moveSpeedY;
+	public float jumpSpeed;
+	public float accelerationX, accelerationY;
 	protected float currentSpeedX, currentSpeedY, wantedSpeedX, wantedSpeedY;
 	protected bool isGrounded = true;
 
@@ -75,7 +75,26 @@ public class Unit : MonoBehaviour, IControls
 	// ========================================================================
 	public virtual bool Move(Vector2 direction)
 	{
-		return false;
+		// Check if move or stop
+		if (direction == Vector2.zero)
+		{
+			wantedSpeedX = 0;
+			wantedSpeedY = 0;
+
+			animator.SetBool("Moving", false);
+
+			return true;
+		}
+		else
+		{
+			wantedSpeedX = direction.x * moveSpeedX;
+			wantedSpeedY = direction.y * moveSpeedY;
+
+			sprite.flipX = direction.x < 0;
+			animator.SetBool("Moving", true);
+
+			return true;
+		}
 	}
 
 	public virtual bool Jump()
