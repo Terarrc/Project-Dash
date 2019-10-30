@@ -41,6 +41,8 @@ public class PlayerUnit : Unit
 			var hasJumped = new HasJumpedEvent(this);
 			hasJumped.execute();
 
+            isGrounded = false;
+
 			return true;
 		}
 
