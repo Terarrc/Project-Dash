@@ -40,6 +40,8 @@ public class PlayerUnit : Unit
 			// Send event
 			var hasJumped = new HasJumpedEvent(this);
 			hasJumped.execute();
+
+			return true;
 		}
 
 		return false;
