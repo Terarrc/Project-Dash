@@ -6,8 +6,8 @@ public class Controller : MonoBehaviour
 {
 	protected IControls controls;
 
-	public void SetControls(IControls controls)
+	public void Awake()
 	{
-		this.controls = controls;
+		controls = gameObject.GetComponent<IControls>();
 	}
 }

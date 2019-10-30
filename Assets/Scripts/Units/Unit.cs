@@ -5,10 +5,9 @@ using UnityEngine;
 public class Unit : MonoBehaviour, IControls
 {
 	// Start is called before the first frame update
-	void Awake()
+	void Start()
 	{
-		Controller controller = gameObject.GetComponent<Controller>();
-		controller!.SetControls(this);
+
 	}
 
 	// Update is called once per frame
