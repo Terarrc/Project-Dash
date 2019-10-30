@@ -23,6 +23,8 @@ public class PlayerUnit : Unit
 			var hasJumped = new UnitHasJumpedEvent(this);
 			hasJumped.execute();
 
+            isGrounded = false;
+
 			return true;
 		}
 
