@@ -9,6 +9,7 @@ public class Unit : MonoBehaviour, IControls
     protected BoxCollider2D boxCollider;
     protected SpriteRenderer sprite;
 
+<<<<<<< HEAD
 	// Physic variable
 	public float moveSpeedX = 6, moveSpeedY = 6;
 	public float jumpSpeed = 9;
@@ -18,6 +19,10 @@ public class Unit : MonoBehaviour, IControls
 
 	// On wake, get Unit's components
 	void Awake()
+=======
+    // On wake, get Unit's components
+    void Awake()
+>>>>>>> 82b48ac7c18e9dcbb9b9322a759aa431327c5637
     {
         body = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
@@ -71,9 +76,15 @@ public class Unit : MonoBehaviour, IControls
 	// ========================================================================
 	// Controls
 	// ========================================================================
+<<<<<<< HEAD
 	public virtual bool Move(Vector2 direction)
 	{
 		return false;
+=======
+	public virtual bool Move(Vector2 direction, float ratio)
+	{
+        return false;
+>>>>>>> 82b48ac7c18e9dcbb9b9322a759aa431327c5637
 	}
 
 	public virtual bool Jump()
