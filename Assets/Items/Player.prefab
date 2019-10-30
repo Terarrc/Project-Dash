@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7080704996284031263}
-  - component: {fileID: 7080704996284031256}
+  - component: {fileID: 7739800965723335750}
+  - component: {fileID: 6044366253312423578}
   - component: {fileID: 7080704996284031257}
   - component: {fileID: 7080704996284031258}
   - component: {fileID: 7080704996284031259}
   - component: {fileID: 7080704996284031236}
-  - component: {fileID: 7080704996284031237}
   - component: {fileID: 7080704996284031238}
   m_Layer: 0
   m_Name: Player
@@ -37,7 +37,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7080704996284031256
+--- !u!114 &7739800965723335750
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,22 +46,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 7080704996284031239}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 709ee11994a2f44658e5fc9887c45081, type: 3}
+  m_Script: {fileID: 11500000, guid: 8130921780fd07c4db8ddb280139de9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minGroundNormalY: 0.65
-  gravityModifier: 2
-  velocity: {x: 0, y: 0}
-  jumpAudio: {fileID: 0}
-  respawnAudio: {fileID: 0}
-  ouchAudio: {fileID: 0}
-  maxSpeed: 6
-  jumpTakeOffSpeed: 3.5
-  jumpState: 0
-  collider2d: {fileID: 0}
-  audioSource: {fileID: 0}
-  health: {fileID: 0}
-  controlEnabled: 1
+--- !u!114 &6044366253312423578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7080704996284031239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af180d9da59d7a342b163c4ad7412672, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bufferTime: 200
 --- !u!212 &7080704996284031257
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -249,19 +249,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &7080704996284031237
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7080704996284031239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffad43bb006db4856a9c527b89b48db9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHP: 1
 --- !u!61 &7080704996284031238
 BoxCollider2D:
   m_ObjectHideFlags: 0
