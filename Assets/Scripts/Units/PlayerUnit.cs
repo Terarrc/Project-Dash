@@ -14,6 +14,8 @@ public class PlayerUnit : Unit
 		{
 			wantedSpeedX = 0;
 
+			animator.SetBool("Walking", false);
+
 			return true;
 		}
 		else
@@ -21,6 +23,9 @@ public class PlayerUnit : Unit
 			direction.Normalize();
 
 			wantedSpeedX = direction.x * moveSpeedX;
+
+			sprite.flipX = direction.x < 0;
+			animator.SetBool("Walking", true);
 
 			return true;
 		}

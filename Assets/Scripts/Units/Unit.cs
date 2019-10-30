@@ -8,6 +8,7 @@ public class Unit : MonoBehaviour, IControls
     protected Rigidbody2D body;
     protected BoxCollider2D boxCollider;
     protected SpriteRenderer sprite;
+	protected Animator animator;
 
 	// Physic variable
 	public float moveSpeedX = 6, moveSpeedY = 6;
@@ -22,7 +23,8 @@ public class Unit : MonoBehaviour, IControls
         body = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         sprite = GetComponent<SpriteRenderer>();
-    }
+		animator = GetComponent<Animator>();
+	}
 
 	// Start is called before the first frame update
 	void Start()
@@ -80,7 +82,7 @@ public class Unit : MonoBehaviour, IControls
 	{
 		return false;
 	}
-	 
+	
 	public virtual bool StopJump()
 	{
 		return false;
