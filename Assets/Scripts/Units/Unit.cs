@@ -4,6 +4,19 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour, IControls
 {
+    //all of the Unit's component
+    protected Rigidbody2D body;
+    protected BoxCollider2D boxCollider;
+    protected SpriteRenderer sprite;
+
+    //On wake, get Unit's components
+    void Awake()
+    {
+        body = GetComponent<Rigidbody2D>();
+        boxCollider = GetComponent<BoxCollider2D>();
+        sprite = GetComponent<SpriteRenderer>();
+    }
+
 	// Start is called before the first frame update
 	void Start()
 	{
