@@ -4,13 +4,13 @@ TextureImporter:
   internalIDToNameTable:
   - first:
       213: -2990309890484215505
-    second: idle_0
+    second: fairy_idle_0
   - first:
       213: 4808560381157864972
-    second: idle_1
+    second: fairy_idle_1
   - first:
       213: 4520698335586148961
-    second: idle_2
+    second: fairy_idle_2
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -95,7 +95,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: idle_0
+      name: fairy_idle_0
       rect:
         serializedVersion: 2
         x: 0
@@ -116,7 +116,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idle_1
+      name: fairy_idle_1
       rect:
         serializedVersion: 2
         x: 64
@@ -137,7 +137,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idle_2
+      name: fairy_idle_2
       rect:
         serializedVersion: 2
         x: 128
