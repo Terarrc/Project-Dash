@@ -4,30 +4,15 @@ using UnityEngine;
 
 public class PlayerUnit : Unit
 {
-    // Start is called before the first frame update
-    public void Start()
-    {
-        
-    }
-
-	// Update is called once per frame
-	public void Update()
-    {
-		
-    }
-
-	public new bool Move(Vector2 direction, float ratio)
+	public override bool Move(Vector2 direction)
 	{
-		// No analog control
-		ratio = 1f;
-
 		// No vertical movement
-		direction.x = 0;
+		direction.y = 0;
 
 		// Check if move or stop
 		if (direction == Vector2.zero)
 		{
-			// stop
+			wantedSpeedX = 0;
 
 			return true;
 		}
@@ -35,16 +20,18 @@ public class PlayerUnit : Unit
 		{
 			direction.Normalize();
 
-			// gameobjectspeed = movespeed * direction * ratio
+			wantedSpeedX = direction.x * moveSpeedX;
 
 			return true;
 		}
 	}
 
-	public new bool Jump()
+	public override bool Jump()
 	{
-		if (true)
+		if (isGrounded)
 		{
+			body.velocity = new Vector2(body.velocity.x, jumpSpeed);
+
 			// Send event
 			var hasJumped = new HasJumpedEvent(this);
 			hasJumped.execute();

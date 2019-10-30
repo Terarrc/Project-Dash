@@ -55,10 +55,10 @@ public class PlayerController : Controller
 		float vertical = Input.GetAxis("Vertical");
 
 		// Move
-		if (horizontal < 0.3 && vertical < 0.3)
-			controls.Move(Vector2.zero, 1f);
+		if (Mathf.Abs(horizontal) < 0.8 && Mathf.Abs(vertical) < 0.8)
+			controls.Move(Vector2.zero);
 		else
-			controls.Move(new Vector2(vertical, horizontal).normalized, 1f);
+			controls.Move(new Vector2(horizontal, vertical));
 
 		// Jump
 		if (Input.GetButtonDown("Jump"))
