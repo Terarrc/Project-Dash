@@ -13,11 +13,43 @@ public class PlayerUnit : Unit
 	// Update is called once per frame
 	public void Update()
     {
-
+		
     }
 
-	public new void Jump()
+	public new bool Move(Vector2 direction, float ratio)
 	{
+		// No analog control
+		ratio = 1f;
 
+		// No vertical movement
+		direction.x = 0;
+
+		// Check if move or stop
+		if (direction == Vector2.zero)
+		{
+			// stop
+
+			return true;
+		}
+		else
+		{
+			direction.Normalize();
+
+			// gameobjectspeed = movespeed * direction * ratio
+
+			return true;
+		}
+	}
+
+	public new bool Jump()
+	{
+		if (true)
+		{
+			// Send event
+			var hasJumped = new HasJumpedEvent(this);
+			hasJumped.execute();
+		}
+
+		return false;
 	}
 }

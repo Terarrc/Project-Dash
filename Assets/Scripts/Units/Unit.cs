@@ -19,7 +19,7 @@ public class Unit : MonoBehaviour, IControls
 	// ========================================================================
 	// Controls
 	// ========================================================================
-	public bool Move(Vector3 direction, float ratio = 1)
+	public bool Move(Vector2 direction, float ratio)
 	{
 		return false;
 	}

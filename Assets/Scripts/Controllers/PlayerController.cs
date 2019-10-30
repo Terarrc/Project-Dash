@@ -51,9 +51,14 @@ public class PlayerController : Controller
 			}
 		}
 
-
 		float horizontal = Input.GetAxis("Horizontal");
 		float vertical = Input.GetAxis("Vertical");
+
+		// Move
+		if (horizontal < 0.3 && vertical < 0.3)
+			controls.Move(Vector2.zero, 1f);
+		else
+			controls.Move(new Vector2(vertical, horizontal).normalized, 1f);
 
 		// Jump
 		if (Input.GetButtonDown("Jump"))
