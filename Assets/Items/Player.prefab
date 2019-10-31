@@ -138,6 +138,10 @@ MonoBehaviour:
   jumpSpeed: 9
   accelerationX: 100
   accelerationY: 100
+  verticalMoveEnabled: 0
+  DoubleJumpParticle: {fileID: 3943271017201014684, guid: e90816ef545d863489422df59b00a038,
+    type: 3}
+  doubleJumpSpeed: 12
   ratioStopJump: 0.5
 --- !u!114 &6044366253312423578
 MonoBehaviour:

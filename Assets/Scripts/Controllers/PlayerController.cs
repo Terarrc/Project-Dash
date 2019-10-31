@@ -74,14 +74,14 @@ public class PlayerController : Controller
 			{
 				Buffer = bufferedInput.none;
                 if (!Input.GetButton("Jump"))
-                    controls.StopJump();
+                    controls.StopJump();
             }
 		}
 
-        if(Input.GetButtonUp("Jump"))
-        {
-            controls.StopJump();
-        }
+        if(Input.GetButtonUp("Jump"))
+		{
+			controls.StopJump();
+		}
 
 	}
 }

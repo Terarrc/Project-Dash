@@ -147,7 +147,6 @@ public class Unit : MonoBehaviour, IControls
 		if (isGrounded && !verticalMoveEnabled)
 		{
 			isGrounded = false;
-
 			body.velocity = new Vector2(body.velocity.x, jumpSpeed);
 
 			// Send event
