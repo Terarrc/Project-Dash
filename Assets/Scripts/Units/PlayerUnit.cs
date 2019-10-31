@@ -59,7 +59,7 @@ public class PlayerUnit : Unit
 
 		// For dashes, check if we don't pass throught walls
 		if (true)//timerDash > 0)
-		{ 
+		{ /*
 			Vector2 pointA, pointB;
 			pointA = new Vector2(oldPosX, body.position.y + (boxCollider.bounds.size.y * 0.6f));
 			pointB = new Vector2(body.position.x, body.position.y + (boxCollider.bounds.size.y * 0.4f));
@@ -73,15 +73,15 @@ public class PlayerUnit : Unit
 			{
 				if (currentSpeedX < 0 && collider.bounds.max.x > positionX)
 				{
-					positionX = collider.bounds.max.x + (boxCollider.bounds.size.x / 2);
+					positionX = collider.bounds.max.x + (boxCollider.bounds.size.x / 2) + 0.02f;
 				}
 				if (currentSpeedX > 0 && collider.bounds.min.x < positionX)
 				{
-					positionX = collider.bounds.min.x - (boxCollider.bounds.size.x / 2);
+					positionX = collider.bounds.min.x - (boxCollider.bounds.size.x / 2) - 0.02f;
 				}
 			}
 
-			body.position = new Vector2(positionX, body.position.y);
+			transform.position = new Vector2(positionX, body.position.y);*/
 		}
 
 		// Reset double jump and dash

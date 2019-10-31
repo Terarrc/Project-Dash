@@ -91,7 +91,32 @@ public class Unit : MonoBehaviour, IControls
 		if (!Mathf.Approximately(currentSpeedX, 0))
 		{
 			float deltaPositionX = currentSpeedX * Time.deltaTime;
+			float oldPosX = positionX;
 			positionX += deltaPositionX;
+
+			if (body)
+			{
+				Vector2 pointA, pointB;
+				pointA = new Vector2(oldPosX, positionY + (boxCollider.bounds.size.y * 0.6f));
+				pointB = new Vector2(positionX, positionY + (boxCollider.bounds.size.y * 0.4f));
+
+
+				Collider2D[] colliders = Physics2D.OverlapAreaAll(pointA, pointB, 1 << 8);
+
+				float offset = 0.5f;
+				foreach (Collider2D collider in colliders)
+				{
+					if (currentSpeedX < 0 && collider.bounds.max.x + (boxCollider.bounds.size.x / 2) + offset > positionX)
+					{
+						positionX = collider.bounds.max.x + (boxCollider.bounds.size.x / 2) + offset;
+					}
+					if (currentSpeedX > 0 && collider.bounds.min.x - (boxCollider.bounds.size.x / 2) - offset < positionX)
+					{
+						positionX = collider.bounds.min.x - (boxCollider.bounds.size.x / 2) - offset;
+					}
+				}
+			}
+
 		}
 		// Update the position Y
 		if (verticalMoveEnabled)
