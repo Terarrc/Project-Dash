@@ -7,7 +7,7 @@ public interface IControls
 	bool Move(Vector2 scale);
 	bool Jump();
 	bool StopJump();
-	bool Dash(float scale);
+	bool Action(int index);
 
 	float GetDirection();
 }

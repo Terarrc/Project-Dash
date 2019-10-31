@@ -27,7 +27,8 @@ public class PlayerUnit : Unit
 			timerDash -= time;
 			if (timerDash <= 0)
 			{
-				animator.SetTrigger("DashStop");
+				animator.SetTrigger("StopDash");
+				animator.SetBool("Dashing", false);
 				currentSpeedX = preDashSpeed * 1.2f;
 				body.velocity = new Vector2(body.velocity.x, 0);
 			}
@@ -86,16 +87,27 @@ public class PlayerUnit : Unit
         return false;
     }
 
-	public override bool Dash(float scale)
+	public override bool Action(int index)
+	{
+		switch (index)
+		{
+			case 1:
+				return Dash();
+		}
+		return false;
+	}
+
+	private bool Dash()
 	{
 		if (!hasDashed)
 		{
 			preDashSpeed = currentSpeedX;
 			timerDash = dashDuration;
-			dashScale = scale;
+			dashScale = GetDirection();
 			hasDashed = true;
 
-			animator.SetTrigger("DashStart");
+			animator.SetTrigger("StartDash");
+			animator.SetBool("Dashing", true);
 
 			return true;
 		}

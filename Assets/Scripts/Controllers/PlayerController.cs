@@ -85,16 +85,16 @@ public class PlayerController : Controller
 		}
 
 		// Dash
-		if (Input.GetButtonDown("Dash"))
+		if (Input.GetButtonDown("Action 1"))
 		{
-			if (!controls.Dash(controls.GetDirection()))
+			if (!controls.Action(1))
 			{
 				Buffer = bufferedInput.dash;
 			}
 		}
 		else if (buffer == bufferedInput.dash)
 		{
-			if (controls.Dash(controls.GetDirection()))
+			if (controls.Action(1))
 			{
 				Buffer = bufferedInput.none;
 			}

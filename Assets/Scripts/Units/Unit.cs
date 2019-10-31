@@ -74,7 +74,9 @@ public class Unit : MonoBehaviour, IControls
 				currentSpeedY = Mathf.Max(wantedSpeedY, currentSpeedY - (accelerationY * Time.deltaTime));
 			}
 		}
-	
+
+		string message = "Speed X: " + currentSpeedX;
+		Debug.Log(message);
 
 		// Update the position X
 		if (!Mathf.Approximately(currentSpeedX, 0))
@@ -166,7 +168,7 @@ public class Unit : MonoBehaviour, IControls
 		return true;
 	}
 
-	public virtual bool Dash(float scale)
+	public virtual bool Action(int index)
 	{
 		return true;
 	}
