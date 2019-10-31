@@ -17,7 +17,10 @@ public class Unit : MonoBehaviour, IControls
 	public bool verticalMoveEnabled;
 	protected float currentSpeedX, currentSpeedY, wantedSpeedX, wantedSpeedY;
 	protected float currentAccelerationX, currentAccelerationY;
-	protected bool isGrounded = true;
+	protected bool isGrounded = false;
+    protected bool isOnHorizontalEnergyField = false;
+    protected bool isOnVerticalEnergyField_Left = false;
+    protected bool isOnVerticalEnergyField_Right = false;
 
 	// On wake, get Unit's components
 	void Awake()
@@ -146,22 +149,73 @@ public class Unit : MonoBehaviour, IControls
 		}
 
 		// Overlap ground check
+        // Energy Field ground check
 		// Make a rectangle out of two edges (Vector 2) and if that rectangle overlaps with layer (8) it returns true
 		if (boxCollider)
 		{
-			var hitboxHalf = boxCollider.bounds.size.x / 2;
-			isGrounded = Physics2D.OverlapArea(
-				new Vector2(transform.position.x - hitboxHalf, transform.position.y),
-				new Vector2(transform.position.x + hitboxHalf, transform.position.y - 0.01f), 1 << 8);
+            var horizontalHitboxHalf = boxCollider.bounds.size.x / 2; 
+            var verticalHitboxQuarter = boxCollider.bounds.size.y / 4;
+
+            // Ground Check
+            isGrounded = Physics2D.OverlapArea(
+				new Vector2(transform.position.x - horizontalHitboxHalf, transform.position.y),
+				new Vector2(transform.position.x + horizontalHitboxHalf, transform.position.y), 1 << 8);
 
 			animator.SetBool("Grounded", isGrounded);
-		}
-		// For animation in the air
-		if (body)
+
+            // Horizontal Energy Field Ground Check
+            isOnHorizontalEnergyField = Physics2D.OverlapArea(
+                new Vector2(transform.position.x - horizontalHitboxHalf, transform.position.y),
+                new Vector2(transform.position.x + horizontalHitboxHalf, transform.position.y), 1 << 9);
+
+            Debug.Log("Horizontal  : " + isOnHorizontalEnergyField);
+
+            if (!isGrounded)
+            {
+                // Vertical Energy Field Check Right Side
+                isOnVerticalEnergyField_Right = Physics2D.OverlapArea(
+                   new Vector2(transform.position.x + horizontalHitboxHalf, transform.position.y + verticalHitboxQuarter),
+                   new Vector2(transform.position.x + horizontalHitboxHalf, transform.position.y + verticalHitboxQuarter * 3), 1 << 10);
+
+                // Vertical Energy Field Check Left Side
+                isOnVerticalEnergyField_Left = Physics2D.OverlapArea(
+                   new Vector2(transform.position.x - horizontalHitboxHalf, transform.position.y + verticalHitboxQuarter),
+                   new Vector2(transform.position.x - horizontalHitboxHalf, transform.position.y + verticalHitboxQuarter * 3), 1 << 10);               
+
+                Debug.Log("Vertical Right : " + isOnVerticalEnergyField_Right);
+                Debug.Log("Vertical Left : " + isOnVerticalEnergyField_Left);
+            }          
+
+        }
+
+        // For animation in the air
+        if (body)
 		{
 			animator.SetFloat("SpeedY", body.velocity.y);
 		}
     }
+
+    /* 
+     * Display wall checkers as black lines
+     * 
+    private void OnDrawGizmos()
+    {
+        if (boxCollider)
+        {
+            var horizontalHitboxHalf = boxCollider.bounds.size.x / 2;
+            var verticalHitboxQuarter = boxCollider.bounds.size.y / 4;
+
+            Gizmos.color = Color.black;
+            Gizmos.DrawLine(
+                new Vector2(transform.position.x + horizontalHitboxHalf, transform.position.y + verticalHitboxQuarter),
+                new Vector2(transform.position.x + horizontalHitboxHalf, transform.position.y + verticalHitboxQuarter * 3));
+            Gizmos.DrawLine(
+               new Vector2(transform.position.x - horizontalHitboxHalf, transform.position.y + verticalHitboxQuarter),
+               new Vector2(transform.position.x - horizontalHitboxHalf, transform.position.y + verticalHitboxQuarter * 3));
+        }
+       
+    }
+    */
 
     // ========================================================================
     // Controls

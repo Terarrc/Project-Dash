@@ -100,10 +100,10 @@ public class PlayerController : Controller
 			}
 		}
 
-		// Create wall
+		// Create Platform
         if (Input.GetButtonDown("Action 2"))
         {
-            
+            controls.Action(2);
         }
 
 	}
