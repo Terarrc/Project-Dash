@@ -11,14 +11,12 @@ public class PlayerUnit : Unit
 	public float ratioStopJump;
 	public float dashSpeed;
 	public float dashDuration;
-	public float groundedDashDelay;
-	private float timerGroundedDash;
 	private bool isGroundJumping = false;
 
-	private bool canDoubleJump = true;
-	private bool canDash = true;
-	private bool canCreatePlatform = true;
-	private bool canCreateWall = true;
+	private bool canDoubleJump = false;
+	private bool canDash = false;
+	private bool canCreatePlatform = false;
+	private bool canCreateWall = false;
     
 	private float dashScale;
 	private float preDashSpeed;
@@ -28,7 +26,7 @@ public class PlayerUnit : Unit
 
 	public override void Update()
 	{
-		// Decrease dash timer
+		// Decrease dash buffer
 		if (timerDash > 0)
 		{
 			float time = Time.deltaTime * 1000f;
@@ -46,26 +44,16 @@ public class PlayerUnit : Unit
 			}
 		}
 
-		// Decrease dash buffer
-		if (timerGroundedDash > 0)
-		{
-			float time = Time.deltaTime * 1000f;
-			timerGroundedDash -= time;
-		}
-
-		// Update movements
 		base.Update();
 
-		// Reset double jump and dash
+		// Reset bonus movement options when on the ground
 		if (isGrounded)
 		{
-			if (timerGroundedDash <= 0)
-				canDash = true;
 			canDoubleJump = true;
+			canDash = true;
+            canCreatePlatform = true;
             canCreateWall = true;
 		}
-		else
-			timerGroundedDash = 0;
 	}
 
 	public override bool Jump()
@@ -73,10 +61,8 @@ public class PlayerUnit : Unit
 		isGroundJumping = true;
 
 		var jumped = base.Jump();
-		if (jumped)
-			canDash = true;
 
-		if (!jumped && canDoubleJump && !verticalMoveEnabled && timerDash <= 0)
+		if (!jumped && canDoubleJump && !verticalMoveEnabled)
 		{
 			body.velocity = new Vector2(body.velocity.x, doubleJumpSpeed);
 			canDoubleJump = false;
@@ -129,9 +115,6 @@ public class PlayerUnit : Unit
 			timerDash = dashDuration;
 			dashScale = GetDirection();
 			canDash = false;
-			// If grounded, avoid spam dash
-			if (isGrounded)
-				timerGroundedDash = groundedDashDelay;
 
 			animator.SetTrigger("StartDash");
 			animator.SetBool("Dashing", true);
