@@ -5,18 +5,25 @@ using UnityEngine;
 public class PlayerUnit : Unit
 {
 	public TimedDurationEntity DoubleJumpParticle;
+    public TimedDurationEntity CreatedPlatform;
 
 	public float doubleJumpSpeed;
 	public float ratioStopJump;
 	public float dashSpeed;
 	public float dashDuration;
 	private bool isGroundJumping = false;
-	private bool hasDoubleJumped = false;
 
-	private bool hasDashed = false;
+	private bool canDoubleJump = true;
+	private bool canDash = true;
+	private bool canCreatePlatform = true;
+	private bool canCreateWall = true;
+
+
 	private float dashScale;
 	private float preDashSpeed;
 	private float timerDash;
+
+
 
 	public override void Update()
 	{
@@ -43,8 +50,8 @@ public class PlayerUnit : Unit
 		// Reset double jump when on the ground
 		if (isGrounded)
 		{
-			hasDoubleJumped = false;
-			hasDashed = false;
+			canDoubleJump = true;
+			canDash = true;
 		}
 	}
 
@@ -54,10 +61,10 @@ public class PlayerUnit : Unit
 
 		var jumped = base.Jump();
 
-		if (!jumped && !hasDoubleJumped && !verticalMoveEnabled)
+		if (!jumped && canDoubleJump && !verticalMoveEnabled)
 		{
 			body.velocity = new Vector2(body.velocity.x, doubleJumpSpeed);
-			hasDoubleJumped = true;
+			canDoubleJump = false;
 			isGroundJumping = false;
 
 			// Send event
@@ -93,18 +100,20 @@ public class PlayerUnit : Unit
 		{
 			case 1:
 				return Dash();
+			case 2:
+				return CreatePlatform();
 		}
 		return false;
 	}
 
 	private bool Dash()
 	{
-		if (!hasDashed)
+		if (canDash)
 		{
 			preDashSpeed = currentSpeedX;
 			timerDash = dashDuration;
 			dashScale = GetDirection();
-			hasDashed = true;
+			canDash = false;
 
 			animator.SetTrigger("StartDash");
 			animator.SetBool("Dashing", true);
@@ -114,4 +123,16 @@ public class PlayerUnit : Unit
 
 		return false;
 	}
+
+	private bool CreatePlatform()
+    {
+        if (!isGrounded && canCreatePlatform)
+        {
+            Instantiate(CreatedPlatform, transform.position, Quaternion.identity);
+            return true;
+        }
+
+        return false;
+    }
+
 }

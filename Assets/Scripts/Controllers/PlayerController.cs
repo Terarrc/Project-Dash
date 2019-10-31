@@ -100,5 +100,11 @@ public class PlayerController : Controller
 			}
 		}
 
+		// Create wall
+        if (Input.GetButtonDown("Action 2"))
+        {
+            
+        }
+
 	}
 }
