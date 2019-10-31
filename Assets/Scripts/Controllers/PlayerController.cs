@@ -83,5 +83,10 @@ public class PlayerController : Controller
 			controls.StopJump();
 		}
 
+        if (Input.GetButtonDown("CreatePlatform"))
+        {
+            
+        }
+
 	}
 }

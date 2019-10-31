@@ -5,11 +5,14 @@ using UnityEngine;
 public class PlayerUnit : Unit
 {
 	public TimedDurationEntity DoubleJumpParticle;
+    public TimedDurationEntity CreatedPlatform;
 
 	public float doubleJumpSpeed;
 	public float ratioStopJump;
 	private bool isGroundJumping = false;
-	private bool hasDoubleJump = false;
+	private bool canDoubleJump = true;
+    private bool canCreatePlatform = true;
+    private bool canCreateWall = true;
 
 	public override void Update()
 	{
@@ -18,7 +21,7 @@ public class PlayerUnit : Unit
 		// Reset double jump when on the ground
 		if (isGrounded)
 		{
-			hasDoubleJump = false;
+			canDoubleJump = true;
 		}
 	}
 
@@ -28,10 +31,10 @@ public class PlayerUnit : Unit
 
 		var jumped = base.Jump();
 
-		if (!jumped && !hasDoubleJump && !verticalMoveEnabled)
+		if (!jumped && canDoubleJump && !verticalMoveEnabled)
 		{
 			body.velocity = new Vector2(body.velocity.x, doubleJumpSpeed);
-			hasDoubleJump = true;
+			canDoubleJump = false;
 			isGroundJumping = false;
 
 			// Send event
@@ -58,6 +61,17 @@ public class PlayerUnit : Unit
 
 			return true;
 		}
+        return false;
+    }
+
+    public bool CreatePlatform()
+    {
+        if (!isGrounded && canCreatePlatform)
+        {
+            Instantiate(CreatedPlatform, transform.position, Quaternion.identity);
+            return true;
+        }
+
         return false;
     }
 

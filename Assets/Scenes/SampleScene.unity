@@ -198,6 +198,12 @@ PrefabInstance:
       propertyPath: doubleJumpSpeed
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 8377384794379606840, guid: d02d610d5bbe650418214872f38fdbbb,
+        type: 3}
+      propertyPath: CreatedPlatform
+      value: 
+      objectReference: {fileID: -8139123069261302785, guid: 58089c843dfc1b04ba6475a13cd64f38,
+        type: 3}
     - target: {fileID: 6044366253312423578, guid: d02d610d5bbe650418214872f38fdbbb,
         type: 3}
       propertyPath: bufferTime
