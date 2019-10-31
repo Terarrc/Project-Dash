@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 9105355849092887770}
   - component: {fileID: 9105355849092887773}
   - component: {fileID: -8139123069261302785}
-  m_Layer: 0
-  m_Name: Platform_Created_0
+  m_Layer: 9
+  m_Name: Created_Horizontal_Field
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -122,4 +122,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2317820d538095341b8b97871b03d768, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 500
+  duration: 2000

@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerUnit : Unit
 {
 	public TimedDurationEntity DoubleJumpParticle;
-    public TimedDurationEntity CreatedPlatform;
+    public TimedDurationEntity createdField;
 
 	public float doubleJumpSpeed;
 	public float ratioStopJump;
@@ -19,7 +19,7 @@ public class PlayerUnit : Unit
 	private bool canDash = true;
 	private bool canCreatePlatform = true;
 	private bool canCreateWall = true;
-
+    
 	private float dashScale;
 	private float preDashSpeed;
 	private float timerDash;
@@ -90,6 +90,7 @@ public class PlayerUnit : Unit
 			if (timerGroundedDash <= 0)
 				canDash = true;
 			canDoubleJump = true;
+            canCreateWall = true;
 		}
 		else
 			timerGroundedDash = 0;
@@ -141,7 +142,7 @@ public class PlayerUnit : Unit
 			case 1:
 				return Dash();
 			case 2:
-				return CreatePlatform();
+				return CreateHorizontalField();
 		}
 		return false;
 	}
@@ -167,14 +168,20 @@ public class PlayerUnit : Unit
 		return false;
 	}
 
-	private bool CreatePlatform()
+	private bool CreateHorizontalField()
     {
         if (!isGrounded && canCreatePlatform)
         {
-            Instantiate(CreatedPlatform, transform.position, Quaternion.identity);
+            canCreatePlatform = false;
+            Instantiate(createdField, transform.position, Quaternion.identity);
             return true;
         }
 
+        return false;
+    }
+
+    private bool CreateVerticalField()
+    {
         return false;
     }
 
