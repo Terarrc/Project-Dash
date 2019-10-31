@@ -73,7 +73,15 @@ public class PlayerController : Controller
 			if (controls.Jump())
 			{
 				Buffer = bufferedInput.none;
-			}
+                if (!Input.GetButton("Jump"))
+                    controls.StopJump();
+            }
 		}
+
+        if(Input.GetButtonUp("Jump"))
+        {
+            controls.StopJump();
+        }
+
 	}
 }

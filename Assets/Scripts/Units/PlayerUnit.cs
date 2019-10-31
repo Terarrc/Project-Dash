@@ -17,13 +17,12 @@ public class PlayerUnit : Unit
 	{
 		if (isGrounded)
 		{
-			body.velocity = new Vector2(body.velocity.x, jumpSpeed);
+            isGrounded = false;
+            body.velocity = new Vector2(body.velocity.x, jumpSpeed);
 
 			// Send event
 			var hasJumped = new UnitHasJumpedEvent(this);
 			hasJumped.execute();
-
-            isGrounded = false;
 
 			animator.SetTrigger("Jumped");
 
@@ -32,4 +31,11 @@ public class PlayerUnit : Unit
 
 		return false;
 	}
+
+    public override bool StopJump()
+    {
+        body.velocity = new Vector2(body.velocity.x, body.velocity.y * 0.6f);
+        return false;
+    }
+
 }
