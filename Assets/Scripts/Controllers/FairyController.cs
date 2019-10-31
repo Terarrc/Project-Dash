@@ -6,6 +6,7 @@ public class FairyController : Controller
 {
     public Unit following;
 	public float ratioSpeedBinded;
+	public Rect wanderingRect = new Rect();
 
 	// Variable offset so the fairy doesn't stay in place
 	private Vector3 offset;
@@ -16,8 +17,8 @@ public class FairyController : Controller
 	{
 		offset = new Vector3
 		{
-			x = Random.Range(-1.5f, 1.5f),
-			y = Random.Range(0.25f, 2.5f)
+			x = Random.Range(wanderingRect.xMin, wanderingRect.xMax),
+			y = Random.Range(wanderingRect.yMin, wanderingRect.yMax)
 		};
 	}
 
@@ -34,11 +35,8 @@ public class FairyController : Controller
 			// Check if we're at the right place
 			if (distance.magnitude < 0.2)
 			{
-				offset = new Vector3
-				{
-					x = Random.Range(-1.5f, 1.5f),
-					y = Random.Range(0.5f, 2.5f)
-				};
+				offset.x = Random.Range(wanderingRect.xMin, wanderingRect.xMax);
+				offset.y = Random.Range(wanderingRect.yMin, wanderingRect.yMax);
 			}
 			else
 			{
