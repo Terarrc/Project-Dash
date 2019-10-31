@@ -8,17 +8,42 @@ public class PlayerUnit : Unit
 
 	public float doubleJumpSpeed;
 	public float ratioStopJump;
+	public float dashSpeed;
+	public float dashDuration;
 	private bool isGroundJumping = false;
-	private bool hasDoubleJump = false;
+	private bool hasDoubleJumped = false;
+
+	private bool hasDashed = false;
+	private float dashScale;
+	private float preDashSpeed;
+	private float timerDash;
 
 	public override void Update()
 	{
+		// Decrease dash buffer
+		if (timerDash > 0)
+		{
+			float time = Time.deltaTime * 1000f;
+			timerDash -= time;
+			if (timerDash <= 0)
+			{
+				animator.SetTrigger("DashStop");
+				currentSpeedX = preDashSpeed * 1.2f;
+				body.velocity = new Vector2(body.velocity.x, 0);
+			}
+			else
+			{
+				currentSpeedX = dashSpeed * dashScale;
+			}
+		}
+
 		base.Update();
 
 		// Reset double jump when on the ground
 		if (isGrounded)
 		{
-			hasDoubleJump = false;
+			hasDoubleJumped = false;
+			hasDashed = false;
 		}
 	}
 
@@ -28,10 +53,10 @@ public class PlayerUnit : Unit
 
 		var jumped = base.Jump();
 
-		if (!jumped && !hasDoubleJump && !verticalMoveEnabled)
+		if (!jumped && !hasDoubleJumped && !verticalMoveEnabled)
 		{
 			body.velocity = new Vector2(body.velocity.x, doubleJumpSpeed);
-			hasDoubleJump = true;
+			hasDoubleJumped = true;
 			isGroundJumping = false;
 
 			// Send event
@@ -61,4 +86,20 @@ public class PlayerUnit : Unit
         return false;
     }
 
+	public override bool Dash(float scale)
+	{
+		if (!hasDashed)
+		{
+			preDashSpeed = currentSpeedX;
+			timerDash = dashDuration;
+			dashScale = scale;
+			hasDashed = true;
+
+			animator.SetTrigger("DashStart");
+
+			return true;
+		}
+
+		return false;
+	}
 }

@@ -99,7 +99,7 @@ public class Unit : MonoBehaviour, IControls
 			var hitboxHalf = boxCollider.bounds.size.x / 2;
 			isGrounded = Physics2D.OverlapArea(
 				new Vector2(transform.position.x - hitboxHalf, transform.position.y),
-				new Vector2(transform.position.x + hitboxHalf, transform.position.y - 0.02f), 1 << 8);
+				new Vector2(transform.position.x + hitboxHalf, transform.position.y - 0.01f), 1 << 8);
 
 			animator.SetBool("Grounded", isGrounded);
 		}
@@ -113,15 +113,15 @@ public class Unit : MonoBehaviour, IControls
     // ========================================================================
     // Controls
     // ========================================================================
-    public virtual bool Move(Vector2 direction)
+    public virtual bool Move(Vector2 scale)
 	{
 		if (!verticalMoveEnabled)
 		{
-			direction.y = 0;
+			scale.y = 0;
 		}
 
 		// Check if move or stop
-		if (direction == Vector2.zero)
+		if (scale == Vector2.zero)
 		{
 			wantedSpeedX = 0;
 			wantedSpeedY = 0;
@@ -132,10 +132,10 @@ public class Unit : MonoBehaviour, IControls
 		}
 		else
 		{
-			wantedSpeedX = direction.x * moveSpeedX;
-			wantedSpeedY = direction.y * moveSpeedY;
+			wantedSpeedX = scale.x * moveSpeedX;
+			wantedSpeedY = scale.y * moveSpeedY;
 
-			sprite.flipX = direction.x < 0;
+			sprite.flipX = scale.x < 0;
 			animator.SetBool("Moving", true);
 
 			return true;
@@ -163,7 +163,19 @@ public class Unit : MonoBehaviour, IControls
 	
 	public virtual bool StopJump()
 	{
-		return false;
+		return true;
 	}
 
+	public virtual bool Dash(float scale)
+	{
+		return true;
+	}
+
+	public float GetDirection()
+	{
+		if (sprite.flipX)
+			return -1;
+		else 
+			return 1;
+	}
 }

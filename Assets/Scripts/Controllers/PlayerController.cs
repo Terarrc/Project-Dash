@@ -78,9 +78,26 @@ public class PlayerController : Controller
             }
 		}
 
-        if(Input.GetButtonUp("Jump"))
+		// Stop Jump
+        if(Input.GetButtonUp("Jump"))
 		{
 			controls.StopJump();
+		}
+
+		// Dash
+		if (Input.GetButtonDown("Dash"))
+		{
+			if (!controls.Dash(controls.GetDirection()))
+			{
+				Buffer = bufferedInput.dash;
+			}
+		}
+		else if (buffer == bufferedInput.dash)
+		{
+			if (controls.Dash(controls.GetDirection()))
+			{
+				Buffer = bufferedInput.none;
+			}
 		}
 
 	}
