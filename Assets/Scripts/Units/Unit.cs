@@ -14,7 +14,9 @@ public class Unit : MonoBehaviour, IControls
 	public float moveSpeedX, moveSpeedY;
 	public float jumpSpeed;
 	public float accelerationX, accelerationY;
+	public bool verticalMoveEnabled;
 	protected float currentSpeedX, currentSpeedY, wantedSpeedX, wantedSpeedY;
+	protected float currentAccelerationX, currentAccelerationY;
 	protected bool isGrounded = true;
 
 	// On wake, get Unit's components
@@ -29,12 +31,24 @@ public class Unit : MonoBehaviour, IControls
 	// Start is called before the first frame update
 	void Start()
 	{
-        
+		
 	}
 
 	// Update is called once per frame
 	public virtual void Update()
 	{
+		// Less maneouvrability in the air
+		if (isGrounded || verticalMoveEnabled)
+		{
+			currentAccelerationX = accelerationX;
+			currentAccelerationY = accelerationY;
+		}
+		else
+		{
+			currentAccelerationX = accelerationX / 2;
+			currentAccelerationY = accelerationY / 2;
+		}
+
 		float positionX = transform.position.x;
 		float positionY = transform.position.y;
 
@@ -47,15 +61,20 @@ public class Unit : MonoBehaviour, IControls
 		{
 			currentSpeedX = Mathf.Max(wantedSpeedX, currentSpeedX - (accelerationX * Time.deltaTime));
 		}
+
 		// Update the speed Y
-		if (currentSpeedY < wantedSpeedY)
+		if (verticalMoveEnabled)
 		{
-			currentSpeedY = Mathf.Min(wantedSpeedY, currentSpeedY + (accelerationY * Time.deltaTime));
+			if (currentSpeedY < wantedSpeedY)
+			{
+				currentSpeedY = Mathf.Min(wantedSpeedY, currentSpeedY + (accelerationY * Time.deltaTime));
+			}
+			else if (currentSpeedY > wantedSpeedY)
+			{
+				currentSpeedY = Mathf.Max(wantedSpeedY, currentSpeedY - (accelerationY * Time.deltaTime));
+			}
 		}
-		else if (currentSpeedY > wantedSpeedY)
-		{
-			currentSpeedY = Mathf.Max(wantedSpeedY, currentSpeedY - (accelerationY * Time.deltaTime));
-		}
+	
 
 		// Update the position X
 		if (!Mathf.Approximately(currentSpeedX, 0))
@@ -63,9 +82,12 @@ public class Unit : MonoBehaviour, IControls
 			positionX += currentSpeedX * Time.deltaTime;
 		}
 		// Update the position Y
-		if (!Mathf.Approximately(currentSpeedY, 0))
+		if (verticalMoveEnabled)
 		{
-			positionY += currentSpeedY * Time.deltaTime;
+			if (!Mathf.Approximately(currentSpeedY, 0))
+			{
+				positionY += currentSpeedY * Time.deltaTime;
+			}
 		}
 
 		transform.position = new Vector3(positionX, positionY);
@@ -93,6 +115,11 @@ public class Unit : MonoBehaviour, IControls
     // ========================================================================
     public virtual bool Move(Vector2 direction)
 	{
+		if (!verticalMoveEnabled)
+		{
+			direction.y = 0;
+		}
+
 		// Check if move or stop
 		if (direction == Vector2.zero)
 		{
@@ -117,6 +144,21 @@ public class Unit : MonoBehaviour, IControls
 
 	public virtual bool Jump()
 	{
+		if (isGrounded && !verticalMoveEnabled)
+		{
+			isGrounded = false;
+
+			body.velocity = new Vector2(body.velocity.x, jumpSpeed);
+
+			// Send event
+			var hasJumped = new UnitHasJumpedEvent(this);
+			hasJumped.execute();
+
+			animator.SetTrigger("Jumped");
+
+			return true;
+		}
+
 		return false;
 	}
 	

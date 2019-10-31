@@ -138,6 +138,7 @@ MonoBehaviour:
   jumpSpeed: 9
   accelerationX: 100
   accelerationY: 100
+  ratioStopJump: 0.5
 --- !u!114 &6044366253312423578
 MonoBehaviour:
   m_ObjectHideFlags: 0

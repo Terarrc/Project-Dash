@@ -51,6 +51,7 @@ MonoBehaviour:
   jumpSpeed: 0
   accelerationX: 4
   accelerationY: 4
+  verticalMoveEnabled: 1
 --- !u!114 &7598376697876336187
 MonoBehaviour:
   m_ObjectHideFlags: 0

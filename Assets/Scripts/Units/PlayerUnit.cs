@@ -4,37 +4,25 @@ using UnityEngine;
 
 public class PlayerUnit : Unit
 {
-	public override bool Move(Vector2 direction)
-	{
-		// No vertical movement
-		direction.y = 0;
-		direction.Normalize();
-
-		return base.Move(direction);
-	}
+	public float ratioStopJump;
+	private bool isGroundJumping = false;
 
 	public override bool Jump()
 	{
-		if (isGrounded)
-		{
-            isGrounded = false;
-            body.velocity = new Vector2(body.velocity.x, jumpSpeed);
+		isGroundJumping = true;
 
-			// Send event
-			var hasJumped = new UnitHasJumpedEvent(this);
-			hasJumped.execute();
-
-			animator.SetTrigger("Jumped");
-
-			return true;
-		}
-
-		return false;
+		return base.Jump();
 	}
 
     public override bool StopJump()
     {
-        body.velocity = new Vector2(body.velocity.x, body.velocity.y * 0.6f);
+		if (isGroundJumping && body.velocity.y > 0)
+		{
+			isGroundJumping = false;
+			body.velocity = new Vector2(body.velocity.x, body.velocity.y * ratioStopJump);
+
+			return true;
+		}
         return false;
     }
 
