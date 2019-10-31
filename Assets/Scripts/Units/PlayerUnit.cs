@@ -25,6 +25,8 @@ public class PlayerUnit : Unit
 
             isGrounded = false;
 
+			animator.SetTrigger("Jumped");
+
 			return true;
 		}
 

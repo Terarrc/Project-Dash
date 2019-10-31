@@ -56,6 +56,7 @@ public class Unit : MonoBehaviour, IControls
 		{
 			currentSpeedY = Mathf.Max(wantedSpeedY, currentSpeedY - (accelerationY * Time.deltaTime));
 		}
+
 		// Update the position X
 		if (!Mathf.Approximately(currentSpeedX, 0))
 		{
@@ -77,6 +78,13 @@ public class Unit : MonoBehaviour, IControls
 			isGrounded = Physics2D.OverlapArea(
 				new Vector2(transform.position.x - hitboxHalf, transform.position.y),
 				new Vector2(transform.position.x + hitboxHalf, transform.position.y - 0.02f), 1 << 8);
+
+			animator.SetBool("Grounded", isGrounded);
+		}
+		// For animation in the air
+		if (body)
+		{
+			animator.SetFloat("SpeedY", body.velocity.y);
 		}
     }
 
