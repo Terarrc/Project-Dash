@@ -141,10 +141,12 @@ MonoBehaviour:
   verticalMoveEnabled: 0
   DoubleJumpParticle: {fileID: 3943271017201014684, guid: e90816ef545d863489422df59b00a038,
     type: 3}
+  CreatedPlatform: {fileID: 0}
   doubleJumpSpeed: 8
   ratioStopJump: 0.5
   dashSpeed: 30
   dashDuration: 150
+  groundedDashDelay: 500
 --- !u!114 &6044366253312423578
 MonoBehaviour:
   m_ObjectHideFlags: 0

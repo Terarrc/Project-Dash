@@ -49,8 +49,20 @@ public class Unit : MonoBehaviour, IControls
 			currentAccelerationY = accelerationY / 2;
 		}
 
-		float positionX = transform.position.x;
-		float positionY = transform.position.y;
+		float positionX;
+		float positionY;
+
+		// Use the rigid body if exists
+		if (body)
+		{
+			positionX = body.position.x;
+			positionY = body.position.y;
+		}
+		else
+		{
+			positionX = transform.position.x;
+			positionY = transform.position.y;
+		}
 
 		// Update the speed X
 		if (currentSpeedX < wantedSpeedX)
@@ -75,13 +87,11 @@ public class Unit : MonoBehaviour, IControls
 			}
 		}
 
-		string message = "Speed X: " + currentSpeedX;
-		Debug.Log(message);
-
 		// Update the position X
 		if (!Mathf.Approximately(currentSpeedX, 0))
 		{
-			positionX += currentSpeedX * Time.deltaTime;
+			float deltaPositionX = currentSpeedX * Time.deltaTime;
+			positionX += deltaPositionX;
 		}
 		// Update the position Y
 		if (verticalMoveEnabled)
@@ -92,7 +102,15 @@ public class Unit : MonoBehaviour, IControls
 			}
 		}
 
-		transform.position = new Vector3(positionX, positionY);
+		// Use the rigid body if exists
+		if (body)
+		{
+			body.position = new Vector3(positionX, positionY);
+		}
+		else
+		{
+			transform.position = new Vector3(positionX, positionY);
+		}
 
 		// Overlap ground check
 		// Make a rectangle out of two edges (Vector 2) and if that rectangle overlaps with layer (8) it returns true

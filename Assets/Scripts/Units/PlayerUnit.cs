@@ -11,13 +11,14 @@ public class PlayerUnit : Unit
 	public float ratioStopJump;
 	public float dashSpeed;
 	public float dashDuration;
+	public float groundedDashDelay;
+	private float timerGroundedDash;
 	private bool isGroundJumping = false;
 
 	private bool canDoubleJump = true;
 	private bool canDash = true;
 	private bool canCreatePlatform = true;
 	private bool canCreateWall = true;
-
 
 	private float dashScale;
 	private float preDashSpeed;
@@ -27,7 +28,7 @@ public class PlayerUnit : Unit
 
 	public override void Update()
 	{
-		// Decrease dash buffer
+		// Decrease dash timer
 		if (timerDash > 0)
 		{
 			float time = Time.deltaTime * 1000f;
@@ -45,14 +46,53 @@ public class PlayerUnit : Unit
 			}
 		}
 
+		// Decrease dash buffer
+		if (timerGroundedDash > 0)
+		{
+			float time = Time.deltaTime * 1000f;
+			timerGroundedDash -= time;
+		}
+
+		// Update movements
+		float oldPosX = body.position.x;
 		base.Update();
 
-		// Reset double jump when on the ground
+		// For dashes, check if we don't pass throught walls
+		if (true)//timerDash > 0)
+		{ 
+			Vector2 pointA, pointB;
+			pointA = new Vector2(oldPosX, body.position.y + (boxCollider.bounds.size.y * 0.6f));
+			pointB = new Vector2(body.position.x, body.position.y + (boxCollider.bounds.size.y * 0.4f));
+
+
+			Collider2D[] colliders = Physics2D.OverlapAreaAll(pointA, pointB, 1 << 8);
+
+			float positionX = body.position.x;
+
+			foreach (Collider2D collider in colliders)
+			{
+				if (currentSpeedX < 0 && collider.bounds.max.x > positionX)
+				{
+					positionX = collider.bounds.max.x + (boxCollider.bounds.size.x / 2);
+				}
+				if (currentSpeedX > 0 && collider.bounds.min.x < positionX)
+				{
+					positionX = collider.bounds.min.x - (boxCollider.bounds.size.x / 2);
+				}
+			}
+
+			body.position = new Vector2(positionX, body.position.y);
+		}
+
+		// Reset double jump and dash
 		if (isGrounded)
 		{
+			if (timerGroundedDash <= 0)
+				canDash = true;
 			canDoubleJump = true;
-			canDash = true;
 		}
+		else
+			timerGroundedDash = 0;
 	}
 
 	public override bool Jump()
@@ -61,7 +101,7 @@ public class PlayerUnit : Unit
 
 		var jumped = base.Jump();
 
-		if (!jumped && canDoubleJump && !verticalMoveEnabled)
+		if (!jumped && canDoubleJump && !verticalMoveEnabled && timerDash <= 0)
 		{
 			body.velocity = new Vector2(body.velocity.x, doubleJumpSpeed);
 			canDoubleJump = false;
@@ -114,6 +154,9 @@ public class PlayerUnit : Unit
 			timerDash = dashDuration;
 			dashScale = GetDirection();
 			canDash = false;
+			// If grounded, avoid spam dash
+			if (isGrounded)
+				timerGroundedDash = groundedDashDelay;
 
 			animator.SetTrigger("StartDash");
 			animator.SetBool("Dashing", true);
