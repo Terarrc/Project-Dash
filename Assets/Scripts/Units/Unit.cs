@@ -96,23 +96,31 @@ public class Unit : MonoBehaviour, IControls
 
 			if (body)
 			{
-				Vector2 pointA, pointB;
-				pointA = new Vector2(oldPosX, positionY + (boxCollider.bounds.size.y * 0.6f));
-				pointB = new Vector2(positionX, positionY + (boxCollider.bounds.size.y * 0.4f));
+				float halfWidth = (boxCollider.bounds.size.x / 2);
 
+				Vector2 pointA, pointB;
+				if (currentSpeedX < 0)
+				{
+					pointA = new Vector2(oldPosX - halfWidth - 0.02f, positionY + (boxCollider.bounds.size.y * 0.6f));
+					pointB = new Vector2(positionX + halfWidth + 0.02f, positionY + (boxCollider.bounds.size.y * 0.4f));
+				}
+				else
+				{
+					pointA = new Vector2(oldPosX + halfWidth + 0.02f, positionY + (boxCollider.bounds.size.y * 0.6f));
+					pointB = new Vector2(positionX - halfWidth - 0.02f, positionY + (boxCollider.bounds.size.y * 0.4f));
+				}
 
 				Collider2D[] colliders = Physics2D.OverlapAreaAll(pointA, pointB, 1 << 8);
 
-				float offset = 0.5f;
 				foreach (Collider2D collider in colliders)
 				{
-					if (currentSpeedX < 0 && collider.bounds.max.x + (boxCollider.bounds.size.x / 2) + offset > positionX)
+					if (currentSpeedX < 0 && collider.bounds.max.x + halfWidth + 0.04f > positionX)
 					{
-						positionX = collider.bounds.max.x + (boxCollider.bounds.size.x / 2) + offset;
+						positionX = collider.bounds.max.x + (boxCollider.bounds.size.x / 2) + 0.04f;
 					}
-					if (currentSpeedX > 0 && collider.bounds.min.x - (boxCollider.bounds.size.x / 2) - offset < positionX)
+					if (currentSpeedX > 0 && collider.bounds.min.x - halfWidth - 0.04f < positionX)
 					{
-						positionX = collider.bounds.min.x - (boxCollider.bounds.size.x / 2) - offset;
+						positionX = collider.bounds.min.x - (boxCollider.bounds.size.x / 2) - 0.04f;
 					}
 				}
 			}
