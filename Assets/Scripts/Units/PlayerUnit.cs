@@ -42,6 +42,7 @@ public class PlayerUnit : Unit
 				animator.SetBool("Dashing", false);
 				currentSpeedX = preDashSpeed * 1.2f;
 				body.velocity = new Vector2(body.velocity.x, 0);
+				body.constraints = RigidbodyConstraints2D.FreezeRotation;
 			}
 			else
 			{
@@ -152,6 +153,8 @@ public class PlayerUnit : Unit
 			// If grounded, avoid spam dash
 			if (isGrounded)
 				timerGroundedDash = groundedDashDelay;
+			body.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+
 
 			animator.SetTrigger("StartDash");
 			animator.SetBool("Dashing", true);
