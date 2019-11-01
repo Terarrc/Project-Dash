@@ -13,11 +13,13 @@ public class PlayerUnit : Unit
 	public float dashSpeed;
 	public float dashDuration;
 	public float groundedDashDelay;
+	public float bufferGroundedTime;
 	private float timerGroundedDash;
 	private bool isGroundJumping = false;
 
 	private bool canDoubleJump = true;
 	private bool canDash = true;
+	private bool isDashing = false;
 	private bool canCreatePlatform = true;
 	private bool canCreateWall = true;
     
@@ -25,17 +27,20 @@ public class PlayerUnit : Unit
 	private float preDashSpeed;
 	private float timerDash;
 	private float timerDashParticles;
-
+	private float timerBufferGrounded;
 
 
 	public override void Update()
 	{
+		float time = Time.deltaTime * 1000f;
+		isDashing = timerDash > 0;
+
 		// Decrease dash timer
-		if (timerDash > 0)
+		if (isDashing)
 		{
 			lockAxisY = true;
 
-			float time = Time.deltaTime * 1000f;
+			
 			timerDash -= time;
 			timerDashParticles -= time;
 			if (timerDash <= 0)
@@ -56,31 +61,43 @@ public class PlayerUnit : Unit
 			}
 		}
 
+		// Descrease fall 
+		if (!isGrounded && timerBufferGrounded > 0 && !isDashing)
+			timerBufferGrounded -= time;
+
 		// Decrease dash buffer
 		if (timerGroundedDash > 0)
-		{
-			float time = Time.deltaTime * 1000f;
 			timerGroundedDash -= time;
-		}
 
 		// Update movements
 		base.Update();
 
+		// Buffer grounded if falling
+		if (timerBufferGrounded > 0)
+			isGrounded = true;
+
+		// Disable ground jumping if falling
+		if (currentSpeedY <= 0)
+			isGroundJumping = false;
+
 		// Reset double jump and dash
 		if (isGrounded)
 		{
+			timerBufferGrounded = bufferGroundedTime;
 			if (timerGroundedDash <= 0)
 				canDash = true;
 			canDoubleJump = true;
 			canCreateWall = true;
 		}
 		else
+		{
 			timerGroundedDash = 0;
+		}
 	}
 
 	public override bool Move(Vector2 scale)
 	{
-		if (timerDash > 0)
+		if (isDashing)
 			return false;
 
 		return base.Move(scale);
@@ -88,7 +105,7 @@ public class PlayerUnit : Unit
 
 	public override bool Jump()
 	{
-		if (timerDash > 0)
+		if (isDashing)
 			return false;
 
 		var jumped = base.Jump();
@@ -97,6 +114,7 @@ public class PlayerUnit : Unit
 			isGroundJumping = true;
 			canDash = true;
 			isGrounded = false;
+			timerBufferGrounded = 0;
 		}
 
 		if (!jumped && canDoubleJump && affectedByGravity)
@@ -104,6 +122,7 @@ public class PlayerUnit : Unit
 			currentSpeedY = doubleJumpSpeed;
 			canDoubleJump = false;
 			isGroundJumping = false;
+			timerBufferGrounded = 0;
 
 			// Send event
 			var hasJumped = new UnitHasJumpedEvent(this);
@@ -122,7 +141,7 @@ public class PlayerUnit : Unit
 
     public override bool StopJump()
     {
-		if (isGroundJumping && currentSpeedY > 0)
+		if (isGroundJumping)
 		{
 			isGroundJumping = false;
 			currentSpeedY  *= ratioStopJump;

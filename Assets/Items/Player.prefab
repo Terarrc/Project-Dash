@@ -150,6 +150,7 @@ MonoBehaviour:
   dashSpeed: 20
   dashDuration: 200
   groundedDashDelay: 500
+  bufferGroundedTime: 100
 --- !u!114 &6044366253312423578
 MonoBehaviour:
   m_ObjectHideFlags: 0
