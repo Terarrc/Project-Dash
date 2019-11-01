@@ -104,13 +104,13 @@ public class Unit : MonoBehaviour, IControls
 				Vector2 pointA, pointB;
 				if (currentSpeedX < 0)
 				{
-					pointA = new Vector2(oldPosX - halfWidth - 0.02f, positionY + (boxCollider.bounds.size.y * 0.6f));
-					pointB = new Vector2(positionX + halfWidth + 0.02f, positionY + (boxCollider.bounds.size.y * 0.4f));
+					pointA = new Vector2(oldPosX - halfWidth - 0.02f, positionY + (boxCollider.bounds.size.y * 0.8f));
+					pointB = new Vector2(positionX + halfWidth + 0.02f, positionY + (boxCollider.bounds.size.y * 0.2f));
 				}
 				else
 				{
-					pointA = new Vector2(oldPosX + halfWidth + 0.02f, positionY + (boxCollider.bounds.size.y * 0.6f));
-					pointB = new Vector2(positionX - halfWidth - 0.02f, positionY + (boxCollider.bounds.size.y * 0.4f));
+					pointA = new Vector2(oldPosX + halfWidth + 0.02f, positionY + (boxCollider.bounds.size.y * 0.8f));
+					pointB = new Vector2(positionX - halfWidth - 0.02f, positionY + (boxCollider.bounds.size.y * 0.2f));
 				}
 
 				Collider2D[] colliders = Physics2D.OverlapAreaAll(pointA, pointB, 1 << 8);

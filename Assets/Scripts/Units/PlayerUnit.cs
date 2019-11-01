@@ -66,7 +66,6 @@ public class PlayerUnit : Unit
 		}
 
 		// Update movements
-		bool wasGrounded = isGrounded;
 		base.Update();
 
 		// Reset double jump and dash
@@ -75,13 +74,18 @@ public class PlayerUnit : Unit
 			if (timerGroundedDash <= 0)
 				canDash = true;
 			canDoubleJump = true;
-            canCreateWall = true;
+			canCreateWall = true;
 		}
-		else if (wasGrounded)
-		{
+		else
 			timerGroundedDash = 0;
-			canDash = true;
-		}
+	}
+
+	public override bool Move(Vector2 scale)
+	{
+		if (timerDash > 0)
+			return false;
+
+		return base.Move(scale);
 	}
 
 	public override bool Jump()
@@ -150,6 +154,8 @@ public class PlayerUnit : Unit
 			timerDashParticles = 0;
 			dashScale = GetDirection();
 			canDash = false;
+			wantedSpeedX = dashSpeed * dashScale;
+
 			// If grounded, avoid spam dash
 			if (isGrounded)
 				timerGroundedDash = groundedDashDelay;

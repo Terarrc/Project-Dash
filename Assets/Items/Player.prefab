@@ -147,8 +147,8 @@ MonoBehaviour:
     type: 3}
   doubleJumpSpeed: 8
   ratioStopJump: 0.5
-  dashSpeed: 30
-  dashDuration: 150
+  dashSpeed: 15
+  dashDuration: 300
   groundedDashDelay: 500
 --- !u!114 &6044366253312423578
 MonoBehaviour:
