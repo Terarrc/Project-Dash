@@ -125,7 +125,7 @@ public class PlayerUnit : Unit
 		if (isGroundJumping && currentSpeedY > 0)
 		{
 			isGroundJumping = false;
-			//currentSpeedY  *= ratioStopJump;
+			currentSpeedY  *= ratioStopJump;
 
 			return true;
 		}

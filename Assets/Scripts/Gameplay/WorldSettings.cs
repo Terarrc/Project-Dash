@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class WorldSettings
+public class WorldSettings
 {
 	public static float gravity = 25;
 }

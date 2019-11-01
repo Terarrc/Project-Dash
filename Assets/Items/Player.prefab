@@ -135,9 +135,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeedX: 6
   moveSpeedY: 6
-  jumpSpeed: 15
-  accelerationX: 50
-  accelerationY: 50
+  jumpSpeed: 10
+  accelerationX: 100
+  accelerationY: 100
   affectedByGravity: 1
   doubleJumpParticle: {fileID: 3943271017201014684, guid: e90816ef545d863489422df59b00a038,
     type: 3}
@@ -145,7 +145,7 @@ MonoBehaviour:
     type: 3}
   createdField: {fileID: -8139123069261302785, guid: 58089c843dfc1b04ba6475a13cd64f38,
     type: 3}
-  doubleJumpSpeed: 15
+  doubleJumpSpeed: 10
   ratioStopJump: 0.5
   dashSpeed: 20
   dashDuration: 200

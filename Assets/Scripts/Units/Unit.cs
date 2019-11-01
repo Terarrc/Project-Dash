@@ -50,15 +50,13 @@ public class Unit : MonoBehaviour, IControls
 	{
 		float time = Time.deltaTime;
 
-		Debug.Log(1 / time);
-
 		// Less maneouvrability in the air
 		if (affectedByGravity)
 		{
 			if (isGrounded)
 				currentAccelerationX = accelerationX;
 			else
-				currentAccelerationX = accelerationX / 2;
+				currentAccelerationX = accelerationX / 4;
 
 			currentAccelerationY = WorldSettings.gravity;
 			wantedSpeedY = -100;
@@ -72,17 +70,9 @@ public class Unit : MonoBehaviour, IControls
 		float positionX;
 		float positionY;
 
-		// Use the rigid body if exists
-		if (body)
-		{
-			positionX = body.position.x;
-			positionY = body.position.y;
-		}
-		else
-		{
-			positionX = transform.position.x;
-			positionY = transform.position.y;
-		}
+		// Get the current position
+		positionX = transform.position.x;
+		positionY = transform.position.y;
 
 		// Update the speed X
 		if (!lockAxisX)
@@ -136,7 +126,7 @@ public class Unit : MonoBehaviour, IControls
 					pointB = new Vector2(positionX + halfWidth + offset, positionY + (height * 0.2f));
 				}
 
-				Collider2D[] colliders = Physics2D.OverlapAreaAll(pointA, pointB, 1 << 8);
+				Collider2D[] colliders = Physics2D.OverlapAreaAll(pointA, pointB, 1 << LayerMask.NameToLayer("Ground"));
 
 				// Move the body the furthest possible without collision
 				foreach (Collider2D collider in colliders)
@@ -178,7 +168,7 @@ public class Unit : MonoBehaviour, IControls
 					pointB = new Vector2(positionX - (halfWidth * 0.6f), positionY + height + offset);
 				}
 
-				Collider2D[] colliders = Physics2D.OverlapAreaAll(pointA, pointB, 1 << 8);
+				Collider2D[] colliders = Physics2D.OverlapAreaAll(pointA, pointB, 1 << LayerMask.NameToLayer("Ground"));
 
 				isGrounded = false;
 				// Move the body the furthest possible without collision
@@ -203,12 +193,7 @@ public class Unit : MonoBehaviour, IControls
 		animator.SetFloat("SpeedY", currentSpeedY);
 
 		// Update the position
-		if (body)
-			body.position = (new Vector2(positionX, positionY));
-		else
-			transform.position = new Vector3(positionX, positionY);
-
-
+		transform.position = new Vector3(positionX, positionY);
     }
 
 
