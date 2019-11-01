@@ -62,7 +62,7 @@ public class PlayerUnit : Unit
 		}
 
 		// Descrease fall 
-		if (!isGrounded && timerBufferGrounded > 0 && !isDashing)
+		if (!isGrounded && timerBufferGrounded > 0)
 			timerBufferGrounded -= time;
 
 		// Decrease dash buffer
@@ -71,10 +71,6 @@ public class PlayerUnit : Unit
 
 		// Update movements
 		base.Update();
-
-		// Buffer grounded if falling
-		if (timerBufferGrounded > 0)
-			isGrounded = true;
 
 		// Disable ground jumping if falling
 		if (currentSpeedY <= 0)
@@ -108,15 +104,21 @@ public class PlayerUnit : Unit
 		if (isDashing)
 			return false;
 
+		// Check if we are grounded from the buffer
+		if (timerBufferGrounded > 0 && !isGrounded)
+		{
+			isGrounded = true;
+		}
+			
 		var jumped = base.Jump();
 		if (jumped)
 		{
 			isGroundJumping = true;
 			canDash = true;
-			isGrounded = false;
 			timerBufferGrounded = 0;
 		}
 
+		// Check for double jump
 		if (!jumped && canDoubleJump && affectedByGravity)
 		{
 			currentSpeedY = doubleJumpSpeed;
