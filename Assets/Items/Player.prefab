@@ -135,9 +135,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeedX: 6
   moveSpeedY: 6
-  jumpSpeed: 9
+  jumpSpeed: 25
   accelerationX: 100
-  accelerationY: 100
+  accelerationY: 50
   verticalMoveEnabled: 0
   doubleJumpParticle: {fileID: 3943271017201014684, guid: e90816ef545d863489422df59b00a038,
     type: 3}
@@ -145,10 +145,10 @@ MonoBehaviour:
     type: 3}
   createdField: {fileID: -8139123069261302785, guid: 58089c843dfc1b04ba6475a13cd64f38,
     type: 3}
-  doubleJumpSpeed: 8
+  doubleJumpSpeed: 20
   ratioStopJump: 0.5
-  dashSpeed: 15
-  dashDuration: 300
+  dashSpeed: 20
+  dashDuration: 200
   groundedDashDelay: 500
 --- !u!114 &6044366253312423578
 MonoBehaviour:
@@ -248,7 +248,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 2
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1

@@ -34,7 +34,8 @@ public class Unit : MonoBehaviour, IControls
 	// Start is called before the first frame update
 	void Start()
 	{
-		
+		if (!verticalMoveEnabled)
+			wantedSpeedY = -10;
 	}
 
 	// Update is called once per frame
@@ -78,65 +79,97 @@ public class Unit : MonoBehaviour, IControls
 		}
 
 		// Update the speed Y
-		if (verticalMoveEnabled)
+		if (currentSpeedY < wantedSpeedY)
 		{
-			if (currentSpeedY < wantedSpeedY)
-			{
-				currentSpeedY = Mathf.Min(wantedSpeedY, currentSpeedY + (accelerationY * Time.deltaTime));
-			}
-			else if (currentSpeedY > wantedSpeedY)
-			{
-				currentSpeedY = Mathf.Max(wantedSpeedY, currentSpeedY - (accelerationY * Time.deltaTime));
-			}
+			currentSpeedY = Mathf.Min(wantedSpeedY, currentSpeedY + (accelerationY * Time.deltaTime));
+		}
+		else if (currentSpeedY > wantedSpeedY)
+		{
+			currentSpeedY = Mathf.Max(wantedSpeedY, currentSpeedY - (accelerationY * Time.deltaTime));
 		}
 
 		// Update the position X
-		if (!Mathf.Approximately(currentSpeedX, 0))
+
+		float deltaPositionX = currentSpeedX * Time.deltaTime;
+		float oldPosX = positionX;
+		positionX += deltaPositionX;
+
+		if (body)
 		{
-			float deltaPositionX = currentSpeedX * Time.deltaTime;
-			float oldPosX = positionX;
-			positionX += deltaPositionX;
+			float height = boxCollider.bounds.size.y;
+			float halfWidth = (boxCollider.bounds.size.x / 2);
 
-			if (body)
+			Vector2 pointA, pointB;
+			if (currentSpeedX < 0)
 			{
-				float halfWidth = (boxCollider.bounds.size.x / 2);
-
-				Vector2 pointA, pointB;
-				if (currentSpeedX < 0)
-				{
-					pointA = new Vector2(oldPosX - halfWidth - 0.02f, positionY + (boxCollider.bounds.size.y * 0.8f));
-					pointB = new Vector2(positionX + halfWidth + 0.02f, positionY + (boxCollider.bounds.size.y * 0.2f));
-				}
-				else
-				{
-					pointA = new Vector2(oldPosX + halfWidth + 0.02f, positionY + (boxCollider.bounds.size.y * 0.8f));
-					pointB = new Vector2(positionX - halfWidth - 0.02f, positionY + (boxCollider.bounds.size.y * 0.2f));
-				}
-
-				Collider2D[] colliders = Physics2D.OverlapAreaAll(pointA, pointB, 1 << 8);
-
-				foreach (Collider2D collider in colliders)
-				{
-					if (currentSpeedX < 0 && collider.bounds.max.x + halfWidth + 0.04f > positionX)
-					{
-						positionX = collider.bounds.max.x + (boxCollider.bounds.size.x / 2) + 0.04f;
-					}
-					if (currentSpeedX > 0 && collider.bounds.min.x - halfWidth - 0.04f < positionX)
-					{
-						positionX = collider.bounds.min.x - (boxCollider.bounds.size.x / 2) - 0.04f;
-					}
-				}
+				pointA = new Vector2(oldPosX - halfWidth - 0.02f, positionY + (height * 0.8f));
+				pointB = new Vector2(positionX - halfWidth - 0.02f, positionY + (height * 0.2f));
+			}
+			else
+			{
+				pointA = new Vector2(oldPosX + halfWidth + 0.02f, positionY + (height * 0.8f));
+				pointB = new Vector2(positionX + halfWidth + 0.02f, positionY + (height * 0.2f));
 			}
 
+			Collider2D[] colliders = Physics2D.OverlapAreaAll(pointA, pointB, 1 << 8);
+
+			foreach (Collider2D collider in colliders)
+			{
+				if (currentSpeedX < 0 && collider.bounds.max.x + halfWidth + 0.04f > positionX)
+				{
+					positionX = collider.bounds.max.x + (boxCollider.bounds.size.x / 2) + 0.04f;
+				}
+				if (currentSpeedX > 0 && collider.bounds.min.x - halfWidth - 0.04f < positionX)
+				{
+					positionX = collider.bounds.min.x - (boxCollider.bounds.size.x / 2) - 0.04f;
+				}
+			}
 		}
+
 		// Update the position Y
-		if (verticalMoveEnabled)
+	
+		float deltaPositionY = currentSpeedY * Time.deltaTime;
+		float oldPosY = positionY;
+		positionY += deltaPositionY;
+
+		if (body)
 		{
-			if (!Mathf.Approximately(currentSpeedY, 0))
+			float height = boxCollider.bounds.size.y;
+			float halfWidth = (boxCollider.bounds.size.x / 2);
+
+			Vector2 pointA, pointB;
+			if (currentSpeedY < 0)
 			{
-				positionY += currentSpeedY * Time.deltaTime;
+				pointA = new Vector2(positionX + (halfWidth * 0.6f), oldPosY - 0.01f);
+				pointB = new Vector2(positionX - (halfWidth * 0.6f), positionY - 0.01f);
 			}
+			else
+			{
+				pointA = new Vector2(positionX + (halfWidth * 0.6f), oldPosY + height + 0.01f);
+				pointB = new Vector2(positionX - (halfWidth * 0.6f), positionY + height + 0.01f);
+			}
+
+			Collider2D[] colliders = Physics2D.OverlapAreaAll(pointA, pointB, 1 << 8);
+
+			isGrounded = false;
+			foreach (Collider2D collider in colliders)
+			{
+				if (currentSpeedY < 0 && collider.bounds.max.y + 0.02f > positionY)
+				{
+					positionY = collider.bounds.max.y + 0.02f;
+					isGrounded = true;
+					currentSpeedY = 0;
+				}
+				if (currentSpeedY > 0 && collider.bounds.min.y - height - 0.02f < positionY)
+				{
+					positionY = collider.bounds.min.y - height - 0.02f;
+					currentSpeedY = 0;
+				}
+			}
+			animator.SetBool("Grounded", isGrounded);
 		}
+
+		animator.SetFloat("SpeedY", currentSpeedY);
 
 		// Use the rigid body if exists
 		if (body)
@@ -156,13 +189,14 @@ public class Unit : MonoBehaviour, IControls
             var horizontalHitboxHalf = boxCollider.bounds.size.x / 2; 
             var verticalHitboxQuarter = boxCollider.bounds.size.y / 4;
 
+			/*
             // Ground Check
             isGrounded = Physics2D.OverlapArea(
 				new Vector2(transform.position.x - horizontalHitboxHalf, transform.position.y),
 				new Vector2(transform.position.x + horizontalHitboxHalf, transform.position.y), 1 << 8);
 
 			animator.SetBool("Grounded", isGrounded);
-
+			*/
             // Horizontal Energy Field Ground Check
             isOnHorizontalEnergyField = Physics2D.OverlapArea(
                 new Vector2(transform.position.x - horizontalHitboxHalf, transform.position.y),
@@ -187,12 +221,6 @@ public class Unit : MonoBehaviour, IControls
             }          
 
         }
-
-        // For animation in the air
-        if (body)
-		{
-			animator.SetFloat("SpeedY", body.velocity.y);
-		}
     }
 
     /* 
@@ -231,7 +259,8 @@ public class Unit : MonoBehaviour, IControls
 		if (scale == Vector2.zero)
 		{
 			wantedSpeedX = 0;
-			wantedSpeedY = 0;
+			if (verticalMoveEnabled)
+				wantedSpeedY = 0;
 
 			animator.SetBool("Moving", false);
 
@@ -240,7 +269,8 @@ public class Unit : MonoBehaviour, IControls
 		else
 		{
 			wantedSpeedX = scale.x * moveSpeedX;
-			wantedSpeedY = scale.y * moveSpeedY;
+			if (verticalMoveEnabled)
+				wantedSpeedY = scale.y * moveSpeedY;
 
 			sprite.flipX = scale.x < 0;
 			animator.SetBool("Moving", true);
@@ -254,7 +284,7 @@ public class Unit : MonoBehaviour, IControls
 		if (isGrounded && !verticalMoveEnabled)
 		{
 			isGrounded = false;
-			body.velocity = new Vector2(body.velocity.x, jumpSpeed);
+			currentSpeedY = jumpSpeed;
 
 			// Send event
 			var hasJumped = new UnitHasJumpedEvent(this);
