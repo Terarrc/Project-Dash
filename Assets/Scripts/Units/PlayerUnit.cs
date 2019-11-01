@@ -40,7 +40,6 @@ public class PlayerUnit : Unit
 		{
 			lockAxisY = true;
 
-			
 			timerDash -= time;
 			timerDashParticles -= time;
 			if (timerDash <= 0)
@@ -85,7 +84,7 @@ public class PlayerUnit : Unit
 			canDoubleJump = true;
 			canCreateWall = true;
 		}
-		else
+		else if (currentSpeedY != 0)
 		{
 			timerGroundedDash = 0;
 		}

@@ -101,7 +101,7 @@ public class Unit : MonoBehaviour, IControls
 		}
 
 		// Calculate the position X
-		float offset = 0.01f;
+		float offset = 0;
 		if (!lockAxisX)
 		{
 			float deltaPositionX = currentSpeedX * time;
@@ -144,6 +144,7 @@ public class Unit : MonoBehaviour, IControls
 		}
 
 		// Calculate the position Y
+		isGrounded = false;
 		if (!lockAxisY)
 		{
 			float deltaPositionY = currentSpeedY * time;
@@ -170,7 +171,6 @@ public class Unit : MonoBehaviour, IControls
 
 				Collider2D[] colliders = Physics2D.OverlapAreaAll(pointA, pointB, 1 << LayerMask.NameToLayer("Ground"));
 
-				isGrounded = false;
 				// Move the body the furthest possible without collision
 				foreach (Collider2D collider in colliders)
 				{
