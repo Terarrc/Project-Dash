@@ -33,6 +33,8 @@ public class PlayerUnit : Unit
 		// Decrease dash timer
 		if (timerDash > 0)
 		{
+			lockAxisY = true;
+
 			float time = Time.deltaTime * 1000f;
 			timerDash -= time;
 			timerDashParticles -= time;
@@ -40,12 +42,9 @@ public class PlayerUnit : Unit
 			{
 				animator.SetTrigger("StopDash");
 				animator.SetBool("Dashing", false);
-				currentSpeedX = preDashSpeed * 1.2f;
-			}
-			else
-			{
-				currentSpeedX = dashSpeed * dashScale;
+				currentSpeedX = preDashSpeed + (currentSpeedX / 2);
 				currentSpeedY = 0;
+				lockAxisY = false;
 			}
 			if (timerDashParticles <= 0)
 			{ 
@@ -100,7 +99,7 @@ public class PlayerUnit : Unit
 			isGrounded = false;
 		}
 
-		if (!jumped && canDoubleJump && !verticalMoveEnabled)
+		if (!jumped && canDoubleJump && affectedByGravity)
 		{
 			currentSpeedY = doubleJumpSpeed;
 			canDoubleJump = false;
@@ -126,7 +125,7 @@ public class PlayerUnit : Unit
 		if (isGroundJumping && currentSpeedY > 0)
 		{
 			isGroundJumping = false;
-			currentSpeedY  *= ratioStopJump;
+			//currentSpeedY  *= ratioStopJump;
 
 			return true;
 		}
@@ -155,6 +154,7 @@ public class PlayerUnit : Unit
 			dashScale = GetDirection();
 			canDash = false;
 			wantedSpeedX = dashSpeed * dashScale;
+			currentSpeedX = wantedSpeedX;
 
 			// If grounded, avoid spam dash
 			if (isGrounded)

@@ -61,12 +61,15 @@ public class PlayerController : Controller
 			controls.Move(new Vector2(horizontal, vertical));
 
 		// Jump
+		bool jumped = false;
 		if (Input.GetButtonDown("Jump"))
 		{
 			if (!controls.Jump())
 			{
 				Buffer = bufferedInput.jump;
 			}
+			else
+				jumped = true;
 		} 
 		else if (buffer == bufferedInput.jump)
 		{
@@ -74,8 +77,8 @@ public class PlayerController : Controller
 			{
 				Buffer = bufferedInput.none;
                 if (!Input.GetButton("Jump"))
-                    controls.StopJump();
-            }
+                    controls.StopJump();				jumped = true;
+			}
 		}
 
 		// Stop Jump
@@ -85,20 +88,24 @@ public class PlayerController : Controller
 		}
 
 		// Dash
-		if (Input.GetButtonDown("Action 1"))
+		if (!jumped)
 		{
-			if (!controls.Action(1))
+			if (Input.GetButtonDown("Action 1"))
 			{
-				Buffer = bufferedInput.dash;
+				if (!controls.Action(1))
+				{
+					Buffer = bufferedInput.dash;
+				}
+			}
+			else if (buffer == bufferedInput.dash)
+			{
+				if (controls.Action(1))
+				{
+					Buffer = bufferedInput.none;
+				}
 			}
 		}
-		else if (buffer == bufferedInput.dash)
-		{
-			if (controls.Action(1))
-			{
-				Buffer = bufferedInput.none;
-			}
-		}
+
 
 		// Create Horizontal Energy Field
         if (Input.GetButtonDown("Action 2"))
