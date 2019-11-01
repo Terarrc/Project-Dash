@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PlayerUnit : Unit
 {
-	public TimedDurationEntity DoubleJumpParticle;
-    public TimedDurationEntity createdField;
+	public TimedDurationEntity doubleJumpParticle;
+	public TimedDurationEntity dashParticle;
+	public TimedDurationEntity createdField;
 
 	public float doubleJumpSpeed;
 	public float ratioStopJump;
@@ -23,6 +24,7 @@ public class PlayerUnit : Unit
 	private float dashScale;
 	private float preDashSpeed;
 	private float timerDash;
+	private float timerDashParticles;
 
 
 
@@ -33,6 +35,7 @@ public class PlayerUnit : Unit
 		{
 			float time = Time.deltaTime * 1000f;
 			timerDash -= time;
+			timerDashParticles -= time;
 			if (timerDash <= 0)
 			{
 				animator.SetTrigger("StopDash");
@@ -44,6 +47,14 @@ public class PlayerUnit : Unit
 			{
 				currentSpeedX = dashSpeed * dashScale;
 			}
+			if (timerDashParticles <= 0)
+			{ 
+				// Generate particle every 30ms
+				TimedDurationEntity particle = Instantiate(dashParticle, transform.position, Quaternion.identity);
+				particle.FlipX(sprite.flipX);
+
+				timerDashParticles = 30;
+			}
 		}
 
 		// Decrease dash buffer
@@ -54,6 +65,7 @@ public class PlayerUnit : Unit
 		}
 
 		// Update movements
+		bool wasGrounded = isGrounded;
 		base.Update();
 
 		// Reset double jump and dash
@@ -64,19 +76,26 @@ public class PlayerUnit : Unit
 			canDoubleJump = true;
             canCreateWall = true;
 		}
-		else
+		else if (wasGrounded)
+		{
 			timerGroundedDash = 0;
+			canDash = true;
+		}
 	}
 
 	public override bool Jump()
 	{
-		isGroundJumping = true;
+		if (timerDash > 0)
+			return false;
 
 		var jumped = base.Jump();
 		if (jumped)
+		{
+			isGroundJumping = true;
 			canDash = true;
+		}
 
-		if (!jumped && canDoubleJump && !verticalMoveEnabled && timerDash <= 0)
+		if (!jumped && canDoubleJump && !verticalMoveEnabled)
 		{
 			body.velocity = new Vector2(body.velocity.x, doubleJumpSpeed);
 			canDoubleJump = false;
@@ -87,7 +106,7 @@ public class PlayerUnit : Unit
 			hasJumped.execute();
 
 			// Generate particle
-			Instantiate(DoubleJumpParticle, transform.position, Quaternion.identity);
+			Instantiate(doubleJumpParticle, transform.position, Quaternion.identity);
 
 			animator.SetTrigger("Jumped");
 
@@ -127,6 +146,7 @@ public class PlayerUnit : Unit
 		{
 			preDashSpeed = currentSpeedX;
 			timerDash = dashDuration;
+			timerDashParticles = 0;
 			dashScale = GetDirection();
 			canDash = false;
 			// If grounded, avoid spam dash

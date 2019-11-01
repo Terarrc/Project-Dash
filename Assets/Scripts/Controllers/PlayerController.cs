@@ -100,7 +100,7 @@ public class PlayerController : Controller
 			}
 		}
 
-		// Create Platform
+		// Create Horizontal Energy Field
         if (Input.GetButtonDown("Action 2"))
         {
             controls.Action(2);
