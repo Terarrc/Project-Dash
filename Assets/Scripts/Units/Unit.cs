@@ -100,8 +100,10 @@ public class Unit : MonoBehaviour, IControls
 			}
 		}
 
-		// Calculate the position X
-		float offset = 0;
+        #region calc x
+
+        // Calculate the position X
+        float offset = 0;
 		if (!lockAxisX)
 		{
 			float deltaPositionX = currentSpeedX * time;
@@ -143,8 +145,12 @@ public class Unit : MonoBehaviour, IControls
 			}
 		}
 
-		// Calculate the position Y
-		isGrounded = false;
+        #endregion
+
+        #region calc y
+
+        // Calculate the position Y
+        isGrounded = false;
 		if (!lockAxisY)
 		{
 			float deltaPositionY = currentSpeedY * time;
@@ -192,8 +198,10 @@ public class Unit : MonoBehaviour, IControls
 		}
 		animator.SetFloat("SpeedY", currentSpeedY);
 
-		// Update the position
-		transform.position = new Vector3(positionX, positionY);
+        #endregion
+
+        // Update the position
+        transform.position = new Vector3(positionX, positionY);
     }
 
 
