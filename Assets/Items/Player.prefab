@@ -135,7 +135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeedX: 6
   moveSpeedY: 6
-  jumpSpeed: 25
+  jumpSpeed: 15
   accelerationX: 100
   accelerationY: 50
   verticalMoveEnabled: 0
@@ -145,7 +145,7 @@ MonoBehaviour:
     type: 3}
   createdField: {fileID: -8139123069261302785, guid: 58089c843dfc1b04ba6475a13cd64f38,
     type: 3}
-  doubleJumpSpeed: 20
+  doubleJumpSpeed: 15
   ratioStopJump: 0.5
   dashSpeed: 20
   dashDuration: 200
@@ -241,7 +241,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7080704996284031239}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0

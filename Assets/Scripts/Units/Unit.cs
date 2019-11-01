@@ -35,7 +35,7 @@ public class Unit : MonoBehaviour, IControls
 	void Start()
 	{
 		if (!verticalMoveEnabled)
-			wantedSpeedY = -10;
+			wantedSpeedY = -100;
 	}
 
 	// Update is called once per frame
