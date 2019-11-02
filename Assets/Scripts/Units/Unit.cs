@@ -145,7 +145,7 @@ public class Unit : MonoBehaviour, IControls
 					}
 				}
 
-				Collider2D[] collidersGround = Physics2D.OverlapAreaAll(pointA, pointB, (1 << LayerMask.NameToLayer("Ground")) + 1 << (LayerMask.NameToLayer("Horizontal Energy Fields")));
+				Collider2D[] collidersGround = Physics2D.OverlapAreaAll(pointA, pointB, (1 << LayerMask.NameToLayer("Ground")) + (1 << LayerMask.NameToLayer("Horizontal Energy Fields")));
 
 				// Move the body the furthest possible without collision
 				foreach (Collider2D collider in collidersGround)
