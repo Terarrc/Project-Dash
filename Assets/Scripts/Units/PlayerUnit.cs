@@ -51,7 +51,7 @@ public class PlayerUnit : Unit
 			{
 				animator.SetTrigger("StopDash");
 				animator.SetBool("Dashing", false);
-				currentSpeedX = preDashSpeed + (currentSpeedX / 2);
+				currentSpeedX = preDashSpeed + (currentSpeedX / 8);
 				currentSpeedY = 0;
 				lockAxisY = false;
 			}
