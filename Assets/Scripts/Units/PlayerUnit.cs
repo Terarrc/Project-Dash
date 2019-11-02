@@ -8,18 +8,24 @@ public class PlayerUnit : Unit
 	public TimedDurationEntity dashParticle;
 	public TimedDurationEntity createdField;
 
+	// Inspector variables
 	public float doubleJumpSpeed;
 	public float ratioStopJump;
 	public float dashSpeed;
 	public float dashDuration;
 	public float groundedDashDelay;
 	public float wallJumpSpeed;
-	public float wallJumpMinimumSpeedX;
+	public float wallJumpSpeedX;
 	public float bufferGroundedTime;
-	private float timerGroundedDash;
-	private bool isGroundJumping = false;
 
+	// Grounded 
+	private float timerBufferGrounded;
+
+	// Jump variables
+	private bool isGroundJumping = false;
 	private bool canDoubleJump = true;
+
+	// Dash variables
 	private bool canDash = true;
 	private bool isDashing = false;
 	private bool IsDashing
@@ -33,7 +39,7 @@ public class PlayerUnit : Unit
 			isDashing = value;
 			if (value)
 			{
-				preDashSpeed = currentSpeedX;
+				collideWithEnergy = false;
 				timerDash = dashDuration;
 				timerDashParticles = 0;
 				canDash = false;
@@ -49,14 +55,19 @@ public class PlayerUnit : Unit
 			}
 			else
 			{
+				collideWithEnergy = true;
 				animator.SetTrigger("StopDash");
 				animator.SetBool("Dashing", false);
-				currentSpeedX = preDashSpeed + (currentSpeedX / 8);
 				currentSpeedY = 0;
 				lockAxisY = false;
 			}
 		}
 	}
+	private float timerDash;
+	private float timerDashParticles;
+	private float timerGroundedDash;
+
+	// Wall sliding variables
 	private bool isWallSliding = false;
 	private bool IsWallSliding
 	{
@@ -72,6 +83,7 @@ public class PlayerUnit : Unit
 			{
 				lockAxisX = true;
 				wantedSpeedY = -1f;
+				//currentSpeedX = 0;
 				animator.SetBool("Wall Slide", true);
 			}
 			else
@@ -82,14 +94,10 @@ public class PlayerUnit : Unit
 			}
 		}
 	}
-	private bool canCreatePlatform = true;
-	private bool canCreateWall = true;
-    
-	private float preDashSpeed;
-	private float timerDash;
-	private float timerDashParticles;
-	private float timerBufferGrounded;
 
+	// Energy field creation variable
+	private bool canCreateEnergyField = true;
+    
 
 	public override void Update()
 	{
@@ -115,17 +123,6 @@ public class PlayerUnit : Unit
 				timerDashParticles = 30;
 			}
 		}
-
-		// Descrease fall 
-		if (!isGrounded && timerBufferGrounded > 0)
-			timerBufferGrounded -= time;
-
-		// Decrease dash buffer
-		if (timerGroundedDash > 0)
-			timerGroundedDash -= time;
-
-		// Update movements
-		base.Update();
 
 		// Check if the conditions for wall sliding are still ok
 		if (IsWallSliding)
@@ -160,6 +157,17 @@ public class PlayerUnit : Unit
 			}
 		};
 
+		// Descrease fall 
+		if (!isGrounded && timerBufferGrounded > 0)
+			timerBufferGrounded -= time;
+
+		// Decrease dash buffer
+		if (timerGroundedDash > 0)
+			timerGroundedDash -= time;
+
+		// Update movements
+		base.Update();
+
 		// Disable ground jumping if falling
 		if (currentSpeedY <= 0)
 			isGroundJumping = false;
@@ -171,7 +179,7 @@ public class PlayerUnit : Unit
 			if (timerGroundedDash <= 0)
 				canDash = true;
 			canDoubleJump = true;
-			canCreateWall = true;
+			canCreateEnergyField = true;
 		}
 		else if (currentSpeedY != 0)
 		{
@@ -201,14 +209,10 @@ public class PlayerUnit : Unit
 		// Check if we are wall sliding for wall jump
 		if (IsWallSliding)
 		{
-			currentSpeedY = wallJumpSpeed;
-			currentSpeedX *= -1;
-			if (currentSpeedX < 0)
-				currentSpeedX = Mathf.Min(currentSpeedX, -wallJumpMinimumSpeedX);
-			else
-				currentSpeedX = Mathf.Max(currentSpeedX, wallJumpMinimumSpeedX);
-
 			IsWallSliding = false;
+			currentSpeedY = wallJumpSpeed;
+
+			currentSpeedX = wallJumpSpeedX * GetDirectionX();
 
 			return true;
 		}
@@ -267,9 +271,7 @@ public class PlayerUnit : Unit
 			case 1:
 				return Dash();
 			case 2:
-				return CreateHorizontalField();
-			case 3:
-				return CreateVerticalField();
+				return CreateEnergyField();
 		}
 		return false;
 	}
@@ -278,6 +280,9 @@ public class PlayerUnit : Unit
 	{
 		if (canDash)
 		{
+			if (IsWallSliding)
+				IsWallSliding = false;
+
 			IsDashing = true;
 			return true;
 		}
@@ -287,26 +292,21 @@ public class PlayerUnit : Unit
 
 	protected override void TouchEnergyFieldVertical(float direction)
 	{
-		IsWallSliding = true;
+		if (collideWithEnergy)
+			IsWallSliding = true;
+		else
+		{
+			canDash = true;
+			canDoubleJump = true;
+		}
+
 	}
 	protected override void TouchEnergyFieldHorizontal(float direction)
 	{
 
 	}
 
-	private bool CreateHorizontalField()
-    {
-        if (!isGrounded && canCreatePlatform)
-        {
-            canCreatePlatform = false;
-            Instantiate(createdField, transform.position, Quaternion.identity);
-            return true;
-        }
-
-        return false;
-    }
-
-    private bool CreateVerticalField()
+    private bool CreateEnergyField()
     {
         return false;
     }

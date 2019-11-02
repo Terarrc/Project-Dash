@@ -10,21 +10,23 @@ public class Unit : MonoBehaviour, IControls
     protected SpriteRenderer sprite;
 	protected Animator animator;
 
-	// Physic variable
+	// Physic variable inspector
 	public float moveSpeedX, moveSpeedY;
 	public float jumpSpeed;
 	public float accelerationX, accelerationY;
 	public bool affectedByGravity;
+
+	// Physic variable
 	protected float currentSpeedX, currentSpeedY, wantedSpeedX, wantedSpeedY;
 	protected float currentAccelerationX, currentAccelerationY;
 	protected bool isGrounded = false;
-    protected bool isOnHorizontalEnergyField = false;
-    protected bool isOnVerticalEnergyField_Left = false;
-    protected bool isOnVerticalEnergyField_Right = false;
 
 	// Disable physic update on a specific axis
 	protected bool lockAxisX = false;
 	protected bool lockAxisY = false;
+
+	// Energy variable
+	protected bool collideWithEnergy = true;
 
 	// On wake, get Unit's components
 	void Awake()
@@ -104,7 +106,6 @@ public class Unit : MonoBehaviour, IControls
         #region Calculate position x
 
         // Calculate the position X
-        float offset = 0;
 		if (!lockAxisX)
 		{
 			float deltaPositionX = currentSpeedX * time;
@@ -120,13 +121,13 @@ public class Unit : MonoBehaviour, IControls
 				Vector2 pointA, pointB;
 				if (currentSpeedX < 0)
 				{
-					pointA = new Vector2(oldPosX - halfWidth - offset, positionY + (height * 0.8f));
-					pointB = new Vector2(positionX - halfWidth - offset, positionY + (height * 0.2f));
+					pointA = new Vector2(oldPosX - halfWidth, positionY + (height * 0.8f));
+					pointB = new Vector2(positionX - halfWidth, positionY + (height * 0.2f));
 				}
 				else
 				{
-					pointA = new Vector2(oldPosX + halfWidth + offset, positionY + (height * 0.8f));
-					pointB = new Vector2(positionX + halfWidth + offset, positionY + (height * 0.2f));
+					pointA = new Vector2(oldPosX + halfWidth, positionY + (height * 0.8f));
+					pointB = new Vector2(positionX + halfWidth, positionY + (height * 0.2f));
 				}
 
 				Collider2D[] collidersEnergy = Physics2D.OverlapAreaAll(pointA, pointB, 1 << LayerMask.NameToLayer("Vertical Energy Fields"));
@@ -136,28 +137,33 @@ public class Unit : MonoBehaviour, IControls
 				{
 					if (currentSpeedX < 0 && collider.bounds.max.x + halfWidth > positionX)
 					{
-						positionX = collider.bounds.max.x + halfWidth + (2 * offset);
+						if (collideWithEnergy)
+							positionX = collider.bounds.max.x + halfWidth;
 						TouchEnergyFieldVertical(-1);
 					}
-					if (currentSpeedX > 0 && collider.bounds.min.x - halfWidth - (2 * offset) < positionX)
+					if (currentSpeedX > 0 && collider.bounds.min.x - halfWidth < positionX)
 					{
-						positionX = collider.bounds.min.x - halfWidth - (2 * offset);
+						if (collideWithEnergy)
+							positionX = collider.bounds.min.x - halfWidth;
 						TouchEnergyFieldVertical(1);
 					}
 				}
 
-				Collider2D[] collidersGround = Physics2D.OverlapAreaAll(pointA, pointB, (1 << LayerMask.NameToLayer("Ground")) + (1 << LayerMask.NameToLayer("Horizontal Energy Fields")));
+				int mask = 1 << LayerMask.NameToLayer("Ground");
+				if (collideWithEnergy)
+					mask += 1 << LayerMask.NameToLayer("Horizontal Energy Fields");
+				Collider2D[] collidersGround = Physics2D.OverlapAreaAll(pointA, pointB, mask);
 
 				// Move the body the furthest possible without collision
 				foreach (Collider2D collider in collidersGround)
 				{
 					if (currentSpeedX < 0 && collider.bounds.max.x + halfWidth > positionX)
 					{
-						positionX = collider.bounds.max.x + halfWidth + (2 * offset);
+						positionX = collider.bounds.max.x + halfWidth;
 					}
-					if (currentSpeedX > 0 && collider.bounds.min.x - halfWidth - (2 * offset) < positionX)
+					if (currentSpeedX > 0 && collider.bounds.min.x - halfWidth < positionX)
 					{
-						positionX = collider.bounds.min.x - halfWidth - (2 * offset);
+						positionX = collider.bounds.min.x - halfWidth;
 					}
 				}
 			}
@@ -185,13 +191,13 @@ public class Unit : MonoBehaviour, IControls
 				Vector2 pointA, pointB;
 				if (currentSpeedY < 0)
 				{
-					pointA = new Vector2(positionX + (halfWidth * 0.6f), oldPosY - offset);
-					pointB = new Vector2(positionX - (halfWidth * 0.6f), positionY - offset);
+					pointA = new Vector2(positionX + (halfWidth * 0.6f), oldPosY);
+					pointB = new Vector2(positionX - (halfWidth * 0.6f), positionY);
 				}
 				else
 				{
-					pointA = new Vector2(positionX + (halfWidth * 0.6f), oldPosY + height + offset);
-					pointB = new Vector2(positionX - (halfWidth * 0.6f), positionY + height + offset);
+					pointA = new Vector2(positionX + (halfWidth * 0.6f), oldPosY + height);
+					pointB = new Vector2(positionX - (halfWidth * 0.6f), positionY + height);
 				}
 
 				Collider2D[] collidersEnergy = Physics2D.OverlapAreaAll(pointA, pointB, 1 << LayerMask.NameToLayer("Horizontal Energy Fields"));
@@ -199,33 +205,38 @@ public class Unit : MonoBehaviour, IControls
 				// Move the body the furthest possible without collision
 				foreach (Collider2D collider in collidersEnergy)
 				{
-					if (currentSpeedY < 0 && collider.bounds.max.y + (2 * offset) > positionY)
+					if (currentSpeedY < 0 && collider.bounds.max.y > positionY)
 					{
-						positionY = collider.bounds.max.y + (2 * offset);
+						if (collideWithEnergy)
+							positionY = collider.bounds.max.y;
 						TouchEnergyFieldHorizontal(-1);
 					}
-					if (currentSpeedY > 0 && collider.bounds.min.y - height - (2 * offset) < positionY)
+					if (currentSpeedY > 0 && collider.bounds.min.y - height < positionY)
 					{
-						positionY = collider.bounds.min.y - height - (2 * offset);
+						if (collideWithEnergy)
+							positionY = collider.bounds.min.y - height;
 						TouchEnergyFieldHorizontal(1);
 					}
 				}
 
-				Collider2D[] collidersGround = Physics2D.OverlapAreaAll(pointA, pointB, (1 << LayerMask.NameToLayer("Ground")) + (1 << LayerMask.NameToLayer("Vertical Energy Fields")));
+				int mask = 1 << LayerMask.NameToLayer("Ground");
+				if (collideWithEnergy)
+					mask += 1 << LayerMask.NameToLayer("Vertical Energy Fields");
+				Collider2D[] collidersGround = Physics2D.OverlapAreaAll(pointA, pointB, mask);
 
 				// Move the body the furthest possible without collision
 				foreach (Collider2D collider in collidersGround)
 				{
-					if (currentSpeedY < 0 && collider.bounds.max.y + (2 * offset) > positionY)
+					if (currentSpeedY < 0 && collider.bounds.max.y > positionY)
 					{
-						positionY = collider.bounds.max.y + (2 * offset);
+						positionY = collider.bounds.max.y;
 						// A vertical collision while falling mean landing
 						isGrounded = true;
 						currentSpeedY = 0;
 					}
-					if (currentSpeedY > 0 && collider.bounds.min.y - height - (2 * offset) < positionY)
+					if (currentSpeedY > 0 && collider.bounds.min.y - height < positionY)
 					{
-						positionY = collider.bounds.min.y - height - (2 * offset);
+						positionY = collider.bounds.min.y - height;
 						currentSpeedY = 0;
 					}
 				}

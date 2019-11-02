@@ -151,7 +151,7 @@ MonoBehaviour:
   dashDuration: 200
   groundedDashDelay: 500
   wallJumpSpeed: 18
-  wallJumpMinimumSpeedX: 30
+  wallJumpSpeedX: 30
   bufferGroundedTime: 100
 --- !u!114 &6044366253312423578
 MonoBehaviour:
@@ -165,6 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af180d9da59d7a342b163c4ad7412672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  analogMovement: 0
   bufferTime: 100
 --- !u!212 &7080704996284031257
 SpriteRenderer:
