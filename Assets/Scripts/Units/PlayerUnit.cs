@@ -70,7 +70,7 @@ public class PlayerUnit : Unit
 			if (value)
 			{
 				lockAxisX = true;
-				wantedSpeedY = -0.5f;
+				wantedSpeedY = -1f;
 			}
 			else
 			{

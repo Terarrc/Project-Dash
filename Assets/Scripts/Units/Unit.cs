@@ -58,7 +58,7 @@ public class Unit : MonoBehaviour, IControls
 			else if (((wantedSpeedX < 0) && (currentSpeedX < 0)) || ((wantedSpeedX > 0) && (currentSpeedX > 0)))
 				currentAccelerationX = accelerationX / 8;
 			else
-				currentAccelerationX = accelerationX;
+				currentAccelerationX = accelerationX / 4;
 
 			currentAccelerationY = WorldSettings.gravity;
 		}
