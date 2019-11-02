@@ -222,6 +222,10 @@ public class PlayerUnit : Unit
 		if (!jumped && canDoubleJump && affectedByGravity)
 		{
 			currentSpeedY = doubleJumpSpeed;
+
+			if ((wantedSpeedX < 0 && currentSpeedX > 0) && (wantedSpeedX > 0 && currentSpeedX < 0))
+				currentSpeedX *= -1;
+
 			canDoubleJump = false;
 			isGroundJumping = false;
 			timerBufferGrounded = 0;
