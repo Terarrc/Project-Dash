@@ -22,6 +22,8 @@ public class PlayerController : Controller
 		}
 	}
 	private float timerBuffer;
+
+	public bool analogMovement;
 	// Time in milliseconds the buffer will keep it's input
 	public float bufferTime;
 
@@ -55,10 +57,29 @@ public class PlayerController : Controller
 		float vertical = Input.GetAxis("Vertical");
 
 		// Move
-		if (Mathf.Abs(horizontal) < 0.8 && Mathf.Abs(vertical) < 0.8)
+		if (Mathf.Abs(horizontal) < 0.8)
 			controls.Move(Vector2.zero);
 		else
+		{
+			if (!analogMovement)
+			{
+				if (Mathf.Abs(horizontal) < 0.8)
+					horizontal = 0;
+				else if (horizontal < 0)
+					horizontal = -1;
+				else
+					horizontal = 1;
+
+				if (Mathf.Abs(vertical) < 0.8)
+					vertical = 0;
+				else if (vertical < 0)
+					vertical = -1;
+				else
+					vertical = 1;
+			}
+
 			controls.Move(new Vector2(horizontal, vertical));
+		}
 
 		// Jump
 		bool jumped = false;
