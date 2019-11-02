@@ -151,7 +151,7 @@ MonoBehaviour:
   dashDuration: 200
   groundedDashDelay: 500
   wallJumpSpeed: 20
-  wallJumpMinimumSpeedX: 20
+  wallJumpMinimumSpeedX: 15
   bufferGroundedTime: 100
 --- !u!114 &6044366253312423578
 MonoBehaviour:
