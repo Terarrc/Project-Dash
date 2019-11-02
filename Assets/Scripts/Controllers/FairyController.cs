@@ -29,7 +29,6 @@ public class FairyController : Controller
 			else
 			{
 				controls.Move(Vector2.zero);
-				controls.Turn(following.transform.position.x - transform.position.x);
 			}
 
 		}
