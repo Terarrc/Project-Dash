@@ -257,7 +257,7 @@ public class Unit : MonoBehaviour, IControls
 		if (affectedByGravity)
 			scale.y = 0;
 
-		if (scale.x != 0)
+		if (scale.x != 0 && !lockAxisX)
 			sprite.flipX = scale.x < 0;
 
 		wantedSpeedX = scale.x * moveSpeedX;

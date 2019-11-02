@@ -66,16 +66,19 @@ public class PlayerUnit : Unit
 		}
 		set
 		{
+			sprite.flipX = currentSpeedX > 0;
 			isWallSliding = value;
 			if (value)
 			{
 				lockAxisX = true;
 				wantedSpeedY = -1f;
+				animator.SetBool("Wall Slide", true);
 			}
 			else
 			{
 				lockAxisX = false;
 				wantedSpeedY = -100;
+				animator.SetBool("Wall Slide", false);
 			}
 		}
 	}

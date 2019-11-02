@@ -68,6 +68,15 @@ TextureImporter:
   - first:
       213: -9094734800969629820
     second: main_character_0
+  - first:
+      213: -4867522598619217774
+    second: player_wall_slide_0
+  - first:
+      213: -2985432916132920115
+    second: player_wall_slide_1
+  - first:
+      213: 1197855320226781875
+    second: player_wall_slide_2
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -453,6 +462,69 @@ TextureImporter:
       bones: []
       spriteID: b5f77de5720e2c44185f142ea5be5c60
       internalID: -8331645088905993239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_wall_slide_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 960
+        width: 64
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 761a0ebf1342fc44d896f470050192b6
+      internalID: -4867522598619217774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_wall_slide_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 960
+        width: 64
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98d0e22fb38958846a0150a02e6016de
+      internalID: -2985432916132920115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_wall_slide_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 960
+        width: 64
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48bfbad3434bd3f469e48a1dda0e16fa
+      internalID: 1197855320226781875
       vertices: []
       indices: 
       edges: []
