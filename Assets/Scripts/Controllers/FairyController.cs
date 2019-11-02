@@ -5,21 +5,11 @@ using UnityEngine;
 public class FairyController : Controller
 {
     public Unit following;
-	public float ratioSpeedBinded;
-	public Rect wanderingRect = new Rect();
-
-	// Variable offset so the fairy doesn't stay in place
-	private Vector3 offset;
-	private bool binded = false;
 
     // Start is called before the first frame update
     void Start() 
 	{
-		offset = new Vector3
-		{
-			x = Random.Range(wanderingRect.xMin, wanderingRect.xMax),
-			y = Random.Range(wanderingRect.yMin, wanderingRect.yMax)
-		};
+
 	}
 
     // Update is called once per frame
@@ -27,40 +17,21 @@ public class FairyController : Controller
 		if (following) 
 		{
 			Vector3 distance;
-			if (binded)
-				distance = (following.transform.position + offset) - transform.position;
+
+			if (following.GetDirectionX() < 0)
+				distance = (following.transform.position + new Vector3(1.5f, 2)) - transform.position;
 			else
-				distance = (following.transform.position + new Vector3(0, 1)) - transform.position;
+				distance = (following.transform.position + new Vector3(-1.5f, 2)) - transform.position;
 
 			// Check if we're at the right place
-			if (distance.magnitude < 0.2)
-			{
-				offset.x = Random.Range(wanderingRect.xMin, wanderingRect.xMax);
-				offset.y = Random.Range(wanderingRect.yMin, wanderingRect.yMax);
-			}
+			if (distance.magnitude > 1)
+				controls.Move(new Vector2(distance.x, distance.y).normalized * Mathf.Min(1, distance.magnitude));
 			else
 			{
-				// The fairy move slowly if close to the unit she follows
-				if (binded)
-				{
-					controls.Move(new Vector2(distance.x, distance.y).normalized * ratioSpeedBinded);
-				}
-				else
-				{
-					controls.Move(new Vector2(distance.x, distance.y).normalized);
-				}
-
+				controls.Move(Vector2.zero);
+				controls.Turn(following.transform.position.x - transform.position.x);
 			}
 
-			// Check if she's bind or unbind
-			if (!binded && distance.magnitude <= 1) 
-			{
-				binded = true;
-			}
-			else if (binded && distance.magnitude > 3)
-			{
-				binded = false;
-			}
-        }
+		}
     }
 }

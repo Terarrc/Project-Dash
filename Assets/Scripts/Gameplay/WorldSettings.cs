@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class WorldSettings
 {
-	public static float gravity = 25;
+	public static float gravity = 50;
 }

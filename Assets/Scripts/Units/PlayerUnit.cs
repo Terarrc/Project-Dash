@@ -13,6 +13,8 @@ public class PlayerUnit : Unit
 	public float dashSpeed;
 	public float dashDuration;
 	public float groundedDashDelay;
+	public float wallJumpSpeed;
+	public float wallJumpMinimumSpeedX;
 	public float bufferGroundedTime;
 	private float timerGroundedDash;
 	private bool isGroundJumping = false;
@@ -20,11 +22,66 @@ public class PlayerUnit : Unit
 	private bool canDoubleJump = true;
 	private bool canDash = true;
 	private bool isDashing = false;
+	private bool IsDashing
+	{
+		get
+		{
+			return isDashing;
+		}
+		set
+		{
+			isDashing = value;
+			if (value)
+			{
+				preDashSpeed = currentSpeedX;
+				timerDash = dashDuration;
+				timerDashParticles = 0;
+				canDash = false;
+				wantedSpeedX = dashSpeed * GetDirectionX();
+				currentSpeedX = wantedSpeedX;
+
+				// If grounded, avoid spam dash
+				if (isGrounded)
+					timerGroundedDash = groundedDashDelay;
+
+				animator.SetTrigger("StartDash");
+				animator.SetBool("Dashing", true);
+			}
+			else
+			{
+				animator.SetTrigger("StopDash");
+				animator.SetBool("Dashing", false);
+				currentSpeedX = preDashSpeed + (currentSpeedX / 2);
+				currentSpeedY = 0;
+				lockAxisY = false;
+			}
+		}
+	}
 	private bool isWallSliding = false;
+	private bool IsWallSliding
+	{
+		get
+		{
+			return isWallSliding;
+		}
+		set
+		{
+			isWallSliding = value;
+			if (value)
+			{
+				lockAxisX = true;
+				wantedSpeedY = -0.5f;
+			}
+			else
+			{
+				lockAxisX = false;
+				wantedSpeedY = -100;
+			}
+		}
+	}
 	private bool canCreatePlatform = true;
 	private bool canCreateWall = true;
     
-	private float dashScale;
 	private float preDashSpeed;
 	private float timerDash;
 	private float timerDashParticles;
@@ -34,10 +91,9 @@ public class PlayerUnit : Unit
 	public override void Update()
 	{
 		float time = Time.deltaTime * 1000f;
-		isDashing = timerDash > 0;
 
 		// Decrease dash timer
-		if (isDashing)
+		if (IsDashing)
 		{
 			lockAxisY = true;
 
@@ -45,11 +101,7 @@ public class PlayerUnit : Unit
 			timerDashParticles -= time;
 			if (timerDash <= 0)
 			{
-				animator.SetTrigger("StopDash");
-				animator.SetBool("Dashing", false);
-				currentSpeedX = preDashSpeed + (currentSpeedX / 2);
-				currentSpeedY = 0;
-				lockAxisY = false;
+				IsDashing = false;
 			}
 			if (timerDashParticles <= 0)
 			{ 
@@ -69,11 +121,41 @@ public class PlayerUnit : Unit
 		if (timerGroundedDash > 0)
 			timerGroundedDash -= time;
 
-		// Lock axis X if wall sliding
-		lockAxisX = isWallSliding;
-
 		// Update movements
 		base.Update();
+
+		// Check if the conditions for wall sliding are still ok
+		if (IsWallSliding)
+		{
+			if (isGrounded)
+				IsWallSliding = false;
+			else
+			{
+				float height = boxCollider.bounds.size.y;
+				float halfWidth = (boxCollider.bounds.size.x / 2);
+
+				// Get the current position
+				float positionX = transform.position.x;
+				float positionY = transform.position.y;
+
+				// Check if there is still a energy field
+				Vector2 pointA, pointB;
+				if (currentSpeedX < 0)
+				{
+					pointA = new Vector2(positionX - halfWidth - 0.1f, positionY + (height * 0.8f));
+					pointB = new Vector2(positionX - halfWidth, positionY + (height * 0.2f));
+				}
+				else
+				{
+					pointA = new Vector2(positionX + halfWidth + 0.1f, positionY + (height * 0.8f));
+					pointB = new Vector2(positionX + halfWidth, positionY + (height * 0.2f));
+				}
+
+				// If no energy field is here, unstuck the player
+				if (!Physics2D.OverlapArea(pointA, pointB, 1 << LayerMask.NameToLayer("Vertical Energy Fields")))
+					IsWallSliding = false;
+			}
+		};
 
 		// Disable ground jumping if falling
 		if (currentSpeedY <= 0)
@@ -96,7 +178,7 @@ public class PlayerUnit : Unit
 
 	public override bool Move(Vector2 scale)
 	{
-		if (isDashing)
+		if (IsDashing)
 			return false;
 
 		return base.Move(scale);
@@ -104,7 +186,7 @@ public class PlayerUnit : Unit
 
 	public override bool Jump()
 	{
-		if (isDashing)
+		if (IsDashing)
 			return false;
 
 		// Check if we are grounded from the buffer
@@ -113,11 +195,17 @@ public class PlayerUnit : Unit
 			isGrounded = true;
 		}
 
-		if (isWallSliding)
+		// Check if we are wall sliding for wall jump
+		if (IsWallSliding)
 		{
-			currentSpeedY = doubleJumpSpeed;
+			currentSpeedY = wallJumpSpeed;
 			currentSpeedX *= -1;
-			isWallSliding = false;
+			if (currentSpeedX < 0)
+				currentSpeedX = Mathf.Min(currentSpeedX, -wallJumpMinimumSpeedX);
+			else
+				currentSpeedX = Mathf.Max(currentSpeedX, wallJumpMinimumSpeedX);
+
+			IsWallSliding = false;
 
 			return true;
 		}
@@ -183,22 +271,7 @@ public class PlayerUnit : Unit
 	{
 		if (canDash)
 		{
-			preDashSpeed = currentSpeedX;
-			timerDash = dashDuration;
-			timerDashParticles = 0;
-			dashScale = GetDirection();
-			canDash = false;
-			wantedSpeedX = dashSpeed * dashScale;
-			currentSpeedX = wantedSpeedX;
-
-			// If grounded, avoid spam dash
-			if (isGrounded)
-				timerGroundedDash = groundedDashDelay;
-
-
-			animator.SetTrigger("StartDash");
-			animator.SetBool("Dashing", true);
-
+			IsDashing = true;
 			return true;
 		}
 
@@ -207,7 +280,7 @@ public class PlayerUnit : Unit
 
 	protected override void TouchEnergyFieldVertical(float direction)
 	{
-		isWallSliding = true;
+		IsWallSliding = true;
 	}
 	protected override void TouchEnergyFieldHorizontal(float direction)
 	{

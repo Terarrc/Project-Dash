@@ -46,12 +46,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eea747c2ab32b3429309ee8f1faaf44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeedX: 2
-  moveSpeedY: 2
+  moveSpeedX: 4
+  moveSpeedY: 4
   jumpSpeed: 0
-  accelerationX: 4
-  accelerationY: 4
-  verticalMoveEnabled: 1
+  accelerationX: 8
+  accelerationY: 8
+  affectedByGravity: 0
 --- !u!114 &7598376697876336187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,13 +65,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   following: {fileID: 0}
-  ratioSpeedBinded: 0.1
-  wanderingRect:
-    serializedVersion: 2
-    x: -1.8
-    y: 0.5
-    width: 3.6
-    height: 2
 --- !u!212 &8102855283104174204
 SpriteRenderer:
   m_ObjectHideFlags: 0

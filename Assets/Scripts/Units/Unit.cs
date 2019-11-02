@@ -100,7 +100,7 @@ public class Unit : MonoBehaviour, IControls
 			}
 		}
 
-        #region calc x
+        #region Calculate position x
 
         // Calculate the position X
         float offset = 0;
@@ -145,7 +145,7 @@ public class Unit : MonoBehaviour, IControls
 					}
 				}
 
-				Collider2D[] collidersGround = Physics2D.OverlapAreaAll(pointA, pointB, (1 << LayerMask.NameToLayer("Ground")) + (1 << LayerMask.NameToLayer("Horizontal Energy Fields")));
+				Collider2D[] collidersGround = Physics2D.OverlapAreaAll(pointA, pointB, 1 << LayerMask.NameToLayer("Ground"));
 
 				// Move the body the furthest possible without collision
 				foreach (Collider2D collider in collidersGround)
@@ -165,7 +165,7 @@ public class Unit : MonoBehaviour, IControls
 
 		#endregion
 
-		#region calc y
+		#region Calculate position y
 
 		// Calculate the position Y
 		isGrounded = false;
@@ -210,7 +210,7 @@ public class Unit : MonoBehaviour, IControls
 					}
 				}
 
-				Collider2D[] collidersGround = Physics2D.OverlapAreaAll(pointA, pointB, (1 << LayerMask.NameToLayer("Ground")) + (1 << LayerMask.NameToLayer("Vertical Energy Fields")));
+				Collider2D[] collidersGround = Physics2D.OverlapAreaAll(pointA, pointB, 1 << LayerMask.NameToLayer("Ground"));
 
 				// Move the body the furthest possible without collision
 				foreach (Collider2D collider in collidersGround)
@@ -239,11 +239,19 @@ public class Unit : MonoBehaviour, IControls
         transform.position = new Vector3(positionX, positionY);
     }
 
+	protected virtual void TouchEnergyFieldVertical(float direction)
+	{
 
-    // ========================================================================
-    // Controls
-    // ========================================================================
-    public virtual bool Move(Vector2 scale)
+	}
+	protected virtual void TouchEnergyFieldHorizontal(float direction)
+	{
+
+	}
+
+	// ========================================================================
+	// Controls
+	// ========================================================================
+	public virtual bool Move(Vector2 scale)
 	{
 		if (affectedByGravity)
 			scale.y = 0;
@@ -253,14 +261,17 @@ public class Unit : MonoBehaviour, IControls
 
 		wantedSpeedX = scale.x * moveSpeedX;
 		if (!affectedByGravity)
-		{
 			wantedSpeedY = scale.y * moveSpeedY;
-			animator.SetBool("Moving", Mathf.Abs(scale.x) >= 0.5);
-		}
-		else
-			animator.SetBool("Moving", scale != Vector2.zero);
 
+		animator.SetBool("Moving X", scale.x != 0);
+		animator.SetBool("Moving Y", scale.y != 0);
 
+		return true;
+	}
+
+	public bool Turn(float direction)
+	{
+		sprite.flipX = (direction < 0);
 		return true;
 	}
 
@@ -293,20 +304,13 @@ public class Unit : MonoBehaviour, IControls
 		return true;
 	}
 
-	protected virtual void TouchEnergyFieldVertical(float direction)
-	{
-
-	}
-	protected virtual void TouchEnergyFieldHorizontal(float direction)
-	{
-
-	}
-
-	public float GetDirection()
+	public float GetDirectionX()
 	{
 		if (sprite.flipX)
 			return -1;
 		else 
 			return 1;
 	}
+
+
 }

@@ -59,7 +59,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 3.359941
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -133,11 +133,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b760ae66e76e28409601841e8895977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeedX: 6
-  moveSpeedY: 6
-  jumpSpeed: 10
-  accelerationX: 100
-  accelerationY: 100
+  moveSpeedX: 12
+  moveSpeedY: 12
+  jumpSpeed: 20
+  accelerationX: 200
+  accelerationY: 200
   affectedByGravity: 1
   doubleJumpParticle: {fileID: 3943271017201014684, guid: e90816ef545d863489422df59b00a038,
     type: 3}
@@ -145,11 +145,13 @@ MonoBehaviour:
     type: 3}
   createdField: {fileID: -8139123069261302785, guid: 58089c843dfc1b04ba6475a13cd64f38,
     type: 3}
-  doubleJumpSpeed: 10
+  doubleJumpSpeed: 20
   ratioStopJump: 0.5
-  dashSpeed: 20
+  dashSpeed: 40
   dashDuration: 200
   groundedDashDelay: 500
+  wallJumpSpeed: 20
+  wallJumpMinimumSpeedX: 20
   bufferGroundedTime: 100
 --- !u!114 &6044366253312423578
 MonoBehaviour:
@@ -364,16 +366,16 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.55}
+  m_Offset: {x: 0, y: 1.1}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 2, y: 2}
+    oldSize: {x: 4, y: 4}
     newSize: {x: 2, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 1
   serializedVersion: 2
-  m_Size: {x: 0.2, y: 1.1}
+  m_Size: {x: 0.4, y: 2.2}
   m_EdgeRadius: 0
