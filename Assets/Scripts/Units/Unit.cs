@@ -55,10 +55,10 @@ public class Unit : MonoBehaviour, IControls
 		{
 			if (isGrounded)
 				currentAccelerationX = accelerationX;
-			else if (((wantedSpeedX < 0) && (currentSpeedX < 0)) || ((wantedSpeedX > 0) && (currentSpeedX > 0)))
+			else if (currentSpeedY > 0)
 				currentAccelerationX = accelerationX / 8;
 			else
-				currentAccelerationX = accelerationX / 4;
+				currentAccelerationX = accelerationX / 2;
 
 			currentAccelerationY = WorldSettings.gravity;
 		}
