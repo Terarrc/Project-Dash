@@ -149,7 +149,7 @@ public class Unit : MonoBehaviour, IControls
 						if ((collider.gameObject.layer == LayerMask.NameToLayer("Vertical Energy Fields") && collideWithEnergy) || collider.gameObject.layer == LayerMask.NameToLayer("Vertical Energy Ground"))
 							TouchEnergyVertical(-1);
 
-						if (collider.gameObject.layer == LayerMask.NameToLayer("Vertical Energy Fields") && !collideWithEnergy)
+						if (collider.gameObject.layer == LayerMask.NameToLayer("Vertical Energy Fields"))
 							TouchEnergyField();
 					}
 					if (currentSpeedX > 0 && collider.bounds.min.x - halfWidth < positionX)
@@ -160,7 +160,7 @@ public class Unit : MonoBehaviour, IControls
 						if ((collider.gameObject.layer == LayerMask.NameToLayer("Vertical Energy Fields") && collideWithEnergy) || collider.gameObject.layer == LayerMask.NameToLayer("Vertical Energy Ground"))
 							TouchEnergyVertical(1);
 
-						if (collider.gameObject.layer == LayerMask.NameToLayer("Vertical Energy Fields") && !collideWithEnergy)
+						if (collider.gameObject.layer == LayerMask.NameToLayer("Vertical Energy Fields"))
 							TouchEnergyField();
 					}
 				}
@@ -216,7 +216,7 @@ public class Unit : MonoBehaviour, IControls
 						if ((collider.gameObject.layer == LayerMask.NameToLayer("Horizontal Energy Fields") && collideWithEnergy) || collider.gameObject.layer == LayerMask.NameToLayer("Horizontal Energy Ground"))
 							TouchEnergyHorizontal(-1);
 
-						if (collider.gameObject.layer == LayerMask.NameToLayer("Horizontal Energy Fields") && !collideWithEnergy)
+						if (collider.gameObject.layer == LayerMask.NameToLayer("Horizontal Energy Fields"))
 							TouchEnergyField();
 					}
 					if (currentSpeedY > 0 && collider.bounds.min.y - height < positionY)
@@ -230,7 +230,7 @@ public class Unit : MonoBehaviour, IControls
 						if ((collider.gameObject.layer == LayerMask.NameToLayer("Horizontal Energy Fields") && collideWithEnergy) || collider.gameObject.layer == LayerMask.NameToLayer("Horizontal Energy Ground"))
 							TouchEnergyHorizontal(1);
 
-						if (collider.gameObject.layer == LayerMask.NameToLayer("Horizontal Energy Fields") && !collideWithEnergy)
+						if (collider.gameObject.layer == LayerMask.NameToLayer("Horizontal Energy Fields"))
 							TouchEnergyField();
 					}
 				}
