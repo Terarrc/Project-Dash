@@ -56,7 +56,7 @@ public class Unit : MonoBehaviour, IControls
 			if (isGrounded)
 				currentAccelerationX = accelerationX;
 			else if (((wantedSpeedX < 0) && (currentSpeedX < 0)) || ((wantedSpeedX > 0) && (currentSpeedX > 0)))
-				currentAccelerationX = 0;
+				currentAccelerationX = accelerationX / 16;
 			else
 				currentAccelerationX = accelerationX / 4;
 
