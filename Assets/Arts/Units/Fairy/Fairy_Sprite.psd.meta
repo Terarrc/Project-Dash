@@ -11,6 +11,15 @@ TextureImporter:
   - first:
       213: 4520698335586148961
     second: fairy_idle_2
+  - first:
+      213: -5576659857952527034
+    second: fairy_move_0
+  - first:
+      213: 6951191512724870257
+    second: fairy_move_1
+  - first:
+      213: 4823293726592872115
+    second: fairy_move_2
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -153,6 +162,69 @@ TextureImporter:
       bones: []
       spriteID: 5838b2eeb7cace84a88ba02b6aead1ee
       internalID: 4520698335586148961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fairy_move_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d638178fd5054974cb549f2224259d3b
+      internalID: -5576659857952527034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fairy_move_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31002d0dd139ee64ea7de1c25e98d981
+      internalID: 6951191512724870257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fairy_move_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20c68f6cacfe2e94ca5e04d79d71176f
+      internalID: 4823293726592872115
       vertices: []
       indices: 
       edges: []

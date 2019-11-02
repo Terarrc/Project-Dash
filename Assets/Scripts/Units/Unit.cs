@@ -144,13 +144,14 @@ public class Unit : MonoBehaviour, IControls
 				}
 			}
 		}
+		animator.SetFloat("Speed X", currentSpeedX);
 
-        #endregion
+		#endregion
 
-        #region calc y
+		#region calc y
 
-        // Calculate the position Y
-        isGrounded = false;
+		// Calculate the position Y
+		isGrounded = false;
 		if (!lockAxisY)
 		{
 			float deltaPositionY = currentSpeedY * time;
@@ -196,7 +197,7 @@ public class Unit : MonoBehaviour, IControls
 				animator.SetBool("Grounded", isGrounded);
 			}
 		}
-		animator.SetFloat("SpeedY", currentSpeedY);
+		animator.SetFloat("Speed Y", currentSpeedY);
 
         #endregion
 
@@ -218,9 +219,13 @@ public class Unit : MonoBehaviour, IControls
 
 		wantedSpeedX = scale.x * moveSpeedX;
 		if (!affectedByGravity)
+		{
 			wantedSpeedY = scale.y * moveSpeedY;
+			animator.SetBool("Moving", Mathf.Abs(scale.x) >= 0.5);
+		}
+		else
+			animator.SetBool("Moving", scale != Vector2.zero);
 
-		animator.SetBool("Moving", scale != Vector2.zero);
 
 		return true;
 	}
