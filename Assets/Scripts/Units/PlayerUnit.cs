@@ -77,14 +77,15 @@ public class PlayerUnit : Unit
 		}
 		set
 		{
-			sprite.flipX = currentSpeedX > 0;
 			isWallSliding = value;
 			if (value)
 			{
+				sprite.flipX = currentSpeedX > 0;
 				lockAxisX = true;
 				wantedSpeedY = -1f;
-				//currentSpeedX = 0;
+				currentSpeedX = 0;
 				animator.SetBool("Wall Slide", true);
+				Debug.Log("Stop wall sliding");
 			}
 			else
 			{
@@ -140,19 +141,19 @@ public class PlayerUnit : Unit
 
 				// Check if there is still a energy field
 				Vector2 pointA, pointB;
-				if (currentSpeedX < 0)
+				if (GetDirectionX() > 0)
 				{
-					pointA = new Vector2(positionX - halfWidth - 0.1f, positionY + (height * 0.8f));
-					pointB = new Vector2(positionX - halfWidth, positionY + (height * 0.2f));
+					pointA = new Vector2(positionX - halfWidth - 0.1f, positionY + height);
+					pointB = new Vector2(positionX - halfWidth, positionY);
 				}
 				else
 				{
-					pointA = new Vector2(positionX + halfWidth + 0.1f, positionY + (height * 0.8f));
-					pointB = new Vector2(positionX + halfWidth, positionY + (height * 0.2f));
+					pointA = new Vector2(positionX + halfWidth + 0.1f, positionY + height);
+					pointB = new Vector2(positionX + halfWidth, positionY);
 				}
 
 				// If no energy field is here, unstuck the player
-				if (!Physics2D.OverlapArea(pointA, pointB, 1 << LayerMask.NameToLayer("Vertical Energy Fields")))
+				if (!Physics2D.OverlapArea(pointA, pointB, (1 << LayerMask.NameToLayer("Vertical Energy Fields")) + (1 << LayerMask.NameToLayer("Vertical Energy Ground"))))
 					IsWallSliding = false;
 			}
 		};
@@ -290,23 +291,21 @@ public class PlayerUnit : Unit
 		return false;
 	}
 
-	protected override void TouchEnergyFieldVertical(float direction)
+	protected override void TouchEnergyVertical(float direction)
 	{
-		if (collideWithEnergy)
-			IsWallSliding = true;
-		else
-		{
-			canDash = true;
-			canDoubleJump = true;
-		}
-
+		IsWallSliding = true;
 	}
-	protected override void TouchEnergyFieldHorizontal(float direction)
+	protected override void TouchEnergyHorizontal(float direction)
 	{
 
 	}
 
-    private bool CreateEnergyField()
+	protected override void TouchEnergyField()
+	{
+		canDash = true;
+	}
+
+	private bool CreateEnergyField()
     {
         return false;
     }
