@@ -416,31 +416,10 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_dash_1
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 1024
-        width: 64
-        height: 64
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d388bd862fd78cb41bc8a4e3510f91f1
-      internalID: -4876791003163831989
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: player_dash_3
       rect:
         serializedVersion: 2
-        x: 128
+        x: 64
         y: 1024
         width: 64
         height: 64
@@ -461,7 +440,7 @@ TextureImporter:
       name: player_dash_4
       rect:
         serializedVersion: 2
-        x: 192
+        x: 128
         y: 1024
         width: 64
         height: 64

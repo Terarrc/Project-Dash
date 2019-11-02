@@ -20,6 +20,7 @@ public class PlayerUnit : Unit
 	private bool canDoubleJump = true;
 	private bool canDash = true;
 	private bool isDashing = false;
+	private bool isWallSliding = false;
 	private bool canCreatePlatform = true;
 	private bool canCreateWall = true;
     
@@ -68,6 +69,9 @@ public class PlayerUnit : Unit
 		if (timerGroundedDash > 0)
 			timerGroundedDash -= time;
 
+		// Lock axis X if wall sliding
+		lockAxisX = isWallSliding;
+
 		// Update movements
 		base.Update();
 
@@ -107,6 +111,15 @@ public class PlayerUnit : Unit
 		if (timerBufferGrounded > 0 && !isGrounded)
 		{
 			isGrounded = true;
+		}
+
+		if (isWallSliding)
+		{
+			currentSpeedY = doubleJumpSpeed;
+			currentSpeedX *= -1;
+			isWallSliding = false;
+
+			return true;
 		}
 			
 		var jumped = base.Jump();
@@ -160,6 +173,8 @@ public class PlayerUnit : Unit
 				return Dash();
 			case 2:
 				return CreateHorizontalField();
+			case 3:
+				return CreateVerticalField();
 		}
 		return false;
 	}
@@ -188,6 +203,15 @@ public class PlayerUnit : Unit
 		}
 
 		return false;
+	}
+
+	protected override void TouchEnergyFieldVertical(float direction)
+	{
+		isWallSliding = true;
+	}
+	protected override void TouchEnergyFieldHorizontal(float direction)
+	{
+
 	}
 
 	private bool CreateHorizontalField()
