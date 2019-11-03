@@ -4,16 +4,28 @@ TextureImporter:
   internalIDToNameTable:
   - first:
       213: -6592606853723924377
-    second: energy_wall_0
+    second: energy_ground_0
   - first:
       213: 5171053770778084923
-    second: energy_wall_1
+    second: energy_ground_1
   - first:
       213: -6656186423531653919
     second: energy_field_0
   - first:
       213: 2931976591647297817
     second: energy_field_1
+  - first:
+      213: 4907991421833877517
+    second: energy_ground_top_0
+  - first:
+      213: -8797171310562258092
+    second: energy_ground_top_1
+  - first:
+      213: -6302382665998311393
+    second: energy_field_top_0
+  - first:
+      213: -1840032104905651567
+    second: energy_field_top_1
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -98,11 +110,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: energy_wall_0
+      name: energy_ground_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 304
+        y: 288
         width: 16
         height: 16
       alignment: 0
@@ -119,11 +131,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: energy_wall_1
+      name: energy_ground_1
       rect:
         serializedVersion: 2
         x: 16
-        y: 304
+        y: 288
         width: 16
         height: 16
       alignment: 0
@@ -144,7 +156,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 304
+        y: 288
         width: 16
         height: 16
       alignment: 0
@@ -165,7 +177,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 48
-        y: 304
+        y: 288
         width: 16
         height: 16
       alignment: 0
@@ -177,6 +189,90 @@ TextureImporter:
       bones: []
       spriteID: 5f8adaef3214e80489b56d75901ed5af
       internalID: 2931976591647297817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: energy_ground_top_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 304
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1951171349e5494e964b91987ee8919
+      internalID: 4907991421833877517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: energy_ground_top_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 304
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 444f4ff168b35b2459a99b9a831ccec9
+      internalID: -8797171310562258092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: energy_field_top_0
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 304
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7de09ea6834491409c8af8ec49428ad
+      internalID: -6302382665998311393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: energy_field_top_1
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 304
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0af8e831f402d541947365ab6b66148
+      internalID: -1840032104905651567
       vertices: []
       indices: 
       edges: []

@@ -5,9 +5,9 @@ using UnityEngine;
 public class UnitHasJumpedEvent : IEvent
 {
 	// The unit who jumped
-	private Unit unit;
+	private Entity unit;
 	
-	public UnitHasJumpedEvent(Unit unit)
+	public UnitHasJumpedEvent(Entity unit)
 	{
 		this.unit = unit;
 	}

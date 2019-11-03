@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerUnit : Unit
+public class PlayerEntity : Entity
 {
 	public TimedDurationEntity doubleJumpParticle;
 	public TimedDurationEntity dashParticle;

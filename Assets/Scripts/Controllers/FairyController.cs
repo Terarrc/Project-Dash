@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FairyController : Controller
 {
-    public Unit following;
+    public Entity following;
 
     // Start is called before the first frame update
     void Start() 
