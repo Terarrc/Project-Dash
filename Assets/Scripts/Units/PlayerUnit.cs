@@ -293,7 +293,8 @@ public class PlayerUnit : Unit
 
 	protected override void TouchEnergyVertical(float direction)
 	{
-		IsWallSliding = true;
+		if (!isGrounded)
+			IsWallSliding = true;
 	}
 	protected override void TouchEnergyHorizontal(float direction)
 	{
