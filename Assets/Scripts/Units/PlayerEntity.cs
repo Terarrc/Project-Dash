@@ -85,7 +85,6 @@ public class PlayerEntity : Entity
 				wantedSpeedY = -1f;
 				currentSpeedX = 0;
 				animator.SetBool("Wall Slide", true);
-				Debug.Log("Stop wall sliding");
 			}
 			else
 			{

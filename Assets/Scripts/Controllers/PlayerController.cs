@@ -57,12 +57,13 @@ public class PlayerController : Controller
 		float vertical = Input.GetAxis("Vertical");
 
 		// Move
-		if (Mathf.Abs(horizontal) < 0.8)
-			controls.Move(Vector2.zero);
-		else
+		if (!analogMovement)
 		{
-			if (!analogMovement)
+			if (Mathf.Abs(horizontal) < 0.8)
+				controls.Move(Vector2.zero);
+			else
 			{
+
 				if (Mathf.Abs(horizontal) < 0.8)
 					horizontal = 0;
 				else if (horizontal < 0)
@@ -77,9 +78,8 @@ public class PlayerController : Controller
 				else
 					vertical = 1;
 			}
-
-			controls.Move(new Vector2(horizontal, vertical));
 		}
+		controls.Move(new Vector2(horizontal, vertical));
 
 		// Jump
 		bool jumped = false;
