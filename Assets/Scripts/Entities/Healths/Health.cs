@@ -10,11 +10,16 @@ public class Health : MonoBehaviour
 	public TimedDurationObject deathEffect;
 
 	public int maxHealth;
-	public int currentHealth;
+	private int currentHealth;
 
 	public float ratioPhysic;
 	public float ratioEnergetic;
 	public float ratioSuperEnergetic;
+
+	public void Start()
+	{
+		currentHealth = maxHealth;
+	}
 
 	public void ApplyDamage(float amount, DamageType damageType, GameObject source)
 	{
@@ -33,7 +38,8 @@ public class Health : MonoBehaviour
 		}
 		currentHealth -= damage;
 
-		Kill(source);
+		if (currentHealth <= 0)
+			Kill(source);
 	}
 
 	private void Kill(GameObject source)
