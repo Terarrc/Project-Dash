@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TimedDurationEntity : MonoBehaviour
+public class TimedDurationObject : MonoBehaviour
 {
 	private SpriteRenderer sprite;
 

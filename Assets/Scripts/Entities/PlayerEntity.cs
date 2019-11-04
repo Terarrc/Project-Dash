@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class PlayerEntity : Entity
 {
-	public TimedDurationEntity doubleJumpParticle;
-	public TimedDurationEntity dashParticle;
-	public TimedDurationEntity createdField;
+	public TimedDurationObject doubleJumpParticle;
+	public TimedDurationObject dashParticle;
 
 	// Inspector variables
 	public float doubleJumpSpeed;
@@ -94,9 +93,6 @@ public class PlayerEntity : Entity
 			}
 		}
 	}
-
-	// Energy field creation variable
-	private bool canCreateEnergyField = true;
     
 
 	public override void Update()
@@ -117,7 +113,7 @@ public class PlayerEntity : Entity
 			if (timerDashParticles <= 0)
 			{ 
 				// Generate particle every 30ms
-				TimedDurationEntity particle = Instantiate(dashParticle, transform.position, Quaternion.identity);
+				TimedDurationObject particle = Instantiate(dashParticle, transform.position, Quaternion.identity);
 				particle.FlipX(sprite.flipX);
 
 				timerDashParticles = 30;
@@ -179,7 +175,6 @@ public class PlayerEntity : Entity
 			if (timerGroundedDash <= 0)
 				canDash = true;
 			canDoubleJump = true;
-			canCreateEnergyField = true;
 		}
 		else if (currentSpeedY != 0)
 		{
@@ -270,8 +265,6 @@ public class PlayerEntity : Entity
 		{
 			case 1:
 				return Dash();
-			case 2:
-				return CreateEnergyField();
 		}
 		return false;
 	}
@@ -303,11 +296,6 @@ public class PlayerEntity : Entity
 	protected override void TouchEnergyField()
 	{
 		canDash = true;
+		canDoubleJump = true;
 	}
-
-	private bool CreateEnergyField()
-    {
-        return false;
-    }
-
 }
