@@ -8,6 +8,7 @@ public class PlayerHealth : Health
 
 	protected override void Kill(GameObject source)
 	{
+		currentHealth = maxHealth;
 		gameObject.transform.position = respawnPoint;
 	}
 }
