@@ -26,10 +26,15 @@ public class Entity : MonoBehaviour, IControls
 	protected bool lockAxisY = false;
 
 	// Energy variable
-	protected bool collideWithEnergy = true;
+	//protected bool collideWithEnergy = true;
 
+	// All layer we must checkthe collision
+	protected int layerCollision = 0;
+	// All layer that block the entity
+	protected int layerBlock = 0;
+	
 	// On wake, get Entity's components
-	void Awake()
+	public void Awake()
     {
         body = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
@@ -38,13 +43,21 @@ public class Entity : MonoBehaviour, IControls
 	}
 
 	// Start is called before the first frame update
-	void Start()
+	public void Start()
 	{
 		// We don't care if a parameter doesn't exists
 		animator.logWarnings = false;
 
 		if (affectedByGravity)
 			wantedSpeedY = -100;
+
+		layerCollision = 1 << LayerMask.NameToLayer("Ground");
+		layerCollision += 1 << LayerMask.NameToLayer("Vertical Energy Ground");
+		layerCollision += 1 << LayerMask.NameToLayer("Horizontal Energy Ground");
+		layerCollision += 1 << LayerMask.NameToLayer("Vertical Energy Field");
+		layerCollision += 1 << LayerMask.NameToLayer("Horizontal Energy Field");
+
+		layerBlock = layerCollision;
 	}
 
 	// Update is called once per frame
@@ -101,12 +114,6 @@ public class Entity : MonoBehaviour, IControls
 			}
 		}
 
-		int mask = 1 << LayerMask.NameToLayer("Ground");
-		mask += 1 << LayerMask.NameToLayer("Vertical Energy Fields");
-		mask += 1 << LayerMask.NameToLayer("Horizontal Energy Fields");
-		mask += 1 << LayerMask.NameToLayer("Vertical Energy Ground");
-		mask += 1 << LayerMask.NameToLayer("Horizontal Energy Ground");
-
 		#region Calculate position x
 
 		// Calculate the position X
@@ -134,35 +141,12 @@ public class Entity : MonoBehaviour, IControls
 					pointB = new Vector2(positionX + halfWidth, positionY + (height * 0.2f));
 				}
 
-				Collider2D[] colliders = Physics2D.OverlapAreaAll(pointA, pointB, mask);
+				Collider2D[] colliders = Physics2D.OverlapAreaAll(pointA, pointB, layerCollision);
 
 				// Move the body the furthest possible without collision
 				foreach (Collider2D collider in colliders)
-				{			
-					if (currentSpeedX < 0 && collider.bounds.max.x + halfWidth > positionX)
-					{
-						if ((collider.gameObject.layer != LayerMask.NameToLayer("Vertical Energy Fields") && collider.gameObject.layer != LayerMask.NameToLayer("Horizontal Energy Fields")) || 
-							(collideWithEnergy  && collider.gameObject.layer == LayerMask.NameToLayer("Vertical Energy Fields")))
-							positionX = collider.bounds.max.x + halfWidth;
-
-						if ((collider.gameObject.layer == LayerMask.NameToLayer("Vertical Energy Fields") && collideWithEnergy) || collider.gameObject.layer == LayerMask.NameToLayer("Vertical Energy Ground"))
-							TouchEnergyVertical(-1);
-
-						if (collider.gameObject.layer == LayerMask.NameToLayer("Vertical Energy Fields"))
-							TouchEnergyField();
-					}
-					if (currentSpeedX > 0 && collider.bounds.min.x - halfWidth < positionX)
-					{
-						if ((collider.gameObject.layer != LayerMask.NameToLayer("Vertical Energy Fields") && collider.gameObject.layer != LayerMask.NameToLayer("Horizontal Energy Fields")) ||
-							(collideWithEnergy && collider.gameObject.layer == LayerMask.NameToLayer("Vertical Energy Fields")))
-							positionX = collider.bounds.min.x - halfWidth;
-
-						if ((collider.gameObject.layer == LayerMask.NameToLayer("Vertical Energy Fields") && collideWithEnergy) || collider.gameObject.layer == LayerMask.NameToLayer("Vertical Energy Ground"))
-							TouchEnergyVertical(1);
-
-						if (collider.gameObject.layer == LayerMask.NameToLayer("Vertical Energy Fields"))
-							TouchEnergyField();
-					}
+				{
+					positionX = CollideX(collider, positionX);
 				}
 			}
 		}
@@ -198,43 +182,12 @@ public class Entity : MonoBehaviour, IControls
 					pointB = new Vector2(positionX - (halfWidth * 0.6f), positionY + height);
 				}
 
-				Collider2D[] colliders = Physics2D.OverlapAreaAll(pointA, pointB, mask);
+				Collider2D[] colliders = Physics2D.OverlapAreaAll(pointA, pointB, layerCollision);
 
 				// Move the body the furthest possible without collision
 				foreach (Collider2D collider in colliders)
 				{
-					if (currentSpeedY < 0 && collider.bounds.max.y > positionY)
-					{
-						if ((collider.gameObject.layer != LayerMask.NameToLayer("Vertical Energy Fields") && collider.gameObject.layer != LayerMask.NameToLayer("Horizontal Energy Fields")) ||
-							(collideWithEnergy && collider.gameObject.layer == LayerMask.NameToLayer("Horizontal Energy Fields")))
-						{
-							positionY = collider.bounds.max.y;
-							// A vertical collision while falling mean landing
-							isGrounded = true;
-							currentSpeedY = 0;
-						}
-
-						if ((collider.gameObject.layer == LayerMask.NameToLayer("Horizontal Energy Fields") && collideWithEnergy) || collider.gameObject.layer == LayerMask.NameToLayer("Horizontal Energy Ground"))
-							TouchEnergyHorizontal(-1);
-
-						if (collider.gameObject.layer == LayerMask.NameToLayer("Horizontal Energy Fields"))
-							TouchEnergyField();
-					}
-					if (currentSpeedY > 0 && collider.bounds.min.y - height < positionY)
-					{
-						if ((collider.gameObject.layer != LayerMask.NameToLayer("Vertical Energy Fields") && collider.gameObject.layer != LayerMask.NameToLayer("Horizontal Energy Fields")) ||
-							(collideWithEnergy && collider.gameObject.layer == LayerMask.NameToLayer("Horizontal Energy Fields")))
-						{
-							positionY = collider.bounds.min.y - height;
-							currentSpeedY = 0;
-						}
-
-						if ((collider.gameObject.layer == LayerMask.NameToLayer("Horizontal Energy Fields") && collideWithEnergy) || collider.gameObject.layer == LayerMask.NameToLayer("Horizontal Energy Ground"))
-							TouchEnergyHorizontal(1);
-
-						if (collider.gameObject.layer == LayerMask.NameToLayer("Horizontal Energy Fields"))
-							TouchEnergyField();
-					}
+					positionY = CollideY(collider, positionY);
 				}
 
 				animator.SetBool("Grounded", isGrounded);
@@ -248,17 +201,45 @@ public class Entity : MonoBehaviour, IControls
         transform.position = new Vector3(positionX, positionY);
     }
 
-	protected virtual void TouchEnergyVertical(float direction)
+	protected virtual float CollideX(Collider2D collider, float positionX)
 	{
+		float halfWidth = (boxCollider.bounds.size.x / 2);
 
+		if (((1 << collider.gameObject.layer) & layerBlock) != 0)
+		{ 
+			if (currentSpeedX < 0 && collider.bounds.max.x + halfWidth > positionX)
+				positionX = collider.bounds.max.x + halfWidth;
+
+			if (currentSpeedX > 0 && collider.bounds.min.x - halfWidth < positionX)
+				positionX = collider.bounds.min.x - halfWidth;
+		}
+
+		return positionX;
 	}
-	protected virtual void TouchEnergyHorizontal(float direction)
-	{
 
-	}
-	protected virtual void TouchEnergyField()
+	protected virtual float CollideY(Collider2D collider, float positionY)
 	{
+		float height = boxCollider.bounds.size.y;
 
+		if (((1 << collider.gameObject.layer) & layerBlock) != 0)
+		{
+			if (currentSpeedY < 0 && collider.bounds.max.y > positionY)
+			{
+				positionY = collider.bounds.max.y;
+				// A vertical collision while falling mean landing
+				isGrounded = true;
+				currentSpeedY = 0;
+			}
+
+			if (currentSpeedY > 0 && collider.bounds.min.y - height < positionY)
+			{
+				positionY = collider.bounds.min.y - height;
+				currentSpeedY = 0;
+			}
+
+		}
+
+		return positionY;
 	}
 
 	// ========================================================================
@@ -324,6 +305,4 @@ public class Entity : MonoBehaviour, IControls
 		else 
 			return 1;
 	}
-
-
 }

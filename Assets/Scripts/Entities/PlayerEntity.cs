@@ -38,7 +38,8 @@ public class PlayerEntity : Entity
 			isDashing = value;
 			if (value)
 			{
-				collideWithEnergy = false;
+				// Put 0 at the energy layer to disable blockage
+				layerBlock &= (((1 << LayerMask.NameToLayer("Vertical Energy Field")) + (1 << LayerMask.NameToLayer("Horizontal Energy Field"))) ^ int.MaxValue);
 				timerDash = dashDuration;
 				timerDashParticles = 0;
 				canDash = false;
@@ -54,7 +55,8 @@ public class PlayerEntity : Entity
 			}
 			else
 			{
-				collideWithEnergy = true;
+				// Put 1 at the energy layer to enable blockage
+				layerBlock |= ((1 << LayerMask.NameToLayer("Vertical Energy Field")) + (1 << LayerMask.NameToLayer("Horizontal Energy Field")));
 				animator.SetTrigger("StopDash");
 				animator.SetBool("Dashing", false);
 				currentSpeedY = 0;
@@ -94,6 +96,10 @@ public class PlayerEntity : Entity
 		}
 	}
     
+	public new void Start()
+	{
+		base.Start();
+	}
 
 	public override void Update()
 	{
@@ -148,7 +154,7 @@ public class PlayerEntity : Entity
 				}
 
 				// If no energy field is here, unstuck the player
-				if (!Physics2D.OverlapArea(pointA, pointB, (1 << LayerMask.NameToLayer("Vertical Energy Fields")) + (1 << LayerMask.NameToLayer("Vertical Energy Ground"))))
+				if (!Physics2D.OverlapArea(pointA, pointB, (1 << LayerMask.NameToLayer("Vertical Energy Field")) + (1 << LayerMask.NameToLayer("Vertical Energy Ground"))))
 					IsWallSliding = false;
 			}
 		};
@@ -283,17 +289,57 @@ public class PlayerEntity : Entity
 		return false;
 	}
 
-	protected override void TouchEnergyVertical(float direction)
+	protected override float CollideX(Collider2D collider, float positionX)
+	{
+		positionX = base.CollideX(collider, positionX);
+
+		if ((collider.gameObject.layer == LayerMask.NameToLayer("Vertical Energy Field") && ((layerBlock & (1 << LayerMask.NameToLayer("Vertical Energy Field"))) != 0)) || 
+			collider.gameObject.layer == LayerMask.NameToLayer("Vertical Energy Ground"))
+		{
+			if (currentSpeedX < 0)
+				TouchEnergyVertical(-1);
+			if (currentSpeedX > 0)
+				TouchEnergyVertical(1);
+		}
+
+		if (collider.gameObject.layer == LayerMask.NameToLayer("Vertical Energy Field"))
+			TouchEnergyField();
+
+		return positionX;
+	}
+
+	protected override float CollideY(Collider2D collider, float positionY)
+	{
+		float oldSpeedY = currentSpeedY;
+
+		positionY = base.CollideY(collider, positionY);
+
+		if ((collider.gameObject.layer == LayerMask.NameToLayer("Horizontal Energy Field") && ((layerBlock & LayerMask.NameToLayer("Horizontal Energy Field")) != 0)) ||
+			collider.gameObject.layer == LayerMask.NameToLayer("Horizontal Energy Ground"))
+		{
+			if (oldSpeedY < 0)
+				TouchEnergyHorizontal(-1);
+			if (oldSpeedY > 0)
+				TouchEnergyHorizontal(1);
+		}
+
+		if (collider.gameObject.layer == LayerMask.NameToLayer("Horizontal Energy Field"))
+			TouchEnergyField();
+
+		return positionY;
+	}
+
+	protected void TouchEnergyVertical(float direction)
 	{
 		if (!isGrounded)
 			IsWallSliding = true;
 	}
-	protected override void TouchEnergyHorizontal(float direction)
+	protected void TouchEnergyHorizontal(float direction)
 	{
 
 	}
 
-	protected override void TouchEnergyField()
+	protected void TouchEnergyField()
 	{
 		canDash = true;
 		canDoubleJump = true;

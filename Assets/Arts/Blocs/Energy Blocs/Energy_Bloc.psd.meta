@@ -4,28 +4,28 @@ TextureImporter:
   internalIDToNameTable:
   - first:
       213: -6592606853723924377
-    second: energy_ground_0
+    second: Energy_Ground_0
   - first:
       213: 5171053770778084923
-    second: energy_ground_1
+    second: Energy_Ground_1
   - first:
       213: -6656186423531653919
-    second: energy_field_0
+    second: Energy_Field_0
   - first:
       213: 2931976591647297817
-    second: energy_field_1
+    second: Energy_Field_1
   - first:
       213: 4907991421833877517
-    second: energy_ground_top_0
+    second: Energy_Ground_Top_0
   - first:
       213: -8797171310562258092
-    second: energy_ground_top_1
+    second: Energy_Ground_Top_1
   - first:
       213: -6302382665998311393
-    second: energy_field_top_0
+    second: Energy_Field_Top_0
   - first:
       213: -1840032104905651567
-    second: energy_field_top_1
+    second: Energy_Field_Top_1
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: energy_ground_0
+      name: Energy_Ground_0
       rect:
         serializedVersion: 2
         x: 0
@@ -131,7 +131,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: energy_ground_1
+      name: Energy_Ground_1
       rect:
         serializedVersion: 2
         x: 16
@@ -152,7 +152,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: energy_field_0
+      name: Energy_Field_0
       rect:
         serializedVersion: 2
         x: 32
@@ -173,7 +173,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: energy_field_1
+      name: Energy_Field_1
       rect:
         serializedVersion: 2
         x: 48
@@ -194,7 +194,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: energy_ground_top_0
+      name: Energy_Ground_Top_0
       rect:
         serializedVersion: 2
         x: 0
@@ -202,7 +202,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -215,7 +215,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: energy_ground_top_1
+      name: Energy_Ground_Top_1
       rect:
         serializedVersion: 2
         x: 16
@@ -223,7 +223,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -236,7 +236,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: energy_field_top_0
+      name: Energy_Field_Top_0
       rect:
         serializedVersion: 2
         x: 32
@@ -244,7 +244,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -257,7 +257,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: energy_field_top_1
+      name: Energy_Field_Top_1
       rect:
         serializedVersion: 2
         x: 48
@@ -265,7 +265,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

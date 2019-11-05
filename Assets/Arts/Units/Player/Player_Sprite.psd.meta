@@ -22,61 +22,61 @@ TextureImporter:
     second: idle_2
   - first:
       213: 4286226893186011910
-    second: player_idle_0
+    second: Player_Idle_0
   - first:
       213: -3397742657084610863
-    second: player_idle_1
+    second: Player_Idle_1
   - first:
       213: 9194212183759662425
-    second: player_crouch_0
+    second: Player_Crouch_0
   - first:
       213: -6630090513874364724
-    second: player_crouch_1
+    second: Player_Crouch_1
   - first:
       213: 866115022448513815
-    second: player_walk_0
+    second: Player_Walk_0
   - first:
       213: 4843264201371844899
-    second: player_walk_1
+    second: Player_Walk_1
   - first:
       213: 8113009089874084705
-    second: player_walk_2
+    second: Player_Walk_2
   - first:
       213: -5186609414287820403
-    second: player_walk_3
+    second: Player_Walk_3
   - first:
       213: -7031701112915350705
-    second: player_jump_0
+    second: Player_Jump
   - first:
       213: -821928246313420636
-    second: player_jump_1
+    second: Player_Rise
   - first:
       213: 7890793922815516766
-    second: player_jump_2
+    second: Player_Fall
   - first:
       213: -1322578649457550009
-    second: player_dash_0
+    second: Player_Dash_0
   - first:
       213: -4876791003163831989
     second: player_dash_1
   - first:
       213: 8561395771895517825
-    second: player_dash_3
+    second: Player_Dash_1
   - first:
       213: -8331645088905993239
-    second: player_dash_4
+    second: Player_Dash_2
   - first:
       213: -9094734800969629820
     second: main_character_0
   - first:
       213: -4867522598619217774
-    second: player_wall_slide_0
+    second: Player_Wall_Slide_0
   - first:
       213: -2985432916132920115
-    second: player_wall_slide_1
+    second: Player_Wall_Slide_1
   - first:
       213: 1197855320226781875
-    second: player_wall_slide_2
+    second: Player_Wall_Slide_2
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -173,7 +173,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: player_idle_0
+      name: Player_Idle_0
       rect:
         serializedVersion: 2
         x: 0
@@ -194,7 +194,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_idle_1
+      name: Player_Idle_1
       rect:
         serializedVersion: 2
         x: 64
@@ -215,7 +215,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_crouch_0
+      name: Player_Crouch_0
       rect:
         serializedVersion: 2
         x: 128
@@ -236,7 +236,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_crouch_1
+      name: Player_Crouch_1
       rect:
         serializedVersion: 2
         x: 192
@@ -257,7 +257,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_walk_0
+      name: Player_Walk_0
       rect:
         serializedVersion: 2
         x: 0
@@ -278,7 +278,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_walk_1
+      name: Player_Walk_1
       rect:
         serializedVersion: 2
         x: 64
@@ -299,7 +299,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_walk_2
+      name: Player_Walk_2
       rect:
         serializedVersion: 2
         x: 128
@@ -320,7 +320,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_walk_3
+      name: Player_Walk_3
       rect:
         serializedVersion: 2
         x: 192
@@ -341,11 +341,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_jump_0
+      name: Player_Jump
       rect:
         serializedVersion: 2
         x: 0
-        y: 1088
+        y: 1087
         width: 64
         height: 64
       alignment: 7
@@ -362,7 +362,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_jump_1
+      name: Player_Rise
       rect:
         serializedVersion: 2
         x: 64
@@ -383,7 +383,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_jump_2
+      name: Player_Fall
       rect:
         serializedVersion: 2
         x: 128
@@ -404,7 +404,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_dash_0
+      name: Player_Dash_0
       rect:
         serializedVersion: 2
         x: 0
@@ -425,7 +425,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_dash_3
+      name: Player_Dash_1
       rect:
         serializedVersion: 2
         x: 64
@@ -446,7 +446,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_dash_4
+      name: Player_Dash_2
       rect:
         serializedVersion: 2
         x: 128
@@ -467,7 +467,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_wall_slide_0
+      name: Player_Wall_Slide_0
       rect:
         serializedVersion: 2
         x: 0
@@ -488,7 +488,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_wall_slide_1
+      name: Player_Wall_Slide_1
       rect:
         serializedVersion: 2
         x: 64
@@ -509,7 +509,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_wall_slide_2
+      name: Player_Wall_Slide_2
       rect:
         serializedVersion: 2
         x: 128

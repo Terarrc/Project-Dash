@@ -1,22 +1,28 @@
 fileFormatVersion: 2
-guid: 00d73410baef6ee4f8e72dd1b3d0f33e
+guid: c76300f5c3bf0cd4295be949eec1e30d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7056408404359397801
-    second: player_particles_0
+      213: 4162073681614177860
+    second: Imp_Idle_0
   - first:
-      213: 6820125394250750651
-    second: player_particles_1
+      213: -2653727530910819259
+    second: Imp_Idle_1
   - first:
-      213: -2761136273333091616
-    second: Player_Effects_Double_Jump_0
+      213: 4544939283262648575
+    second: Imp_Sprite_2
   - first:
-      213: 7526146470499714731
-    second: Player_Effects_Double_Jump_1
+      213: -6777050065800937514
+    second: Imp_Walk_1
   - first:
-      213: 7524122756612138224
-    second: Player_Effects_Double_Jump_2
+      213: 6053922894628769077
+    second: Imp_Walk_2
+  - first:
+      213: -1694517582378716265
+    second: Imp_Walk_3
+  - first:
+      213: 5940379386490484745
+    second: Imp_Walk_0
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -101,64 +107,148 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player_Effects_Double_Jump_0
+      name: Imp_Idle_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 316
+        y: 288
         width: 32
-        height: 3
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1adcd543e7ecbca4c8531d250efbc9f0
-      internalID: -2761136273333091616
+      spriteID: d6317cd7c18e3384f82cd27f03e9f3e2
+      internalID: 4162073681614177860
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Effects_Double_Jump_1
+      name: Imp_Idle_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 308
+        x: 32
+        y: 288
         width: 32
-        height: 3
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4856d64508107ea48b82d4a36376e849
-      internalID: 7526146470499714731
+      spriteID: 1c5c75ae3e6bb704298f88f7d4266a63
+      internalID: -2653727530910819259
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Effects_Double_Jump_2
+      name: Imp_Sprite_2
       rect:
         serializedVersion: 2
         x: 0
-        y: 300
+        y: 256
         width: 32
-        height: 3
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9847305a85614d7449d428eb02388d44
-      internalID: 7524122756612138224
+      spriteID: c2179cc3d04a27f4b9dd3c88ecfe3839
+      internalID: 4544939283262648575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Imp_Walk_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 256
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a91ae581c81bcbd4ba305a7b8f4078e9
+      internalID: -6777050065800937514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Imp_Walk_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 256
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 186023e50eff79a468f6e398d5b0db7c
+      internalID: 6053922894628769077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Imp_Walk_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 256
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7420ed8f19133ee4b92fb0c4b8efc583
+      internalID: -1694517582378716265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Imp_Walk_0
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 70
+        width: 1
+        height: 3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90e8910f0406e4f429cb81d7e00f706b
+      internalID: 5940379386490484745
       vertices: []
       indices: 
       edges: []

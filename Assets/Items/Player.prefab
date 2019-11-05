@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 7080704996284031259}
   - component: {fileID: 7080704996284031236}
   - component: {fileID: 7080704996284031238}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,8 +142,6 @@ MonoBehaviour:
   doubleJumpParticle: {fileID: 3943271017201014684, guid: e90816ef545d863489422df59b00a038,
     type: 3}
   dashParticle: {fileID: 2441962214247651552, guid: 5eae381317a47a24788031057eefc062,
-    type: 3}
-  createdField: {fileID: -8139123069261302785, guid: 58089c843dfc1b04ba6475a13cd64f38,
     type: 3}
   doubleJumpSpeed: 20
   ratioStopJump: 0.5

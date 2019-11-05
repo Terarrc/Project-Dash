@@ -1851,11 +1851,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1467163940}
     m_Modifications:
-    - target: {fileID: 1058280073876558099, guid: b47e431c2a1745048bb50fd003f9e8aa,
-        type: 3}
-      propertyPath: m_Name
-      value: Vertical_Energy_Field (3)
-      objectReference: {fileID: 0}
     - target: {fileID: 1058280073876558097, guid: b47e431c2a1745048bb50fd003f9e8aa,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1910,6 +1905,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1058280073876558099, guid: b47e431c2a1745048bb50fd003f9e8aa,
+        type: 3}
+      propertyPath: m_Name
+      value: Vertical_Energy_Field (3)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b47e431c2a1745048bb50fd003f9e8aa, type: 3}
@@ -2372,11 +2372,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1467163940}
     m_Modifications:
-    - target: {fileID: 1058280073876558099, guid: b47e431c2a1745048bb50fd003f9e8aa,
-        type: 3}
-      propertyPath: m_Name
-      value: Vertical_Energy_Field (2)
-      objectReference: {fileID: 0}
     - target: {fileID: 1058280073876558097, guid: b47e431c2a1745048bb50fd003f9e8aa,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2431,6 +2426,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1058280073876558099, guid: b47e431c2a1745048bb50fd003f9e8aa,
+        type: 3}
+      propertyPath: m_Name
+      value: Vertical_Energy_Field (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b47e431c2a1745048bb50fd003f9e8aa, type: 3}
@@ -3143,11 +3143,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1467163940}
     m_Modifications:
-    - target: {fileID: 1058280073876558099, guid: b47e431c2a1745048bb50fd003f9e8aa,
-        type: 3}
-      propertyPath: m_Name
-      value: Vertical_Energy_Field (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 1058280073876558097, guid: b47e431c2a1745048bb50fd003f9e8aa,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3202,6 +3197,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1058280073876558099, guid: b47e431c2a1745048bb50fd003f9e8aa,
+        type: 3}
+      propertyPath: m_Name
+      value: Vertical_Energy_Field (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b47e431c2a1745048bb50fd003f9e8aa, type: 3}
@@ -3316,11 +3316,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1467163940}
     m_Modifications:
-    - target: {fileID: 1058280073876558099, guid: b47e431c2a1745048bb50fd003f9e8aa,
-        type: 3}
-      propertyPath: m_Name
-      value: Vertical_Energy_Field
-      objectReference: {fileID: 0}
     - target: {fileID: 1058280073876558097, guid: b47e431c2a1745048bb50fd003f9e8aa,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3375,6 +3370,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1058280073876558099, guid: b47e431c2a1745048bb50fd003f9e8aa,
+        type: 3}
+      propertyPath: m_Name
+      value: Vertical_Energy_Field
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b47e431c2a1745048bb50fd003f9e8aa, type: 3}
