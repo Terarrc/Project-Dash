@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 7080704996284031263}
   - component: {fileID: 8377384794379606840}
   - component: {fileID: 6044366253312423578}
+  - component: {fileID: 4499548179787306450}
   - component: {fileID: 7080704996284031257}
   - component: {fileID: 7080704996284031258}
   - component: {fileID: 7080704996284031259}
@@ -165,6 +166,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   analogMovement: 0
   bufferTime: 100
+--- !u!114 &4499548179787306450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7080704996284031239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 679ad2a57d60aec4ca1b40ce752b497d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathEffect: {fileID: 0}
+  invulnerableAfterDamage: 0
+  maxHealth: 3
+  ratioPhysic: 1
+  ratioEnergetic: 1
+  ratioSuperEnergetic: 1
+  respawnPoint: {x: 0, y: 0, z: 0}
 --- !u!212 &7080704996284031257
 SpriteRenderer:
   m_ObjectHideFlags: 0

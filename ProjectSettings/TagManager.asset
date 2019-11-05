@@ -14,13 +14,13 @@ TagManager:
   - 
   - 
   - Ground
-  - Horizontal Energy Fields
-  - Vertical Energy Fields
+  - Horizontal Energy Field
+  - Vertical Energy Field
   - Horizontal Energy Ground
   - Vertical Energy Ground
-  - 
-  - 
-  - 
+  - Player
+  - Robot
+  - Demon
   - 
   - 
   - 

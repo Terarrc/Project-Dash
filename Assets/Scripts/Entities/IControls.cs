@@ -11,4 +11,6 @@ public interface IControls
 	bool Action(int index);
 
 	float GetDirectionX();
+	int GetLayerCollision();
+	int GetLayerBlock();
 }

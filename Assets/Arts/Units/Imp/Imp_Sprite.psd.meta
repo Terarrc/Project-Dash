@@ -10,7 +10,7 @@ TextureImporter:
     second: Imp_Idle_1
   - first:
       213: 4544939283262648575
-    second: Imp_Sprite_2
+    second: Imp_Walk_0
   - first:
       213: -6777050065800937514
     second: Imp_Walk_1
@@ -149,7 +149,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Imp_Sprite_2
+      name: Imp_Walk_0
       rect:
         serializedVersion: 2
         x: 0
@@ -228,27 +228,6 @@ TextureImporter:
       bones: []
       spriteID: 7420ed8f19133ee4b92fb0c4b8efc583
       internalID: -1694517582378716265
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Imp_Walk_0
-      rect:
-        serializedVersion: 2
-        x: 319
-        y: 70
-        width: 1
-        height: 3
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 90e8910f0406e4f429cb81d7e00f706b
-      internalID: 5940379386490484745
       vertices: []
       indices: 
       edges: []

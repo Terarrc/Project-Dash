@@ -305,4 +305,14 @@ public class Entity : MonoBehaviour, IControls
 		else 
 			return 1;
 	}
+
+	public int GetLayerCollision()
+	{
+		return layerCollision;
+	}
+
+	public int GetLayerBlock()
+	{
+		return layerBlock;
+	}
 }
