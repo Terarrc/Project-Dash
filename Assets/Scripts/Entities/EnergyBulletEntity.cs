@@ -5,7 +5,6 @@ using UnityEngine;
 public class EnergyBulletEntity : Entity
 {
 	public float damage;
-	public GameObject Creator { get; set; }
 
     // Start is called before the first frame update
     new void Start()
@@ -20,7 +19,7 @@ public class EnergyBulletEntity : Entity
 		{
 			Health health = collider.gameObject.GetComponent<Health>();
 			if (health)
-				health.ApplyDamage(damage, Health.DamageType.Energetic, Creator);
+				health.ApplyDamage(damage, Health.DamageType.Energetic, gameObject);
 		}
 
 		if (collider.gameObject.layer != LayerMask.NameToLayer("Vertical Energy Field") && collider.gameObject.layer != LayerMask.NameToLayer("Horizontal Energy Field"))

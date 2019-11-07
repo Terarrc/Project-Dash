@@ -3950,5 +3950,10 @@ PrefabInstance:
       propertyPath: attackRate
       value: 500
       objectReference: {fileID: 0}
+    - target: {fileID: 2618240247473718942, guid: 6f67be9d8890fb84fbdea7657848488b,
+        type: 3}
+      propertyPath: maxHealth
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f67be9d8890fb84fbdea7657848488b, type: 3}

@@ -247,6 +247,12 @@ public class Entity : MonoBehaviour, IControls
 		return positionY;
 	}
 
+	public void ApplySpeed(Vector2 speed)
+	{
+		currentSpeedX += speed.x;
+		currentSpeedY += speed.y;
+	}
+
 	// ========================================================================
 	// Controls
 	// ========================================================================

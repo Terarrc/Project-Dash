@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathEffect: {fileID: 0}
-  maxHealth: 5
+  maxHealth: 30
   ratioPhysic: 1
   ratioEnergetic: 1
   ratioSuperEnergetic: 1

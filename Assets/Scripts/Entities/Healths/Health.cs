@@ -77,6 +77,16 @@ public class Health : MonoBehaviour
 		}
 		currentHealth -= damage;
 
+		Entity entity = GetComponent<Entity>();
+		if (entity != null)
+		{
+			if (transform.position.x < source.transform.position.x)
+				entity.ApplySpeed(new Vector2(-10, 5));
+
+			else
+				entity.ApplySpeed(new Vector2(10, 5));
+		}
+
 		// If a damage is taken, the entity is briefly invulnerable
 		if (damage >= 1)
 			timerInvulnerable = invulnerableTime;

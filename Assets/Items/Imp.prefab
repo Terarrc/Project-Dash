@@ -88,7 +88,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathEffect: {fileID: 0}
-  maxHealth: 8
+  maxHealth: 20
   ratioPhysic: 1
   ratioEnergetic: 1
   ratioSuperEnergetic: 1
