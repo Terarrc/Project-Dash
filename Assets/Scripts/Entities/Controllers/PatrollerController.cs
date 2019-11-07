@@ -14,7 +14,7 @@ public class PatrollerController : Controller
 
 	public Entity.Faction faction;
 
-	private GameObject aggro;
+	public GameObject aggro;
 	private int layerAggro;
 	// Timer when we want to move after an attack to prevent animator bug
 	private float timerMoveAgain;
@@ -101,15 +101,23 @@ public class PatrollerController : Controller
 
 			if (hit.collider != null)
 			{
-				if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Demon") || hit.collider.gameObject.layer == LayerMask.NameToLayer("Robot"))
+				switch (faction)
 				{
-					aggro = hit.collider.gameObject;
+					case Entity.Faction.Robot:
+						if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Demon"))
+							aggro = hit.collider.gameObject;
+						break;
+
+					case Entity.Faction.Demon:
+						if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Robot"))
+							aggro = hit.collider.gameObject;
+						break;
+
+					default:
+						break;
 				}
 			}
-			else
-			{
-				RestartMove(new Vector2(-0.5f, 0));
-			}		
+			RestartMove(new Vector2(-0.5f, 0));	
 
 			pointA = new Vector2(transform.position.x - halfWidth - 0.1f, transform.position.y + height);
 
@@ -136,7 +144,7 @@ public class PatrollerController : Controller
 			}
 		}
 
-		else if (controls.GetDirectionX() > 0)
+		else
 		{
 			float halfWidth = (boxCollider.bounds.size.x / 2);
 
@@ -150,15 +158,24 @@ public class PatrollerController : Controller
 
 			if (hit.collider != null)
 			{
-				if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Demon") || hit.collider.gameObject.layer == LayerMask.NameToLayer("Robot"))
+				switch (faction)
 				{
-					aggro = hit.collider.gameObject;
+					case Entity.Faction.Robot:
+						if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Demon"))
+							aggro = hit.collider.gameObject;
+						break;
+
+					case Entity.Faction.Demon:
+						if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Robot"))
+							aggro = hit.collider.gameObject;
+						break;
+
+					default:
+						break;
 				}
 			}
-			else
-			{ 
-				RestartMove(new Vector2(0.5f, 0));
-			}
+
+			RestartMove(new Vector2(0.5f, 0));
 	
 
 			pointA = new Vector2(transform.position.x + halfWidth + 0.1f, transform.position.y + height);

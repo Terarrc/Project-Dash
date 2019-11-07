@@ -179,8 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathEffect: {fileID: 0}
-  invulnerableAfterDamage: 0
-  maxHealth: 3
+  maxHealth: 1
   ratioPhysic: 1
   ratioEnergetic: 1
   ratioSuperEnergetic: 1

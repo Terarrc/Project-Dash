@@ -151,6 +151,8 @@ public class Entity : MonoBehaviour, IControls
 				// Move the body the furthest possible without collision
 				foreach (Collider2D collider in colliders)
 				{
+					if (collider.gameObject == gameObject)
+						continue;
 					positionX = CollideX(collider, positionX);
 				}
 			}
@@ -192,6 +194,8 @@ public class Entity : MonoBehaviour, IControls
 				// Move the body the furthest possible without collision
 				foreach (Collider2D collider in colliders)
 				{
+					if (collider.gameObject == gameObject)
+						continue;
 					positionY = CollideY(collider, positionY);
 				}
 

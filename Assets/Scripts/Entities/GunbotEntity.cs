@@ -17,9 +17,7 @@ public class GunbotEntity : Entity
     {
 		base.Start();
 		layerCollision += 1 << LayerMask.NameToLayer("Robot");
-		layerCollision += 1 << LayerMask.NameToLayer("Demon");
 		layerBlock += 1 << LayerMask.NameToLayer("Robot");
-		layerBlock += 1 << LayerMask.NameToLayer("Demon");
 	}
 
 	new void Update()
