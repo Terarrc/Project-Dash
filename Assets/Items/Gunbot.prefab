@@ -73,7 +73,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fallCliff: 0
   startLeft: 0
-  attackRange: 6
+  attackRange: 8
   aggroRange: 8
   cancelAggroRange: 10
   faction: 0
