@@ -271,6 +271,8 @@ public class PlayerEntity : Entity
 		{
 			case 1:
 				return Dash();
+			default:
+				break;
 		}
 		return false;
 	}

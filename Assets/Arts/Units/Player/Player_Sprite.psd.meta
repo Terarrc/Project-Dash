@@ -77,6 +77,15 @@ TextureImporter:
   - first:
       213: 1197855320226781875
     second: Player_Wall_Slide_2
+  - first:
+      213: -4021566529490745830
+    second: Player_Double_Jump_0
+  - first:
+      213: 3016832670128372917
+    second: Player_Double_Jump_1
+  - first:
+      213: -4166829048666513478
+    second: Player_Double_Jump_2
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -525,6 +534,69 @@ TextureImporter:
       bones: []
       spriteID: 48bfbad3434bd3f469e48a1dda0e16fa
       internalID: 1197855320226781875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Double_Jump_0
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 1253
+        width: 14
+        height: 3
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77100563fb8a2814fb943b7f9f45c06e
+      internalID: -4021566529490745830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Double_Jump_1
+      rect:
+        serializedVersion: 2
+        x: 403
+        y: 1244
+        width: 26
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4658d923308e39644a40cdd2c284d1f0
+      internalID: 3016832670128372917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Double_Jump_2
+      rect:
+        serializedVersion: 2
+        x: 397
+        y: 1235
+        width: 38
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c11296afaf8170c4d8cad36b526ffc29
+      internalID: -4166829048666513478
       vertices: []
       indices: 
       edges: []

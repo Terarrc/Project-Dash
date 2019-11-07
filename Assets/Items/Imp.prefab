@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6151224023179597653}
   - component: {fileID: 4709112117115743200}
   - component: {fileID: 7466538931974738265}
+  - component: {fileID: 2618240247473718942}
   - component: {fileID: 9043854793488160862}
   - component: {fileID: 4529806560665437121}
   - component: {fileID: 2155699079555041960}
@@ -48,13 +49,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 829b3c90e040a5d4d8b86b387fe62294, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeedX: 2
-  moveSpeedY: 2
+  moveSpeedX: 4
+  moveSpeedY: 4
   jumpSpeed: 10
   accelerationX: 200
   accelerationY: 200
   affectedByGravity: 1
-  meleeDamages: 1
+  meleeDamages: 2
+  attackRate: 500
 --- !u!114 &7466538931974738265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,6 +71,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fallCliff: 0
   startLeft: 0
+  attackRange: 1
+  aggroRange: 5
+  cancelAggroRange: 7
+  faction: 1
+--- !u!114 &2618240247473718942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1070596028329852921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 193c0677d95d3a44d99ba2193ad801f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathEffect: {fileID: 0}
+  maxHealth: 10
+  ratioPhysic: 1
+  ratioEnergetic: 1
+  ratioSuperEnergetic: 1
 --- !u!212 &9043854793488160862
 SpriteRenderer:
   m_ObjectHideFlags: 0

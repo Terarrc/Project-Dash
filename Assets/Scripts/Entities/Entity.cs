@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour, IControls
 {
+	public enum Faction { Robot, Demon };
+
     // All of the Entity's component
     protected Rigidbody2D body;
     protected BoxCollider2D boxCollider;
@@ -36,17 +38,20 @@ public class Entity : MonoBehaviour, IControls
 	// On wake, get Entity's components
 	public void Awake()
     {
-        body = GetComponent<Rigidbody2D>();
+		body = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         sprite = GetComponent<SpriteRenderer>();
 		animator = GetComponent<Animator>();
+
+		// We don't care if a parameter doesn't exists
+		if (animator)
+			animator.logWarnings = false;
+
 	}
 
 	// Start is called before the first frame update
 	public void Start()
 	{
-		// We don't care if a parameter doesn't exists
-		animator.logWarnings = false;
 
 		if (affectedByGravity)
 			wantedSpeedY = -100;

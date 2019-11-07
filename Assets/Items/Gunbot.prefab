@@ -9,13 +9,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8497234091507377556}
-  - component: {fileID: 571878025479220531}
+  - component: {fileID: 8042374463023938287}
   - component: {fileID: 1716636311946078298}
+  - component: {fileID: 4684810138452052760}
   - component: {fileID: 6631073393806850272}
   - component: {fileID: 8175614437154184188}
   - component: {fileID: 1456393569827469421}
   - component: {fileID: 2426959105098996367}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Gunbot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +37,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &571878025479220531
+--- !u!114 &8042374463023938287
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,16 +46,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 8632502431143126090}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 829b3c90e040a5d4d8b86b387fe62294, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ebcd8bf9d753554b85a5176218abf6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeedX: 2
-  moveSpeedY: 2
-  jumpSpeed: 0
+  moveSpeedX: 4
+  moveSpeedY: 4
+  jumpSpeed: 10
   accelerationX: 200
   accelerationY: 200
   affectedByGravity: 1
-  meleeDamages: 1
+  projectile: {fileID: 4068062651091735448, guid: f24555db54167bf46816809d068172a2,
+    type: 3}
+  fireRate: 2500
+  burstRate: 200
 --- !u!114 &1716636311946078298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,6 +73,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fallCliff: 0
   startLeft: 0
+  attackRange: 6
+  aggroRange: 8
+  cancelAggroRange: 10
+  faction: 0
+--- !u!114 &4684810138452052760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8632502431143126090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 193c0677d95d3a44d99ba2193ad801f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathEffect: {fileID: 0}
+  maxHealth: 5
+  ratioPhysic: 1
+  ratioEnergetic: 1
+  ratioSuperEnergetic: 1
 --- !u!212 &6631073393806850272
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -23,6 +23,12 @@ TextureImporter:
   - first:
       213: 5940379386490484745
     second: Imp_Walk_0
+  - first:
+      213: -4082764355162247526
+    second: Imp_Attack_0
+  - first:
+      213: 3258162740644821061
+    second: Imp_Attack_1
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -228,6 +234,48 @@ TextureImporter:
       bones: []
       spriteID: 7420ed8f19133ee4b92fb0c4b8efc583
       internalID: -1694517582378716265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Imp_Attack_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 224
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 698638b983aba6b4ea68a65767fa4d61
+      internalID: -4082764355162247526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Imp_Attack_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 224
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22e229bc865bfc44d8801d77c8cd5af5
+      internalID: 3258162740644821061
       vertices: []
       indices: 
       edges: []

@@ -19,7 +19,7 @@ public class Health : MonoBehaviour
 	public float ratioSuperEnergetic;
 
 	protected float timerInvulnerable;
-	protected float invulnerableTime = 1000;
+	protected float invulnerableTime = 0;
 	protected float timerBlink;
 	protected float blinkTime = 100;
 
@@ -92,6 +92,6 @@ public class Health : MonoBehaviour
 			Instantiate(deathEffect, transform.position, Quaternion.identity);
 		}
 
-		Destroy(this);
+		Destroy(gameObject);
 	}
 }
