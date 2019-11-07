@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Unit))]
 public class Controller : MonoBehaviour
 {
-	protected IControls controls;
+	protected Unit unit;
 
 	public void Awake()
 	{
-		controls = gameObject.GetComponent<IControls>();
+		unit = gameObject.GetComponent<Unit>();
 	}
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FairyController : Controller
+public class FairyController : oldController
 {
     public Entity following;
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PatrollerController : Controller
+public class PatrollerController : oldController
 {
 	private BoxCollider2D boxCollider;
 

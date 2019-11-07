@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : Controller
+public class OldPlayerController : oldController
 {
 	public enum bufferedInput { none, jump, dash };
 
