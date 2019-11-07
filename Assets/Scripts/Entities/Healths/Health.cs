@@ -18,10 +18,8 @@ public class Health : MonoBehaviour
 	public float ratioEnergetic;
 	public float ratioSuperEnergetic;
 
-	protected float timerInvulnerable;
-	protected float invulnerableTime = 0;
-	protected float timerBlink;
-	protected float blinkTime = 100;
+	private float redTime = 200;
+	private float timerRed;
 
 	public void Awake()
 	{
@@ -35,33 +33,17 @@ public class Health : MonoBehaviour
 
 	public void Update()
 	{
-		float time = Time.deltaTime * 1000;
-
-		if (timerInvulnerable > 0)
+		if (timerRed > 0)
 		{
-			timerInvulnerable -= time;
-			if (timerInvulnerable <= 0)
-			{
-				if (sprite)
-					sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
-				timerBlink = 100;
-			}
-			else
-			{
-				timerBlink -= time;
-				if (timerBlink <= -blinkTime)
-					timerBlink = blinkTime;
-				if (sprite)
-					sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, Mathf.Abs(timerBlink) / blinkTime);
-			}
+			timerRed -= Time.deltaTime * 1000;
+			if (timerRed < 0)
+				timerRed = 0;
+			sprite.color = new Color(1, 1 - (timerRed / redTime), 1 - (timerRed / redTime));
 		}
 	}
 
 	public void ApplyDamage(float amount, DamageType damageType, GameObject source)
 	{
-		if (timerInvulnerable > 0)
-			return;
-
 		int damage = 0;
 		switch (damageType)
 		{
@@ -89,7 +71,11 @@ public class Health : MonoBehaviour
 
 		// If a damage is taken, the entity is briefly invulnerable
 		if (damage >= 1)
-			timerInvulnerable = invulnerableTime;
+		{
+			timerRed = redTime;
+			sprite.color = new Color(1, 0, 0);
+		}
+
 
 		if (currentHealth <= 0)
 			Kill(source);

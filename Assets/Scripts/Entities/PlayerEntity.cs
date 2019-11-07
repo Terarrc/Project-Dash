@@ -291,9 +291,9 @@ public class PlayerEntity : Entity
 		return false;
 	}
 
-	protected override float CollideX(Collider2D collider, float positionX)
+	protected override float CollideX(Collider2D collider, float positionX, float positionY, float oldPosX)
 	{
-		positionX = base.CollideX(collider, positionX);
+		positionX = base.CollideX(collider, positionX, positionY, oldPosX);
 
 		if ((collider.gameObject.layer == LayerMask.NameToLayer("Vertical Energy Field") && ((layerBlock & (1 << LayerMask.NameToLayer("Vertical Energy Field"))) != 0)) || 
 			collider.gameObject.layer == LayerMask.NameToLayer("Vertical Energy Ground"))
@@ -310,11 +310,11 @@ public class PlayerEntity : Entity
 		return positionX;
 	}
 
-	protected override float CollideY(Collider2D collider, float positionY)
+	protected override float CollideY(Collider2D collider, float positionX, float positionY, float oldPosY)
 	{
 		float oldSpeedY = currentSpeedY;
 
-		positionY = base.CollideY(collider, positionY);
+		positionY = base.CollideY(collider, positionX, positionY, oldPosY);
 
 		if ((collider.gameObject.layer == LayerMask.NameToLayer("Horizontal Energy Field") && ((layerBlock & LayerMask.NameToLayer("Horizontal Energy Field")) != 0)) ||
 			collider.gameObject.layer == LayerMask.NameToLayer("Horizontal Energy Ground"))

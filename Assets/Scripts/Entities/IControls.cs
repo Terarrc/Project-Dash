@@ -13,4 +13,6 @@ public interface IControls
 	float GetDirectionX();
 	int GetLayerCollision();
 	int GetLayerBlock();
+
+	float GetDamageDirection();
 }

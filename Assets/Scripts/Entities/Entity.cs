@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Entity : MonoBehaviour, IControls
 {
@@ -27,8 +28,8 @@ public class Entity : MonoBehaviour, IControls
 	protected bool lockAxisX = false;
 	protected bool lockAxisY = false;
 
-	// Energy variable
-	//protected bool collideWithEnergy = true;
+	// Direction form the last source of damage
+	private float damageDirection = 0;
 
 	// All layer we must checkthe collision
 	protected int layerCollision = 0;
@@ -153,7 +154,7 @@ public class Entity : MonoBehaviour, IControls
 				{
 					if (collider.gameObject == gameObject)
 						continue;
-					positionX = CollideX(collider, positionX);
+					positionX = CollideX(collider, positionX, positionY, oldPosX);
 				}
 			}
 		}
@@ -196,7 +197,7 @@ public class Entity : MonoBehaviour, IControls
 				{
 					if (collider.gameObject == gameObject)
 						continue;
-					positionY = CollideY(collider, positionY);
+					positionY = CollideY(collider, positionX, positionY, oldPosY);
 				}
 
 				animator.SetBool("Grounded", isGrounded);
@@ -210,42 +211,43 @@ public class Entity : MonoBehaviour, IControls
         transform.position = new Vector3(positionX, positionY);
     }
 
-	protected virtual float CollideX(Collider2D collider, float positionX)
+	protected virtual float CollideX(Collider2D collider, float positionX, float positionY, float oldPosX)
 	{
 		float halfWidth = (boxCollider.bounds.size.x / 2);
+		float height = boxCollider.bounds.size.y;
 
-		if (((1 << collider.gameObject.layer) & layerBlock) != 0)
-		{ 
-			if (currentSpeedX < 0 && collider.bounds.max.x + halfWidth > positionX)
-				positionX = collider.bounds.max.x + halfWidth;
-
-			if (currentSpeedX > 0 && collider.bounds.min.x - halfWidth < positionX)
-				positionX = collider.bounds.min.x - halfWidth;
+		if (currentSpeedX < 0)
+		{
+			Vector2 point = collider.ClosestPoint(new Vector2(oldPosX - halfWidth, positionY + (height / 2)));
+			positionX = point.x + halfWidth;
 		}
+		if (currentSpeedX > 0)
+		{
+			Vector2 point = collider.ClosestPoint(new Vector2(oldPosX + halfWidth, positionY + (height / 2)));
+			positionX = point.x - halfWidth;
+		}
+
 
 		return positionX;
 	}
 
-	protected virtual float CollideY(Collider2D collider, float positionY)
+	protected virtual float CollideY(Collider2D collider, float positionX, float positionY, float oldPosY)
 	{
 		float height = boxCollider.bounds.size.y;
 
-		if (((1 << collider.gameObject.layer) & layerBlock) != 0)
+		if (currentSpeedY < 0)
 		{
-			if (currentSpeedY < 0 && collider.bounds.max.y > positionY)
-			{
-				positionY = collider.bounds.max.y;
-				// A vertical collision while falling mean landing
-				isGrounded = true;
-				currentSpeedY = 0;
-			}
-
-			if (currentSpeedY > 0 && collider.bounds.min.y - height < positionY)
-			{
-				positionY = collider.bounds.min.y - height;
-				currentSpeedY = 0;
-			}
-
+			Vector2 point = collider.ClosestPoint(new Vector2(positionX, oldPosY));
+			positionY = point.y;
+			// A vertical collision while falling mean landing
+			isGrounded = true;
+			currentSpeedY = 0;
+		}
+		if (currentSpeedY > 0)
+		{
+			Vector2 point = collider.ClosestPoint(new Vector2(positionX, oldPosY + height));
+			positionY = point.y - height;
+			currentSpeedY = 0;
 		}
 
 		return positionY;
@@ -329,5 +331,10 @@ public class Entity : MonoBehaviour, IControls
 	public int GetLayerBlock()
 	{
 		return layerBlock;
+	}
+
+	public float GetDamageDirection()
+	{
+		return damageDirection;
 	}
 }

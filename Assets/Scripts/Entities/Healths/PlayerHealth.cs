@@ -11,4 +11,33 @@ public class PlayerHealth : Health
 		currentHealth = maxHealth;
 		gameObject.transform.position = respawnPoint;
 	}
+
+	/*
+	 * 
+	protected float timerInvulnerable;
+	protected float invulnerableTime = 0;
+	protected float timerBlink;
+	protected float blinkTime = 100;
+
+	 * 		float time = Time.deltaTime * 1000;
+
+		if (timerInvulnerable > 0)
+		{
+			timerInvulnerable -= time;
+			if (timerInvulnerable <= 0)
+			{
+				if (sprite)
+					sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
+				timerBlink = 100;
+			}
+			else
+			{
+				timerBlink -= time;
+				if (timerBlink <= -blinkTime)
+					timerBlink = blinkTime;
+				if (sprite)
+					sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, Mathf.Abs(timerBlink) / blinkTime);
+			}
+		}
+	 */
 }

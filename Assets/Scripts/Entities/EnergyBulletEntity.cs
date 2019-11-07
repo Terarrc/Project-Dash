@@ -26,14 +26,14 @@ public class EnergyBulletEntity : Entity
 			Destroy(gameObject);
 	}
 
-	protected override float CollideX(Collider2D collider, float positionX)
+	protected override float CollideX(Collider2D collider, float positionX, float positionY, float oldPosX)
 	{
 		Collide(collider);
 
 		return 0;
 	}
 
-	protected override float CollideY(Collider2D collider, float positionY)
+	protected override float CollideY(Collider2D collider, float positionX, float positionY, float oldPosY)
 	{
 		Collide(collider);
 
