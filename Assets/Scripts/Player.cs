@@ -45,6 +45,28 @@ public class Player : Unit
 		}
 	}
 
+	// in this timer, the player can't stuck to a wall again
+	private float wallJumpTime = 0.2f;
+	private float timerWallJump;
+	private bool isWallJumping;
+	protected bool IsWallJumping
+	{
+		get
+		{
+			return isWallJumping;
+		}
+		set
+		{
+			isWallJumping = value;
+			if (value)
+			{
+				IsWallSliding = false;
+				body.velocity = new Vector2(wallJumpSpeedX * GetDirectionX(), wallJumpSpeed);
+				timerWallJump = wallJumpTime;
+			}
+		}
+	}
+
 	// Dash variables
 	private bool canDash;
 	private bool isDashing = false;
@@ -128,7 +150,7 @@ public class Player : Unit
 		if (body.velocity.y <= 0)
 			IsDoubleJumping = false;
 
-		if (IsGrounded)
+		if (IsGrounded && !IsDashing)
 		{
 			timerBufferGrounded = bufferGroundedTime;
 			canDoubleJump = true;
@@ -178,11 +200,18 @@ public class Player : Unit
 			else
 				body.velocity = new Vector2(0, -wallSlideSpeed);
 		}
+
+		if (IsWallJumping)
+		{
+			timerWallJump -= Time.deltaTime;
+			if (timerWallJump <= 0)
+				IsWallJumping = false;
+		}
 	}
 
-	public void OnCollisionEnter2D(Collision2D collision)
+	public void OnCollisionStay2D(Collision2D collision)
 	{
-		if (!IsWallSliding && !isGrounded && (collision.gameObject.layer == LayerMask.NameToLayer("Energy Field") || collision.gameObject.layer == LayerMask.NameToLayer("Energy Ground")))
+		if (!IsWallSliding && !IsWallJumping && !isGrounded && (collision.gameObject.layer == LayerMask.NameToLayer("Energy Field") || collision.gameObject.layer == LayerMask.NameToLayer("Energy Ground")))
 		{
 			ColliderDistance2D colliderDistance = collision.collider.Distance(collision.otherCollider);
 
@@ -209,8 +238,7 @@ public class Player : Unit
 	{
 		if (IsWallSliding)
 		{
-			IsWallSliding = false;
-			body.velocity = new Vector2(wallJumpSpeedX * GetDirectionX(), wallJumpSpeed);
+			IsWallJumping = true;
 
 			return true;
 		}
