@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7080704996284031263}
   - component: {fileID: 1299896796654707453}
+  - component: {fileID: 4490090770297310930}
   - component: {fileID: 4544343487607997635}
   - component: {fileID: 7080704996284031257}
   - component: {fileID: 7080704996284031258}
@@ -53,6 +54,7 @@ MonoBehaviour:
   acceleration: {x: 200, y: 0}
   verticalMovement: 0
   jumpSpeed: 22
+  faction: 0
   doubleJumpParticle: {fileID: 3872488329964344648, guid: e90816ef545d863489422df59b00a038,
     type: 3}
   dashParticle: {fileID: 1458038487322518881, guid: 5eae381317a47a24788031057eefc062,
@@ -64,7 +66,25 @@ MonoBehaviour:
   wallJumpSpeed: 20
   wallJumpSpeedX: 30
   wallSlideSpeed: 1
-  bufferGroundedTime: 0.05
+  bufferGroundedTime: 0.075
+--- !u!114 &4490090770297310930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7080704996284031239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 679ad2a57d60aec4ca1b40ce752b497d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathEffect: {fileID: 0}
+  maxHealth: 1
+  ratioPhysic: 1
+  ratioEnergetic: 1
+  ratioSuperEnergetic: 1
+  respawnPoint: {x: 0, y: 0, z: 0}
 --- !u!114 &4544343487607997635
 MonoBehaviour:
   m_ObjectHideFlags: 0

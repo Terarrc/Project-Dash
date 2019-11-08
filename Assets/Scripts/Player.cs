@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : Unit
 {
+	#region variables
 	public SpriteRenderer doubleJumpParticle;
 	public SpriteRenderer dashParticle;
 
@@ -140,7 +141,8 @@ public class Player : Unit
 			}
 		}
 	}
-
+	#endregion
+	
 	void Start()
 	{
 

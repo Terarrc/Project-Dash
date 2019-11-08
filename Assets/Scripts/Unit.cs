@@ -7,6 +7,8 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class Unit : MonoBehaviour
 {
+	public enum Faction { Robot, Demon };
+
 	protected Rigidbody2D body;
 	protected BoxCollider2D boxCollider;
 	protected SpriteRenderer sprite;
@@ -20,8 +22,28 @@ public class Unit : MonoBehaviour
 	public bool verticalMovement;
 	[SerializeField, Tooltip("Vertical speed given when the unit is jumping")]
 	public float jumpSpeed;
+	[SerializeField, Tooltip("Define who will be it's allies and who will be it's enemies")]
+	public Faction faction;
 
-	private int layerGround;
+	public Vector2 Size 
+	{
+		get
+		{
+			return boxCollider.bounds.size;
+		}
+	}
+
+	public Vector2 Position
+	{
+		get
+		{
+			return body.position;
+		}
+	}
+
+	public float AttackRange { get; set; }
+
+
 
 	protected bool isJumping;
 	protected bool IsJumping 
@@ -50,6 +72,7 @@ public class Unit : MonoBehaviour
 		}
 	}
 
+	public int LayerGround { get; set; }
 	protected bool isGrounded;
 	protected bool IsGrounded
 	{
@@ -75,7 +98,7 @@ public class Unit : MonoBehaviour
 		if (animator != null)
 			animator.logWarnings = false;
 
-		layerGround = (1 << LayerMask.NameToLayer("Ground")) + (1 << LayerMask.NameToLayer("Energy Ground")) + (1 << LayerMask.NameToLayer("Energy Field"));
+		LayerGround = (1 << LayerMask.NameToLayer("Ground")) + (1 << LayerMask.NameToLayer("Energy Ground")) + (1 << LayerMask.NameToLayer("Energy Field")) + (1 << gameObject.layer);
 	}
 
 	protected void Update()
@@ -83,7 +106,7 @@ public class Unit : MonoBehaviour
 		if (body.velocity.y <= 0)
 			IsJumping = false;
 
-		IsGrounded = Physics2D.OverlapCircle(body.position + (Vector2.down * (boxCollider.bounds.size.y / 2)), boxCollider.bounds.size.x / 2, layerGround);
+		IsGrounded = Physics2D.OverlapCircle(body.position + (Vector2.down * (boxCollider.bounds.size.y / 2)), boxCollider.bounds.size.x / 2, LayerGround);
 
 		animator.SetFloat("Speed X", body.velocity.x);
 		animator.SetFloat("Speed Y", body.velocity.y);
@@ -92,6 +115,25 @@ public class Unit : MonoBehaviour
 	public float GetDirectionX()
 	{
 		return sprite.flipX ? -1 : 1;
+	}
+
+	public virtual bool SetDirectionX(float input)
+	{
+		sprite.flipX = input < 0;
+
+		return true;
+	}
+
+	public void ApplyForce(Vector2 force)
+	{
+		body.AddForce(force, ForceMode2D.Impulse);
+	}
+
+	public void ApplyDamage(float amount, Health.DamageType damageType, GameObject source)
+	{
+		Health health = GetComponent<Health>();
+		if (health != null)
+			health.ApplyDamage(amount, damageType, source);
 	}
 
 	public virtual bool Move(Vector2 input)

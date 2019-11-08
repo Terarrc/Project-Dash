@@ -59,23 +59,22 @@ public class Health : MonoBehaviour
 		}
 		currentHealth -= damage;
 
-		Entity entity = GetComponent<Entity>();
-		if (entity != null)
+		Unit unit = GetComponent<Unit>();
+		if (unit != null)
 		{
 			if (transform.position.x < source.transform.position.x)
-				entity.ApplySpeed(new Vector2(-10, 5));
+				unit.ApplyForce(new Vector2(-20, 10));
 
 			else
-				entity.ApplySpeed(new Vector2(10, 5));
+				unit.ApplyForce(new Vector2(20, 10));
 		}
 
-		// If a damage is taken, the entity is briefly invulnerable
+		// If a damage is taken, the entity is briefly red
 		if (damage >= 1)
 		{
 			timerRed = redTime;
 			sprite.color = new Color(1, 0, 0);
 		}
-
 
 		if (currentHealth <= 0)
 			Kill(source);
