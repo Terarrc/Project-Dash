@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6397223313111066376}
   - component: {fileID: 6397223313111066379}
   - component: {fileID: 6397223313111066377}
-  m_Layer: 12
+  m_Layer: 11
   m_Name: Energy_Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,7 +132,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 15}
+  m_Size: {x: 1, y: 17}
   m_EdgeRadius: 0
 --- !u!95 &6397223313111066377
 Animator:
@@ -164,6 +164,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Energy_Ground_Top (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1192754706424469036, guid: 7736d98d6f6146148a035e19333e53b8,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 7721627798424466160, guid: 7736d98d6f6146148a035e19333e53b8,
         type: 3}

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7080704996284031263}
   - component: {fileID: 1299896796654707453}
   - component: {fileID: 4544343487607997635}
-  - component: {fileID: 7658023873410144446}
   - component: {fileID: 7080704996284031257}
   - component: {fileID: 7080704996284031258}
   - component: {fileID: 5779869371375558129}
@@ -53,9 +52,18 @@ MonoBehaviour:
   speed: {x: 10, y: 0}
   acceleration: {x: 100, y: 0}
   jumpSpeed: 22
-  doubleJumpParticle: {fileID: 1483724610723144411, guid: e90816ef545d863489422df59b00a038,
+  doubleJumpParticle: {fileID: 3872488329964344648, guid: e90816ef545d863489422df59b00a038,
+    type: 3}
+  dashParticle: {fileID: 1458038487322518881, guid: 5eae381317a47a24788031057eefc062,
     type: 3}
   doubleJumpSpeed: 22
+  dashSpeed: 30
+  dashDuration: 0.2
+  groundedDashDelay: 0.5
+  wallJumpSpeed: 20
+  wallJumpSpeedX: 30
+  wallSlideSpeed: 1
+  bufferGroundedTime: 0.05
 --- !u!114 &4544343487607997635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,18 +78,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   analogMovement: 1
   bufferTime: 0.1
---- !u!114 &7658023873410144446
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7080704996284031239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78181709f93cb294da40675e35c29f07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &7080704996284031257
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -118,8 +114,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1148383967
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 4286226893186011910, guid: e3b33a0c1ba4061479a12cfef3a5dc84,
     type: 3}

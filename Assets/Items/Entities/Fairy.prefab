@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 602112419631556425}
-  - component: {fileID: 8833812991706781820}
   - component: {fileID: 7598376697876336187}
   - component: {fileID: 8102855283104174204}
   - component: {fileID: -5838410206474701275}
-  m_Layer: 0
+  - component: {fileID: 1387588598649062258}
+  m_Layer: 13
   m_Name: Fairy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34,24 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8833812991706781820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4034704999682480111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5eea747c2ab32b3429309ee8f1faaf44, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeedX: 4
-  moveSpeedY: 4
-  jumpSpeed: 0
-  accelerationX: 8
-  accelerationY: 8
-  affectedByGravity: 0
 --- !u!114 &7598376697876336187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -101,8 +83,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1433474061
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -2990309890484215505, guid: bd0f8ced2084ac64da8f81c49492c76b,
     type: 3}
@@ -135,3 +117,24 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!50 &1387588598649062258
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4034704999682480111}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4

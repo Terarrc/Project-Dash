@@ -14,10 +14,10 @@ TagManager:
   - 
   - 
   - Ground
-  - Horizontal Energy Field
-  - Vertical Energy Field
-  - Horizontal Energy Ground
-  - Vertical Energy Ground
+  - Energy Field
+  - Energy Projectile
+  - Energy Ground
+  - Projectile
   - Player
   - Robot
   - Demon
@@ -40,4 +40,19 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 689420291
+    locked: 0
+  - name: Ground
+    uniqueID: 3425183187
+    locked: 0
+  - name: Mob
+    uniqueID: 4272589529
+    locked: 0
+  - name: Fairy
+    uniqueID: 1433474061
+    locked: 0
+  - name: Player
+    uniqueID: 1148383967
     locked: 0

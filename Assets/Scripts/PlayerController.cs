@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : Controller
 {
-	public enum bufferedInput { none, jump, dash };
+	public enum BufferedInput { none, jump, dash };
 
 	[SerializeField, Tooltip("Enable analog movement")]
 	public bool analogMovement;
@@ -14,8 +14,8 @@ public class PlayerController : Controller
 
 
 	// Buffer for player input
-	private bufferedInput buffer;
-	public bufferedInput Buffer
+	private BufferedInput buffer;
+	public BufferedInput Buffer
 	{
 		get
 		{
@@ -24,7 +24,7 @@ public class PlayerController : Controller
 		set
 		{
 			buffer = value;
-			if (value != bufferedInput.none)
+			if (value != BufferedInput.none)
 				timerBuffer = bufferTime;
 		}
 	}
@@ -47,7 +47,7 @@ public class PlayerController : Controller
 			timerBuffer -= time;
 			if (timerBuffer <= 0)
 			{
-				Buffer = bufferedInput.none;
+				Buffer = BufferedInput.none;
 			}
 		}
 
@@ -85,27 +85,21 @@ public class PlayerController : Controller
 		{
 			if (!unit.Jump())
 			{
-				Buffer = bufferedInput.jump;
+				Buffer = BufferedInput.jump;
 			}
 			else
 				jumped = true;
 		}
-		else if (buffer == bufferedInput.jump)
+		else if (buffer == BufferedInput.jump)
 		{
 			if (unit.Jump())
 			{
-				Buffer = bufferedInput.none;
+				Buffer = BufferedInput.none;
 				if (!Input.GetButton("Jump"))
 					unit.StopJump();
 
 				jumped = true;
 			}
-		}
-
-		// Hold Jump
-		if (Input.GetButton("Jump"))
-		{
-			unit.HoldJump();
 		}
 
 		// Stop Jump
@@ -121,14 +115,14 @@ public class PlayerController : Controller
 			{
 				if (!unit.Action(1))
 				{
-					Buffer = bufferedInput.dash;
+					Buffer = BufferedInput.dash;
 				}
 			}
-			else if (buffer == bufferedInput.dash)
+			else if (buffer == BufferedInput.dash)
 			{
 				if (unit.Action(1))
 				{
-					Buffer = bufferedInput.none;
+					Buffer = BufferedInput.none;
 				}
 			}
 		}
