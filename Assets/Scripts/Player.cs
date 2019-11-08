@@ -173,6 +173,7 @@ public class Player : Unit
 		else
 		{
 			timerGroundedDash = 0;
+
 			if (timerBufferGrounded > 0)
 				timerBufferGrounded -= Time.deltaTime;
 		}
@@ -251,18 +252,15 @@ public class Player : Unit
 		}
 
 		// Check if we are grounded from the buffer
-		if (timerBufferGrounded > 0 && !isGrounded)
+		if (timerBufferGrounded > 0 || IsGrounded)
 		{
-			isGrounded = true;
-		}
-
-		if (base.Jump())
+			IsJumping = true;
 			return true;
+		}
 
 		else if (canDoubleJump)
 		{
 			IsDoubleJumping = true;
-
 			return true;
 		}
 

@@ -106,7 +106,7 @@ public class Unit : MonoBehaviour
 		if (body.velocity.y <= 0)
 			IsJumping = false;
 
-		IsGrounded = Physics2D.OverlapCircle(body.position + (Vector2.down * (boxCollider.bounds.size.y / 2)), boxCollider.bounds.size.x / 2, LayerGround);
+		IsGrounded = Physics2D.OverlapCircle(body.position + (Vector2.down * (boxCollider.bounds.size.y / 2)), boxCollider.bounds.size.x / 2, LayerGround - (1 << gameObject.layer));
 
 		animator.SetFloat("Speed X", body.velocity.x);
 		animator.SetFloat("Speed Y", body.velocity.y);
