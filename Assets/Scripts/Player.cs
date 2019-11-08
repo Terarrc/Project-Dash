@@ -153,10 +153,14 @@ public class Player : Unit
 		if (body.velocity.y <= 0)
 			IsDoubleJumping = false;
 
-		if (IsGrounded && !IsDashing)
+		if (isGrounded)
 		{
-			timerBufferGrounded = bufferGroundedTime;
-			canDoubleJump = true;
+			if (!IsDashing)
+			{
+				timerBufferGrounded = bufferGroundedTime;
+				canDoubleJump = true;
+			}
+
 			if (timerGroundedDash > 0)
 			{
 				timerGroundedDash -= Time.deltaTime;

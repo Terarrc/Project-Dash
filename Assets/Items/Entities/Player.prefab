@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: {x: 10, y: 0}
-  acceleration: {x: 100, y: 0}
+  acceleration: {x: 200, y: 0}
   jumpSpeed: 22
   doubleJumpParticle: {fileID: 3872488329964344648, guid: e90816ef545d863489422df59b00a038,
     type: 3}
