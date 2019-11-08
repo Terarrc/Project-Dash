@@ -12044,12 +12044,12 @@ PrefabInstance:
     - target: {fileID: 602112419631556425, guid: bbc078b6a2313054aaa03c0c174768da,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.3
+      value: 1.39
       objectReference: {fileID: 0}
     - target: {fileID: 602112419631556425, guid: bbc078b6a2313054aaa03c0c174768da,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.7
+      value: 3.06
       objectReference: {fileID: 0}
     - target: {fileID: 602112419631556425, guid: bbc078b6a2313054aaa03c0c174768da,
         type: 3}
@@ -12096,6 +12096,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7598376697876336187, guid: bbc078b6a2313054aaa03c0c174768da,
+        type: 3}
+      propertyPath: following
+      value: 
+      objectReference: {fileID: 1248770075}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbc078b6a2313054aaa03c0c174768da, type: 3}
 --- !u!1 &639187259
@@ -12109,7 +12114,7 @@ GameObject:
   - component: {fileID: 639187260}
   - component: {fileID: 639187262}
   - component: {fileID: 639187261}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: Vertical_EnergyField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12230,12 +12235,12 @@ PrefabInstance:
     - target: {fileID: 7080704996284031263, guid: d02d610d5bbe650418214872f38fdbbb,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.6
+      value: 9.08
       objectReference: {fileID: 0}
     - target: {fileID: 7080704996284031263, guid: d02d610d5bbe650418214872f38fdbbb,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.7
+      value: -1.29
       objectReference: {fileID: 0}
     - target: {fileID: 7080704996284031263, guid: d02d610d5bbe650418214872f38fdbbb,
         type: 3}
@@ -12281,6 +12286,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1299896796654707453, guid: d02d610d5bbe650418214872f38fdbbb,
+        type: 3}
+      propertyPath: bufferGroundedTime
+      value: 0.075
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d02d610d5bbe650418214872f38fdbbb, type: 3}
@@ -12353,6 +12363,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f67be9d8890fb84fbdea7657848488b, type: 3}
+--- !u!114 &1248770075 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1299896796654707453, guid: d02d610d5bbe650418214872f38fdbbb,
+    type: 3}
+  m_PrefabInstance: {fileID: 726794754}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c38a32dbd4f1cda4a8ae4f8de8459502, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1276479039
 GameObject:
   m_ObjectHideFlags: 0

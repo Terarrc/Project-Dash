@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FairyController : oldController
+public class FairyController : Controller
 {
-    public Entity following;
+    public Unit following;
 
     // Start is called before the first frame update
     void Start() 
@@ -25,10 +25,10 @@ public class FairyController : oldController
 
 			// Check if we're at the right place
 			if (distance.magnitude > 1)
-				controls.Move(new Vector2(distance.x, distance.y).normalized * Mathf.Min(1, distance.magnitude));
+				unit.Move(new Vector2(distance.x, distance.y).normalized * Mathf.Min(1, distance.magnitude));
 			else
 			{
-				controls.Move(Vector2.zero);
+				unit.Move(Vector2.zero);
 			}
 
 		}

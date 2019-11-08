@@ -12,8 +12,13 @@ public class Unit : MonoBehaviour
 	protected SpriteRenderer sprite;
 	protected Animator animator;
 
+	[SerializeField, Tooltip("Movement speed of the unit")]
 	public Vector2 speed;
+	[SerializeField, Tooltip("Acceleration of the unit")]
 	public Vector2 acceleration;
+	[SerializeField, Tooltip("Enable vertical movement input")]
+	public bool verticalMovement;
+	[SerializeField, Tooltip("Vertical speed given when the unit is jumping")]
 	public float jumpSpeed;
 
 	private int layerGround;
@@ -78,7 +83,7 @@ public class Unit : MonoBehaviour
 		if (body.velocity.y <= 0)
 			IsJumping = false;
 
-		IsGrounded = Physics2D.OverlapCircle(body.position, boxCollider.bounds.size.x / 2, layerGround);
+		IsGrounded = Physics2D.OverlapCircle(body.position + (Vector2.down * (boxCollider.bounds.size.y / 2)), boxCollider.bounds.size.x / 2, layerGround);
 
 		animator.SetFloat("Speed X", body.velocity.x);
 		animator.SetFloat("Speed Y", body.velocity.y);
@@ -91,7 +96,10 @@ public class Unit : MonoBehaviour
 
 	public virtual bool Move(Vector2 input)
 	{
-		body.velocity = new Vector2(Mathf.MoveTowards(body.velocity.x, speed.x * input.x, acceleration.x * Time.deltaTime), body.velocity.y);
+		if (!verticalMovement)
+			body.velocity = new Vector2(Mathf.MoveTowards(body.velocity.x, speed.x * input.x, acceleration.x * Time.deltaTime), body.velocity.y);
+		else
+			body.velocity = new Vector2(Mathf.MoveTowards(body.velocity.x, speed.x * input.x, acceleration.x * Time.deltaTime), Mathf.MoveTowards(body.velocity.y, speed.y * input.y, acceleration.y * Time.deltaTime));
 
 		if (input.x != 0)
 			sprite.flipX = input.x > 0 ? false : true;

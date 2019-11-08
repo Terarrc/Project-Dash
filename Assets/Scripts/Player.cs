@@ -40,7 +40,7 @@ public class Player : Unit
 
 				// Generate particle
 				if (doubleJumpParticle != null)
-					Instantiate(doubleJumpParticle, transform.position, Quaternion.identity);
+					Instantiate(doubleJumpParticle, body.position + (Vector2.down * (boxCollider.bounds.size.y / 2)), Quaternion.identity);
 			}
 		}
 	}
