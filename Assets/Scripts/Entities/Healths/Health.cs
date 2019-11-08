@@ -42,8 +42,11 @@ public class Health : MonoBehaviour
 		}
 	}
 
-	public void ApplyDamage(float amount, DamageType damageType, GameObject source)
+	public float ApplyDamage(float amount, DamageType damageType, GameObject source)
 	{
+		if (timerRed > 0)
+			return 0;
+
 		int damage = 0;
 		switch (damageType)
 		{
@@ -63,10 +66,10 @@ public class Health : MonoBehaviour
 		if (unit != null)
 		{
 			if (transform.position.x < source.transform.position.x)
-				unit.ApplyForce(new Vector2(-20, 10));
+				unit.ApplyForce(new Vector2(-10, 5));
 
 			else
-				unit.ApplyForce(new Vector2(20, 10));
+				unit.ApplyForce(new Vector2(10, 5));
 		}
 
 		// If a damage is taken, the entity is briefly red
@@ -78,6 +81,8 @@ public class Health : MonoBehaviour
 
 		if (currentHealth <= 0)
 			Kill(source);
+
+		return damage;
 	}
 
 	protected virtual void Kill(GameObject source)

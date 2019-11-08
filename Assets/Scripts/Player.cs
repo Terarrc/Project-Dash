@@ -86,7 +86,7 @@ public class Player : Unit
 					IsWallSliding = false;
 
 				// Disable collision
-				gameObject.layer = LayerMask.NameToLayer("Energy Projectile");
+				gameObject.layer = LayerMask.NameToLayer("Energy Dash");
 				body.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
 
 				timerDash = dashDuration;

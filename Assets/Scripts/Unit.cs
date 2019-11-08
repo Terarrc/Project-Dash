@@ -129,11 +129,13 @@ public class Unit : MonoBehaviour
 		body.AddForce(force, ForceMode2D.Impulse);
 	}
 
-	public void ApplyDamage(float amount, Health.DamageType damageType, GameObject source)
+	public float ApplyDamage(float amount, Health.DamageType damageType, GameObject source)
 	{
 		Health health = GetComponent<Health>();
 		if (health != null)
-			health.ApplyDamage(amount, damageType, source);
+			return health.ApplyDamage(amount, damageType, source);
+
+		return 0;
 	}
 
 	public virtual bool Move(Vector2 input)

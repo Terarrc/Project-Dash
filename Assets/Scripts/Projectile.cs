@@ -33,8 +33,8 @@ public class Projectile : MonoBehaviour
 		{
 			if (unit.faction != faction)
 			{
-				unit.ApplyDamage(damage, type, gameObject);
-				Destroy(gameObject);
+				if(unit.ApplyDamage(damage, type, gameObject) > 0)
+					Destroy(gameObject);
 			}
 		}
 		else
