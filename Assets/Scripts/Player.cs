@@ -81,6 +81,9 @@ public class Player : Unit
 			isDashing = value;
 			if (value)
 			{
+				if (IsWallSliding)
+					IsWallSliding = false;
+
 				// Disable collision
 				gameObject.layer = LayerMask.NameToLayer("Energy Projectile");
 				body.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
@@ -215,15 +218,13 @@ public class Player : Unit
 		{
 			ColliderDistance2D colliderDistance = collision.collider.Distance(collision.otherCollider);
 
-			Debug.Log(Vector2.Angle(colliderDistance.normal, Vector2.up));
-
 			// Check if the collision is horizontal
-			if (Vector2.Angle(colliderDistance.normal, Vector2.up) == 90)
+			if (Mathf.Approximately(Vector2.Angle(colliderDistance.normal, Vector2.up), 90))
 			{
-				sprite.flipX = collision.transform.position.x - transform.position.x > 0;
+				sprite.flipX = collision.GetContact(0).point.x - transform.position.x > 0;
 				IsWallSliding = true;
 			}	
-		}
+		} 
 	}
 
 	public override bool Move(Vector2 input)
@@ -246,7 +247,6 @@ public class Player : Unit
 		// Check if we are grounded from the buffer
 		if (timerBufferGrounded > 0 && !isGrounded)
 		{
-			Debug.Log("Buffered");
 			isGrounded = true;
 		}
 

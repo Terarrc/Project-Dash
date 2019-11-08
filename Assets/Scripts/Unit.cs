@@ -78,7 +78,7 @@ public class Unit : MonoBehaviour
 		if (body.velocity.y <= 0)
 			IsJumping = false;
 
-		IsGrounded = Mathf.Approximately(body.velocity.y, 0) && Physics2D.OverlapCircle(body.position, boxCollider.bounds.size.x / 2, layerGround);
+		IsGrounded = Physics2D.OverlapCircle(body.position, boxCollider.bounds.size.x / 2, layerGround);
 
 		animator.SetFloat("Speed X", body.velocity.x);
 		animator.SetFloat("Speed Y", body.velocity.y);
