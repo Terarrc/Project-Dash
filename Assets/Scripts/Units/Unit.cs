@@ -98,7 +98,7 @@ public class Unit : MonoBehaviour
 		if (animator != null)
 			animator.logWarnings = false;
 
-		LayerGround = (1 << LayerMask.NameToLayer("Ground")) + (1 << LayerMask.NameToLayer("Energy Ground")) + (1 << LayerMask.NameToLayer("Energy Field")) + (1 << gameObject.layer);
+		LayerGround = (1 << LayerMask.NameToLayer("Ground")) + (1 << LayerMask.NameToLayer("Energy Ground")) + (1 << LayerMask.NameToLayer("Energy Field"));
 	}
 
 	protected void Update()
@@ -106,15 +106,38 @@ public class Unit : MonoBehaviour
 		if (body.velocity.y <= 0)
 			IsJumping = false;
 
-		IsGrounded = Physics2D.OverlapCircle(body.position + (Vector2.down * (boxCollider.bounds.size.y / 2)), boxCollider.bounds.size.x / 2, LayerGround - (1 << gameObject.layer));
-
-		animator.SetFloat("Speed X", body.velocity.x);
-		animator.SetFloat("Speed Y", body.velocity.y);
+		if (animator != null)
+		{
+			animator.SetFloat("Speed X", body.velocity.x);
+			animator.SetFloat("Speed Y", body.velocity.y);
+		}
 	}
 
-	public float GetDirectionX()
+	protected void FixedUpdate()
 	{
-		return sprite.flipX ? -1 : 1;
+		// Called before unity physic check, including collision
+		IsGrounded = false;
+	}
+
+	protected void OnCollisionStay2D(Collision2D collision)
+	{
+		ColliderDistance2D colliderDistance = collision.collider.Distance(boxCollider);
+
+		// Check if the collision is less than 50° with the vertical, and check if the collision is done from the bottom
+		if ((Vector2.Angle(colliderDistance.normal, Vector2.up) < 50) && (collision.GetContact(0).point.y - body.position.y < 0))
+			IsGrounded = true;
+		else
+		{
+			// If we are stuck to a wall, the angle will be 90°
+			// If the angle is not right, check the ground to be sure we are not stuck in a wall
+			if (Physics2D.OverlapCircle(Position + (Vector2.down * (Size.y / 2)), (Size.x / 4), LayerGround))
+				IsGrounded = true;
+		}
+	}
+
+	public Vector2 GetDirection()
+	{
+		return sprite.flipX ? Vector2.left : Vector2.right;
 	}
 
 	public virtual bool SetDirectionX(float input)

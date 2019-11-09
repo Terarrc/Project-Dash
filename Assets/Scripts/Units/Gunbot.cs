@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GunbotEntity : Entity
+public class Gunbot : Unit
 {
-	public Entity projectile;
+	public Projectile projectile;
 	public float fireRate;
 	public float burstRate;
 
@@ -12,12 +12,9 @@ public class GunbotEntity : Entity
 	private int fireCount;
 	private float timerReload;
 
-    // Start is called before the first frame update
-    new void Start()
-    {
-		base.Start();
-		layerCollision += 1 << LayerMask.NameToLayer("Robot");
-		layerBlock += 1 << LayerMask.NameToLayer("Robot");
+	private void Start()
+	{
+		AttackRange = 8;
 	}
 
 	new void Update()
@@ -26,18 +23,25 @@ public class GunbotEntity : Entity
 
 		if (timerFire > 0)
 		{
-			float time = Time.deltaTime * 1000;
+			float time = Time.deltaTime;
 			timerFire -= time;
 		}
 
 		if (timerReload > 0)
 		{
-			float time = Time.deltaTime * 1000;
+			float time = Time.deltaTime;
 			timerReload -= time;
 
 			if (timerReload <= 0)
 				fireCount = 0;
 		}
+	}
+	public override bool Move(Vector2 input)
+	{
+		if (timerFire > 0)
+			return base.Move(Vector2.zero);
+
+		return base.Move(input);
 	}
 
 	public override bool Action(int index)
@@ -58,16 +62,8 @@ public class GunbotEntity : Entity
 			return false;
 		else
 		{
-			if (GetDirectionX() < 0)
-			{
-				Entity createdProjectile = Instantiate(projectile, new Vector3(transform.position.x - 0.5f, transform.position.y + 1.125f, 0), Quaternion.identity);
-				createdProjectile.Move(new Vector2(-1, Random.Range(-1, 1)));
-			}
-			else
-			{
-				Entity createdProjectile = Instantiate(projectile, new Vector3(transform.position.x + 0.5f, transform.position.y + 1.125f, 0), Quaternion.identity);
-				createdProjectile.Move(new Vector2(1, Random.Range(-1, 1)));
-			}
+			Projectile createdProjectile = Instantiate(projectile, new Vector3(transform.position.x + (GetDirection().x * 0.875f), transform.position.y + 0.4375f, 0), Quaternion.identity);
+			createdProjectile.SetVelocity((GetDirection() * 20) + (Vector2.up * Random.Range(-0.1f, 0.1f)));
 
 			if (fireCount == 2)
 			{
@@ -80,7 +76,7 @@ public class GunbotEntity : Entity
 				timerFire = burstRate;
 				timerReload = fireRate;
 				fireCount++;
-			}	
+			}
 
 			animator.SetTrigger("Fire");
 			return true;

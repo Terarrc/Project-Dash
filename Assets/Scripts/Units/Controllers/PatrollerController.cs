@@ -25,7 +25,7 @@ public class PatrollerController : Controller
     {
 		state = State.PatrolLeft;
 
-		layerAggro = unit.LayerGround - (1 << unit.gameObject.layer);
+		layerAggro = unit.LayerGround;
 		switch (unit.faction)
 		{
 			case Unit.Faction.Robot:
@@ -50,83 +50,91 @@ public class PatrollerController : Controller
 		{
 			case State.PatrolLeft:
 				unit.Move(new Vector2(-0.5f, 0));
-				CheckForWall(Vector2.left);
-				CheckForCliff(Vector2.left);
+				if (CheckForWall(Vector2.left))
+					state = State.PatrolRight;
+				if (CheckForCliff(Vector2.left))
+					state = State.PatrolRight;
 				LookForEnemy(Vector2.left);
 				break;
 			case State.PatrolRight:
 				unit.Move(new Vector2(0.5f, 0));
-				CheckForWall(Vector2.right);
-				CheckForCliff(Vector2.right);
+				if (CheckForWall(Vector2.right))
+					state = State.PatrolLeft;
+				if (CheckForCliff(Vector2.right))
+					state = State.PatrolLeft;
 				LookForEnemy(Vector2.right);
 				break;
 			case State.Aggro:
-				AttackEnemy();
+				if (!AttackEnemy())
+				{
+					if (CheckForWall(unit.GetDirection()))
+						unit.Jump();
+					else if (CheckForCliff(unit.GetDirection()))
+						unit.Move(Vector2.zero);
+				}
 				break;
 			case State.LostAggro:
-				switch (unit.GetDirectionX())
-				{
-					case 1:
-						state = State.PatrolRight;
-						break;
-					default:
-						state = State.PatrolLeft;
-						break;
-				};
+				if (unit.GetDirection() == Vector2.right)
+					state = State.PatrolRight;
+				else
+					state = State.PatrolLeft;
 				break;
 			default:
 				break;
 		}
 	}
 
-	private void CheckForWall(Vector2 direction)
+	protected void OnCollisionEnter2D(Collision2D collision)
 	{
-		RaycastHit2D hit = Physics2D.Raycast(unit.Position + (direction * ((unit.Size.x / 2) + 0.1f)), direction, 0.1f, unit.LayerGround);
+		ColliderDistance2D colliderDistance = collision.collider.Distance(boxCollider);
 
-		if (hit.collider != null && hit.collider.gameObject != unit.gameObject)
+		// Check if the collision is horizontal
+		if ((Vector2.Angle(colliderDistance.normal, Vector2.up) > 45) && (Vector2.Angle(colliderDistance.normal, Vector2.up) < 135))
 		{
 			switch (state)
 			{
 				case State.PatrolLeft:
-					state = State.PatrolRight;
 					break;
 				case State.PatrolRight:
-					state = State.PatrolLeft;
+					break;
+				case State.Aggro:
 					break;
 				default:
 					break;
 			}
 		}
+
 	}
 
-	private void CheckForCliff(Vector2 direction)
+	private bool CheckForWall(Vector2 direction)
+	{
+		RaycastHit2D hit = Physics2D.Raycast(unit.Position + (direction * ((unit.Size.x / 2) + 0.1f)), direction, 0.1f, unit.LayerGround);
+
+		if (hit.collider != null && hit.collider.gameObject != unit.gameObject)
+			return true;
+		
+		return false;
+	}
+
+	private bool CheckForCliff(Vector2 direction)
 	{
 		Vector2 origin = unit.Position + (direction * ((unit.Size.x / 2) + 0.1f)) + (Vector2.down * unit.Size.y / 2);
 
 		RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, 0.1f, unit.LayerGround);
 
 		if (hit.collider == null)
-		{
-			switch (state)
-			{
-				case State.PatrolLeft:
-					state = State.PatrolRight;
-					break;
-				case State.PatrolRight:
-					state = State.PatrolLeft;
-					break;
-				default:
-					break;
-			}
-		}
+			return true;
+
+
+		return false;
 	}
 
-	private void AttackEnemy()
+	private bool AttackEnemy()
 	{
 		if (aggro == null)
 		{
 			state = State.LostAggro;
-			return;
+			return false;
 		}
 	
 		Vector2 distance = aggro.Position - unit.Position;
@@ -140,7 +148,7 @@ public class PatrollerController : Controller
 		{
 			unit.Move(Vector2.zero);
 			unit.Action(1);
-			return;
+			return true;
 		}
 		else
 		{
@@ -172,6 +180,8 @@ public class PatrollerController : Controller
 			unit.Move(new Vector2(-1, 0));
 		else
 			unit.Move(new Vector2(1, 0));
+
+		return false;
 	}
 
 	private void LookForEnemy(Vector2 direction)

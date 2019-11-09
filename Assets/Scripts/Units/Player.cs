@@ -17,6 +17,24 @@ public class Player : Unit
 	public float wallSlideSpeed;
 	public float bufferGroundedTime;
 
+	// In which room the player is
+	private Room room;
+	public Room Room {
+		get
+		{
+			return room;
+		}
+		set
+		{
+			room = value;
+			IsDashing = false;
+			IsJumping = false;
+			IsDoubleJumping = false;
+			body.velocity = Vector2.zero;
+		}
+ }
+
+
 	private float timerBufferGrounded;
 
 	private bool canDoubleJump;
@@ -62,7 +80,7 @@ public class Player : Unit
 			if (value)
 			{
 				IsWallSliding = false;
-				body.velocity = new Vector2(wallJumpSpeedX * GetDirectionX(), wallJumpSpeed);
+				body.velocity = new Vector2(wallJumpSpeedX * GetDirection().x, wallJumpSpeed);
 				timerWallJump = wallJumpTime;
 			}
 		}
@@ -180,7 +198,8 @@ public class Player : Unit
 
 		if (IsDashing)
 		{
-			body.velocity = new Vector2(dashSpeed * GetDirectionX(), 0);
+			canDash = false;
+			body.velocity = dashSpeed * GetDirection();
 
 			timerDash -= Time.deltaTime;
 			timerDashParticles -= Time.deltaTime;
@@ -201,7 +220,7 @@ public class Player : Unit
 		if (IsWallSliding)
 		{
 			int layerEnergy = (1 << LayerMask.NameToLayer("Energy Field")) + (1 << LayerMask.NameToLayer("Energy Ground"));
-			bool touchEnergyField = Physics2D.OverlapCircle(body.position + new Vector2(boxCollider.bounds.size.x / 2 * -GetDirectionX(), boxCollider.bounds.size.y / 2), boxCollider.bounds.size.x / 2, layerEnergy);
+			bool touchEnergyField = Physics2D.OverlapCircle(body.position + new Vector2(boxCollider.bounds.size.x / 2 * -GetDirection().x, boxCollider.bounds.size.y / 2), boxCollider.bounds.size.x / 2, layerEnergy);
 
 			if (!touchEnergyField || isGrounded)
 			{
@@ -219,8 +238,10 @@ public class Player : Unit
 		}
 	}
 
-	public void OnCollisionStay2D(Collision2D collision)
+	protected new void OnCollisionStay2D(Collision2D collision)
 	{
+		base.OnCollisionStay2D(collision);
+
 		if (!IsWallSliding && !IsWallJumping && !isGrounded && (collision.gameObject.layer == LayerMask.NameToLayer("Energy Field") || collision.gameObject.layer == LayerMask.NameToLayer("Energy Ground")))
 		{
 			ColliderDistance2D colliderDistance = collision.collider.Distance(collision.otherCollider);
@@ -228,7 +249,7 @@ public class Player : Unit
 			// Check if the collision is horizontal
 			if (Mathf.Approximately(Vector2.Angle(colliderDistance.normal, Vector2.up), 90))
 			{
-				sprite.flipX = collision.GetContact(0).point.x - transform.position.x > 0;
+				sprite.flipX = collision.GetContact(0).point.x - Position.x > 0;
 				IsWallSliding = true;
 			}	
 		} 
