@@ -501,8 +501,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -650437669
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: -5329458200867203237, guid: 3801bd603d8dd4849b4e6c6ba222150f,
     type: 3}
@@ -8391,8 +8391,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -650437669
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: -5329458200867203237, guid: 3801bd603d8dd4849b4e6c6ba222150f,
     type: 3}
@@ -8847,6 +8847,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Room1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3652808215628371374, guid: 645d167984a0e5c4e94fd122f7fb3344,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 645d167984a0e5c4e94fd122f7fb3344, type: 3}
