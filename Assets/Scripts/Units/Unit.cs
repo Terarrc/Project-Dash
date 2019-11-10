@@ -92,7 +92,7 @@ public class Unit : MonoBehaviour
 	protected void Awake()
 	{
 		body = GetComponent<Rigidbody2D>();
-
+		health = GetComponent<Health>();
 		boxCollider = GetComponent<BoxCollider2D>();
 		sprite = GetComponent<SpriteRenderer>();
 		animator = GetComponent<Animator>();
