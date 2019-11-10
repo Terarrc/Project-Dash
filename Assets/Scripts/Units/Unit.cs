@@ -13,6 +13,7 @@ public class Unit : MonoBehaviour
 	protected BoxCollider2D boxCollider;
 	protected SpriteRenderer sprite;
 	protected Animator animator;
+	protected Health health;
 
 	[SerializeField, Tooltip("Movement speed of the unit")]
 	public Vector2 speed;
@@ -74,13 +75,13 @@ public class Unit : MonoBehaviour
 
 	public int LayerGround { get; set; }
 	protected bool isGrounded;
-	protected bool IsGrounded
+	public bool IsGrounded
 	{
 		get
 		{
 			return isGrounded;
 		}
-		set
+		protected set
 		{
 			isGrounded = value;
 			if (animator != null)

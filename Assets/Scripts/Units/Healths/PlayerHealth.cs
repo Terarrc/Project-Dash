@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class PlayerHealth : Health
 {
-	public Vector3 respawnPoint;
+	public Vector3 RespawnPoint { get; set; }
 
 	protected override void Kill(GameObject source)
 	{
 		currentHealth = maxHealth;
-		gameObject.transform.position = respawnPoint;
+		gameObject.transform.position = RespawnPoint;
+	}
+
+	public void SetRespawnPoint(Vector3 position)
+	{
+		RespawnPoint = position;
 	}
 
 	/*

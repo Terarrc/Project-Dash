@@ -255,6 +255,18 @@ public class Player : Unit
 		} 
 	}
 
+	public void SetRespawnPoint(Vector3 position)
+	{
+		if (health != null)
+		{
+			PlayerHealth playerHealth = health as PlayerHealth;
+			if (playerHealth != null)
+			{
+				playerHealth.RespawnPoint = position;
+			}
+		}
+	}
+
 	public override bool Move(Vector2 input)
 	{
 		if (IsDashing || IsWallSliding)

@@ -63,6 +63,7 @@ public class Room : MonoBehaviour
 			if (closestSpawn != null)
 			{
 				player.transform.position = closestSpawn.position;
+				player.SetRespawnPoint(closestSpawn.position);
 			}
 		}
 	}

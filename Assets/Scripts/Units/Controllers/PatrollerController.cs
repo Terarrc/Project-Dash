@@ -68,8 +68,6 @@ public class PatrollerController : Controller
 				if (!AttackEnemy())
 				{
 					if (CheckForWall(unit.GetDirection()))
-						unit.Jump();
-					else if (CheckForCliff(unit.GetDirection()))
 						unit.Move(Vector2.zero);
 				}
 				break;
@@ -83,7 +81,7 @@ public class PatrollerController : Controller
 				break;
 		}
 	}
-
+/*
 	protected void OnCollisionEnter2D(Collision2D collision)
 	{
 		ColliderDistance2D colliderDistance = collision.collider.Distance(boxCollider);
@@ -94,10 +92,13 @@ public class PatrollerController : Controller
 			switch (state)
 			{
 				case State.PatrolLeft:
+					state = State.PatrolRight;
 					break;
 				case State.PatrolRight:
+					state = State.PatrolLeft;
 					break;
 				case State.Aggro:
+					unit.Move(Vector2.zero);
 					break;
 				default:
 					break;
@@ -105,10 +106,10 @@ public class PatrollerController : Controller
 		}
 
 	}
-
+	*/
 	private bool CheckForWall(Vector2 direction)
 	{
-		RaycastHit2D hit = Physics2D.Raycast(unit.Position + (direction * ((unit.Size.x / 2) + 0.1f)), direction, 0.1f, unit.LayerGround);
+		RaycastHit2D hit = Physics2D.Raycast(unit.Position + (direction * ((unit.Size.x / 2) + 0.1f)) + (Vector2.up * (unit.Size.y / 2)), Vector2.down, unit.Size.y - 0.1f, unit.LayerGround + (1 << unit.gameObject.layer));
 
 		if (hit.collider != null && hit.collider.gameObject != unit.gameObject)
 			return true;
@@ -118,7 +119,10 @@ public class PatrollerController : Controller
 
 	private bool CheckForCliff(Vector2 direction)
 	{
-		Vector2 origin = unit.Position + (direction * ((unit.Size.x / 2) + 0.1f)) + (Vector2.down * unit.Size.y / 2);
+		if (!unit.IsGrounded)
+			return false;
+
+		Vector2 origin = unit.Position + (direction * ((unit.Size.x / 2) + 0.1f)) + (Vector2.down * (unit.Size.y / 2));
 
 		RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, 0.1f, unit.LayerGround);
 
@@ -176,7 +180,10 @@ public class PatrollerController : Controller
 			}
 		}
 
-		if (distance.x < 0)
+		if (CheckForCliff(unit.GetDirection()))
+			unit.Move(Vector2.zero);
+
+		else if (distance.x < 0)
 			unit.Move(new Vector2(-1, 0));
 		else
 			unit.Move(new Vector2(1, 0));
