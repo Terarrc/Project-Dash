@@ -238,6 +238,18 @@ public class Player : Unit
 		}
 	}
 
+	public bool IsDropping
+	{
+		get
+		{
+			return !Physics2D.GetIgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("One Way Platform"));
+		}
+		set
+		{
+			Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("One Way Platform"), value);
+		}
+	}
+
 	protected new void OnCollisionStay2D(Collision2D collision)
 	{
 		base.OnCollisionStay2D(collision);
@@ -320,6 +332,12 @@ public class Player : Unit
 			return true;
 		}
 
+		return false;
+	}
+
+	public override bool Drop(bool value)
+	{
+		IsDropping = value;
 		return false;
 	}
 }

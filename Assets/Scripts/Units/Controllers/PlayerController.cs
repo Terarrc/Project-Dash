@@ -43,7 +43,7 @@ public class PlayerController : Controller
 		// Decrease timer buffer
 		if (timerBuffer > 0)
 		{
-			float time = Time.deltaTime * 1000f;
+			float time = Time.deltaTime;
 			timerBuffer -= time;
 			if (timerBuffer <= 0)
 			{
@@ -79,8 +79,12 @@ public class PlayerController : Controller
 		}
 		unit.Move(new Vector2(horizontal, vertical));
 
+		// Drop
+		unit.Drop(vertical <= -0.9f);
+
 		// Jump
 		bool jumped = false;
+	
 		if (Input.GetButtonDown("Jump"))
 		{
 			if (!unit.Jump())

@@ -26,7 +26,7 @@ public class Unit : MonoBehaviour
 	[SerializeField, Tooltip("Define who will be it's allies and who will be it's enemies")]
 	public Faction faction;
 
-	public Vector2 Size 
+	public Vector2 Size
 	{
 		get
 		{
@@ -47,8 +47,8 @@ public class Unit : MonoBehaviour
 
 
 	protected bool isJumping;
-	protected bool IsJumping 
-	{ 
+	protected bool IsJumping
+	{
 		get
 		{
 			return isJumping;
@@ -99,7 +99,7 @@ public class Unit : MonoBehaviour
 		if (animator != null)
 			animator.logWarnings = false;
 
-		LayerGround = (1 << LayerMask.NameToLayer("Ground")) + (1 << LayerMask.NameToLayer("Energy Ground")) + (1 << LayerMask.NameToLayer("Energy Field"));
+		LayerGround = (1 << LayerMask.NameToLayer("Ground")) + (1 << LayerMask.NameToLayer("Energy Ground")) + (1 << LayerMask.NameToLayer("Energy Field")) + (1 << LayerMask.NameToLayer("One Way Platform"));
 	}
 
 	protected void Update()
@@ -205,6 +205,11 @@ public class Unit : MonoBehaviour
 	}
 
 	public virtual bool Action(int index)
+	{
+		return false;
+	}
+
+	public virtual bool Drop(bool value)
 	{
 		return false;
 	}
