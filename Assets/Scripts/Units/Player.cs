@@ -280,7 +280,6 @@ public class Player : Unit
 		if (IsWallSliding)
 		{
 			IsWallJumping = true;
-
 			return true;
 		}
 
@@ -291,7 +290,7 @@ public class Player : Unit
 			return true;
 		}
 
-		else if (canDoubleJump)
+		else if (canDoubleJump && !IsDashing)
 		{
 			IsDoubleJumping = true;
 			return true;
