@@ -85,7 +85,7 @@ public class Health : MonoBehaviour
 		return damage;
 	}
 
-	protected virtual void Kill(GameObject source)
+	public virtual void Kill(GameObject source)
 	{
 		if (deathEffect)
 		{

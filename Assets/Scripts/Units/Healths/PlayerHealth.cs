@@ -6,7 +6,7 @@ public class PlayerHealth : Health
 {
 	public Vector3 RespawnPoint { get; set; }
 
-	protected override void Kill(GameObject source)
+	public override void Kill(GameObject source)
 	{
 		currentHealth = maxHealth;
 		gameObject.transform.position = RespawnPoint;

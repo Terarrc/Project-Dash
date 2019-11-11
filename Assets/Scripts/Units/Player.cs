@@ -159,8 +159,21 @@ public class Player : Unit
 			}
 		}
 	}
+
+	public bool IsDropping
+	{
+		get
+		{
+			return !Physics2D.GetIgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("One Way Platform"));
+		}
+		set
+		{
+			Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("One Way Platform"), value);
+		}
+	}
+
 	#endregion
-	
+
 	void Start()
 	{
 
@@ -235,18 +248,6 @@ public class Player : Unit
 			timerWallJump -= Time.deltaTime;
 			if (timerWallJump <= 0)
 				IsWallJumping = false;
-		}
-	}
-
-	public bool IsDropping
-	{
-		get
-		{
-			return !Physics2D.GetIgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("One Way Platform"));
-		}
-		set
-		{
-			Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("One Way Platform"), value);
 		}
 	}
 
