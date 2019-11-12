@@ -174,7 +174,7 @@ public class Player : Unit
 				Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("One Way Platform"), true);
 			else if (isDropping)
 			{
-				timerDropping = 0.1f;
+				timerDropping = 0.2f;
 			}
 			isDropping = value;
 		}
