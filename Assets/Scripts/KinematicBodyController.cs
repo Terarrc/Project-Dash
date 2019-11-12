@@ -12,7 +12,25 @@ public class KinematicBodyController : MonoBehaviour
 	public float gravityScale;
 
 	public Vector2 Velocity { get; set; }
-	// Synchronise changes in the frame 
+	public Vector2 Position
+	{
+		get
+		{
+			return transform.position;
+		}
+		set
+		{
+			transform.position = new Vector3(value.x, value.y, transform.position.z);
+		}
+	}
+	public Vector2 Size
+	{
+		get
+		{
+			return boxCollider.bounds.size;
+		}
+	}
+
 	public bool Grounded { get; private set; }
 	public RigidbodyConstraints2D Constraints
 	{
@@ -58,10 +76,22 @@ public class KinematicBodyController : MonoBehaviour
 			{
 				transform.Translate(colliderDistance.pointA - colliderDistance.pointB);
 
-				if (Vector2.Angle(colliderDistance.normal, Vector2.up) < 45 && Velocity.y < 0)
+				if (Velocity.y < 0 && (Vector2.Angle(colliderDistance.normal, Vector2.up) < 45))
 				{
+
 					Velocity = new Vector2(Velocity.x, 0);
 					Grounded = true;
+				}
+				else
+				{
+					Vector2 pointA = Position + (Vector2.down * (Size.y / 2)) + (Vector2.left * ((Size.x / 2) - (3f / 16f)));
+					Vector2 pointB = Position + (Vector2.down * ((Size.y / 2) + (1f / 16f))) + (Vector2.right * ((Size.x / 2) - (3f / 16f)));
+					if (Physics2D.OverlapArea(pointA, pointB, layerMask))
+					{
+						//ColliderDistance2D colliderDistance = hit.Distance(boxCollider);
+						Velocity = new Vector2(Velocity.x, 0);
+						Grounded = true;
+					}
 				}
 			}
 		}
