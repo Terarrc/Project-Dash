@@ -81,32 +81,7 @@ public class PatrollerController : Controller
 				break;
 		}
 	}
-/*
-	protected void OnCollisionEnter2D(Collision2D collision)
-	{
-		ColliderDistance2D colliderDistance = collision.collider.Distance(boxCollider);
 
-		// Check if the collision is horizontal
-		if ((Vector2.Angle(colliderDistance.normal, Vector2.up) > 45) && (Vector2.Angle(colliderDistance.normal, Vector2.up) < 135))
-		{
-			switch (state)
-			{
-				case State.PatrolLeft:
-					state = State.PatrolRight;
-					break;
-				case State.PatrolRight:
-					state = State.PatrolLeft;
-					break;
-				case State.Aggro:
-					unit.Move(Vector2.zero);
-					break;
-				default:
-					break;
-			}
-		}
-
-	}
-	*/
 	private bool CheckForWall(Vector2 direction)
 	{
 		RaycastHit2D hit = Physics2D.Raycast(unit.Position + (direction * ((unit.Size.x / 2) + 0.1f)) + (Vector2.up * (unit.Size.y / 2)), Vector2.down, unit.Size.y - 0.1f, unit.LayerGround + (1 << unit.gameObject.layer));
