@@ -160,18 +160,45 @@ public class Player : Unit
 		}
 	}
 
+	private float timerDropping;
+	private bool isDropping;
 	public bool IsDropping
 	{
 		get
 		{
-			return !Physics2D.GetIgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("One Way Platform"));
+			return isDropping;// !Physics2D.GetIgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("One Way Platform"));
 		}
 		set
 		{
-			Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("One Way Platform"), value);
+			if (value)
+				Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("One Way Platform"), true);
+			else if (isDropping)
+			{
+				timerDropping = 0.1f;
+			}
+			isDropping = value;
 		}
 	}
 
+	public override bool IsGrounded
+	{
+		get
+		{
+			return isGrounded;
+		}
+		protected set
+		{
+			base.IsGrounded = value;
+			if (value)
+			{
+				if (!IsDashing)
+				{
+					timerBufferGrounded = bufferGroundedTime;
+					canDoubleJump = true;
+				}
+			}
+		}
+	}
 	#endregion
 
 	void Start()
@@ -185,15 +212,17 @@ public class Player : Unit
 
 		if (body.velocity.y <= 0)
 			IsDoubleJumping = false;
-
-		if (isGrounded)
+		
+		// Timer when dropping to avoid break dance
+		if (timerDropping > 0)
 		{
-			if (!IsDashing)
-			{
-				timerBufferGrounded = bufferGroundedTime;
-				canDoubleJump = true;
-			}
+			timerDropping -= Time.deltaTime;
+			if (timerDropping <= 0)
+				Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("One Way Platform"), false);
+		}
 
+		if (IsGrounded)
+		{
 			if (timerGroundedDash > 0)
 			{
 				timerGroundedDash -= Time.deltaTime;

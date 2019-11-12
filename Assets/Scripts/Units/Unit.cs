@@ -75,7 +75,7 @@ public class Unit : MonoBehaviour
 
 	public int LayerGround { get; set; }
 	protected bool isGrounded;
-	public bool IsGrounded
+	public virtual bool IsGrounded
 	{
 		get
 		{
@@ -124,15 +124,26 @@ public class Unit : MonoBehaviour
 	{
 		ColliderDistance2D colliderDistance = collision.collider.Distance(boxCollider);
 
+		float angle = Vector2.Angle(colliderDistance.normal, Vector2.up);
+
 		// Check if the collision is less than 50° with the vertical, and check if the collision is done from the bottom
-		if ((Vector2.Angle(colliderDistance.normal, Vector2.up) < 50) && (collision.GetContact(0).point.y - body.position.y < 0))
+		if ((angle < 50) && (collision.GetContact(0).point.y - body.position.y < 0) && body.velocity.y < 0.01f)
+		{
 			IsGrounded = true;
-		else
+			string message = angle + " - " + body.velocity.y;
+			if (Input.GetKey(KeyCode.RightShift)) 
+				Debug.Log(message);
+		}
+
+		else if (body.velocity.y < 0.01f)
 		{
 			// If we are stuck to a wall, the angle will be 90°
 			// If the angle is not right, check the ground to be sure we are not stuck in a wall
 			if (Physics2D.OverlapCircle(Position + (Vector2.down * (Size.y / 2)), (Size.x / 4), LayerGround))
+			{
 				IsGrounded = true;
+			}
+	
 		}
 	}
 
