@@ -130,9 +130,6 @@ public class Unit : MonoBehaviour
 		if ((angle < 50) && (collision.GetContact(0).point.y - body.position.y < 0) && body.velocity.y < 0.01f)
 		{
 			IsGrounded = true;
-			string message = angle + " - " + body.velocity.y;
-			if (Input.GetKey(KeyCode.RightShift)) 
-				Debug.Log(message);
 		}
 
 		else if (body.velocity.y < 0.01f)

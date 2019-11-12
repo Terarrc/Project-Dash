@@ -262,7 +262,7 @@ public class Player : Unit
 		if (IsWallSliding)
 		{
 			int layerEnergy = (1 << LayerMask.NameToLayer("Energy Field")) + (1 << LayerMask.NameToLayer("Energy Ground"));
-			bool touchEnergyField = Physics2D.OverlapCircle(body.position + new Vector2(boxCollider.bounds.size.x / 2 * -GetDirection().x, boxCollider.bounds.size.y / 2), boxCollider.bounds.size.x / 2, layerEnergy);
+			bool touchEnergyField = Physics2D.OverlapCircle(body.position + (boxCollider.bounds.size.x / 2) * -GetDirection(), boxCollider.bounds.size.x / 2, layerEnergy);
 
 			if (!touchEnergyField || isGrounded)
 			{
@@ -284,12 +284,14 @@ public class Player : Unit
 	{
 		base.OnCollisionStay2D(collision);
 
-		if (!IsWallSliding && !IsWallJumping && !isGrounded && (collision.gameObject.layer == LayerMask.NameToLayer("Energy Field") || collision.gameObject.layer == LayerMask.NameToLayer("Energy Ground")))
+		if (!IsWallSliding && !IsWallJumping && !IsGrounded && (collision.gameObject.layer == LayerMask.NameToLayer("Energy Field") || collision.gameObject.layer == LayerMask.NameToLayer("Energy Ground")))
 		{
 			ColliderDistance2D colliderDistance = collision.collider.Distance(collision.otherCollider);
 
+			float angle = Vector2.Angle(colliderDistance.normal, Vector2.up);
+
 			// Check if the collision is horizontal
-			if (Mathf.Approximately(Vector2.Angle(colliderDistance.normal, Vector2.up), 90))
+			if (angle > 89 && angle < 91)
 			{
 				sprite.flipX = collision.GetContact(0).point.x - Position.x > 0;
 				IsWallSliding = true;
