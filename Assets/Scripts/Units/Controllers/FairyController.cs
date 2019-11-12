@@ -18,7 +18,7 @@ public class FairyController : Controller
 		{
 			Vector3 distance;
 
-			distance = (following.transform.position + new Vector3(following.GetDirection().x * 1.5f, 2)) - transform.position;
+			distance = (following.transform.position + new Vector3(-following.GetDirection().x * 1.5f, 2)) - transform.position;
 
 			// Check if we're at the right place
 			if (distance.magnitude > 1)
