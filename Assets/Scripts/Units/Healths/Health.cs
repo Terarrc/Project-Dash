@@ -66,10 +66,10 @@ public class Health : MonoBehaviour
 		if (unit != null)
 		{
 			if (transform.position.x < source.transform.position.x)
-				unit.ApplyForce(new Vector2(-10, 5));
+				unit.AddVelocity(new Vector2(-10, 5));
 
 			else
-				unit.ApplyForce(new Vector2(10, 5));
+				unit.AddVelocity(new Vector2(10, 5));
 		}
 
 		// If a damage is taken, the entity is briefly red

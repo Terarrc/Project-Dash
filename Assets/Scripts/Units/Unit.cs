@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(KinematicBodyController))]
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(SpriteRenderer))]
 public class Unit : MonoBehaviour
 {
 	public enum Faction { Robot, Demon };
 
-	protected Rigidbody2D body;
+	protected KinematicBodyController body;
 	protected BoxCollider2D boxCollider;
 	protected SpriteRenderer sprite;
 	protected Animator animator;
@@ -18,11 +18,11 @@ public class Unit : MonoBehaviour
 	[SerializeField, Tooltip("Movement speed of the unit")]
 	public Vector2 speed;
 	[SerializeField, Tooltip("Acceleration of the unit")]
-	public Vector2 acceleration;
+	public float acceleration;
 	[SerializeField, Tooltip("Enable vertical movement input")]
 	public bool verticalMovement;
 	[SerializeField, Tooltip("Vertical speed given when the unit is jumping")]
-	public float jumpSpeed;
+	public float jumpHeight;
 	[SerializeField, Tooltip("Define who will be it's allies and who will be it's enemies")]
 	public Faction faction;
 
@@ -38,13 +38,15 @@ public class Unit : MonoBehaviour
 	{
 		get
 		{
-			return body.position;
+			return transform.position;
+		}
+		set
+		{
+			transform.position = new Vector3(value.x, value.y, transform.position.z);
 		}
 	}
 
 	public float AttackRange { get; set; }
-
-
 
 	protected bool isJumping;
 	protected bool IsJumping
@@ -59,15 +61,15 @@ public class Unit : MonoBehaviour
 
 			if (value)
 			{
-				body.velocity = new Vector2(body.velocity.x, jumpSpeed);
+				body.SetVelocityY(Mathf.Sqrt(2 * jumpHeight * Mathf.Abs(Physics2D.gravity.y)));
 				IsGrounded = false;
 
 				if (animator != null)
 					animator.SetTrigger("Jumped");
 			}
-			else if (body.velocity.y > 0)
+			else if (body.Velocity.y > 0)
 			{
-				body.velocity = new Vector2(body.velocity.x, body.velocity.y / 2);
+				body.SetVelocityY(body.Velocity.y / 2);
 			}
 
 		}
@@ -91,7 +93,7 @@ public class Unit : MonoBehaviour
 
 	protected void Awake()
 	{
-		body = GetComponent<Rigidbody2D>();
+		body = GetComponent<KinematicBodyController>();
 		health = GetComponent<Health>();
 		boxCollider = GetComponent<BoxCollider2D>();
 		sprite = GetComponent<SpriteRenderer>();
@@ -104,44 +106,22 @@ public class Unit : MonoBehaviour
 
 	protected void Update()
 	{
-		if (body.velocity.y <= 0)
+		IsGrounded = body.Grounded;
+
+		if (body.Velocity.y <= 0)
 			IsJumping = false;
 
 		if (animator != null)
 		{
-			animator.SetFloat("Speed X", body.velocity.x);
-			animator.SetFloat("Speed Y", body.velocity.y);
+			animator.SetFloat("Speed X", body.Velocity.x);
+			animator.SetFloat("Speed Y", body.Velocity.y);
 		}
 	}
 
-	protected void FixedUpdate()
+	public void AddVelocity(Vector2 velocity)
 	{
-		// Called before unity physic check, including collision
-		IsGrounded = false;
-	}
-
-	protected void OnCollisionStay2D(Collision2D collision)
-	{
-		ColliderDistance2D colliderDistance = collision.collider.Distance(boxCollider);
-
-		float angle = Vector2.Angle(colliderDistance.normal, Vector2.up);
-
-		// Check if the collision is less than 50° with the vertical, and check if the collision is done from the bottom
-		if ((angle < 50) && (collision.GetContact(0).point.y - body.position.y < 0) && body.velocity.y < 0.01f)
-		{
-			IsGrounded = true;
-		}
-
-		else if (body.velocity.y < 0.01f)
-		{
-			// If we are stuck to a wall, the angle will be 90°
-			// If the angle is not right, check the ground to be sure we are not stuck in a wall
-			if (Physics2D.OverlapCircle(Position + (Vector2.down * (Size.y / 2)), (Size.x / 4), LayerGround))
-			{
-				IsGrounded = true;
-			}
-	
-		}
+		body.SetVelocityX(body.Velocity.x + velocity.x);
+		body.SetVelocityY(body.Velocity.y + velocity.y);
 	}
 
 	public Vector2 GetDirection()
@@ -156,11 +136,6 @@ public class Unit : MonoBehaviour
 		return true;
 	}
 
-	public void ApplyForce(Vector2 force)
-	{
-		body.AddForce(force, ForceMode2D.Impulse);
-	}
-
 	public float ApplyDamage(float amount, Health.DamageType damageType, GameObject source)
 	{
 		Health health = GetComponent<Health>();
@@ -173,9 +148,9 @@ public class Unit : MonoBehaviour
 	public virtual bool Move(Vector2 input)
 	{
 		if (!verticalMovement)
-			body.velocity = new Vector2(Mathf.MoveTowards(body.velocity.x, speed.x * input.x, acceleration.x * Time.deltaTime), body.velocity.y);
+			body.MoveX(input.x, speed.x, acceleration);
 		else
-			body.velocity = new Vector2(Mathf.MoveTowards(body.velocity.x, speed.x * input.x, acceleration.x * Time.deltaTime), Mathf.MoveTowards(body.velocity.y, speed.y * input.y, acceleration.y * Time.deltaTime));
+			body.Move(input, speed, acceleration);
 
 		if (input.x != 0)
 			sprite.flipX = input.x > 0 ? false : true;

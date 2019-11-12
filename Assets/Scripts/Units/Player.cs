@@ -8,11 +8,11 @@ public class Player : Unit
 	public SpriteRenderer doubleJumpParticle;
 	public SpriteRenderer dashParticle;
 
-	public float doubleJumpSpeed;
+	public float doubleJumpHeight;
 	public float dashSpeed;
 	public float dashDuration;
 	public float groundedDashDelay;
-	public float wallJumpSpeed;
+	public float wallJumpHeight;
 	public float wallJumpSpeedX;
 	public float wallSlideSpeed;
 	public float bufferGroundedTime;
@@ -30,7 +30,7 @@ public class Player : Unit
 			IsDashing = false;
 			IsJumping = false;
 			IsDoubleJumping = false;
-			body.velocity = Vector2.zero;
+			body.SetVelocity(Vector2.zero);
 		}
  }
 
@@ -52,14 +52,14 @@ public class Player : Unit
 			if (value)
 			{
 				canDoubleJump = false;
-				body.velocity = new Vector2(body.velocity.x, doubleJumpSpeed);
+				body.SetVelocityY(Mathf.Sqrt(2 * doubleJumpHeight * Mathf.Abs(Physics2D.gravity.y)));
 
 				if (animator != null)
 					animator.SetTrigger("Jumped");
 
 				// Generate particle
 				if (doubleJumpParticle != null)
-					Instantiate(doubleJumpParticle, body.position + (Vector2.down * (boxCollider.bounds.size.y / 2)), Quaternion.identity);
+					Instantiate(doubleJumpParticle, Position + (Vector2.down * (boxCollider.bounds.size.y / 2)), Quaternion.identity);
 			}
 		}
 	}
@@ -80,7 +80,8 @@ public class Player : Unit
 			if (value)
 			{
 				IsWallSliding = false;
-				body.velocity = new Vector2(wallJumpSpeedX * GetDirection().x, wallJumpSpeed);
+				body.SetVelocityX(Mathf.Sqrt(wallJumpSpeedX));
+				body.SetVelocityY(Mathf.Sqrt(2 * wallJumpHeight * Mathf.Abs(Physics2D.gravity.y)));
 				timerWallJump = wallJumpTime;
 			}
 		}
@@ -105,7 +106,7 @@ public class Player : Unit
 
 				// Disable collision
 				gameObject.layer = LayerMask.NameToLayer("Energy Dash");
-				body.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+				body.Constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
 
 				timerDash = dashDuration;
 				timerDashParticles = 0;
@@ -121,7 +122,7 @@ public class Player : Unit
 			else
 			{
 				gameObject.layer = LayerMask.NameToLayer("Player");
-				body.constraints = RigidbodyConstraints2D.FreezeRotation;
+				body.Constraints = RigidbodyConstraints2D.FreezeRotation;
 
 				animator.SetTrigger("StopDash");
 				animator.SetBool("Dashing", false);
@@ -145,14 +146,14 @@ public class Player : Unit
 			isWallSliding = value;
 			if (value)
 			{
-				body.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+				body.Constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
 				body.gravityScale = 0;
 				if (animator != null)
 					animator.SetBool("Wall Slide", true);
 			}
 			else
 			{
-				body.constraints = RigidbodyConstraints2D.FreezeRotation;
+				body.Constraints = RigidbodyConstraints2D.FreezeRotation;
 				body.gravityScale = 1;
 				if (animator != null)
 					animator.SetBool("Wall Slide", false);
@@ -210,7 +211,7 @@ public class Player : Unit
     {
 		base.Update();
 
-		if (body.velocity.y <= 0)
+		if (body.Velocity.y <= 0)
 			IsDoubleJumping = false;
 		
 		// Timer when dropping to avoid break dance
@@ -241,7 +242,7 @@ public class Player : Unit
 		if (IsDashing)
 		{
 			canDash = false;
-			body.velocity = dashSpeed * GetDirection();
+			body.SetVelocity(dashSpeed* GetDirection());
 
 			timerDash -= Time.deltaTime;
 			timerDashParticles -= Time.deltaTime;
@@ -252,7 +253,7 @@ public class Player : Unit
 			if (timerDashParticles <= 0)
 			{
 				// Generate particle every 30ms
-				SpriteRenderer particle = Instantiate(dashParticle, transform.position, Quaternion.identity);
+				SpriteRenderer particle = Instantiate(dashParticle, Position, Quaternion.identity);
 				particle.flipX = sprite.flipX;
 
 				timerDashParticles = 0.03f;
@@ -262,14 +263,14 @@ public class Player : Unit
 		if (IsWallSliding)
 		{
 			int layerEnergy = (1 << LayerMask.NameToLayer("Energy Field")) + (1 << LayerMask.NameToLayer("Energy Ground"));
-			bool touchEnergyField = Physics2D.OverlapCircle(body.position + (boxCollider.bounds.size.x / 2) * -GetDirection(), boxCollider.bounds.size.x / 2, layerEnergy);
+			bool touchEnergyField = Physics2D.OverlapCircle(Position + (boxCollider.bounds.size.x / 2) * -GetDirection(), boxCollider.bounds.size.x / 2, layerEnergy);
 
 			if (!touchEnergyField || isGrounded)
 			{
 				IsWallSliding = false;
 			}
 			else
-				body.velocity = new Vector2(0, -wallSlideSpeed);
+				body.SetVelocity(Vector2.down * wallSlideSpeed);
 		}
 
 		if (IsWallJumping)
@@ -280,10 +281,8 @@ public class Player : Unit
 		}
 	}
 
-	protected new void OnCollisionStay2D(Collision2D collision)
+	protected void OnCollisionStay2D(Collision2D collision)
 	{
-		base.OnCollisionStay2D(collision);
-
 		if (!IsWallSliding && !IsWallJumping && !IsGrounded && (collision.gameObject.layer == LayerMask.NameToLayer("Energy Field") || collision.gameObject.layer == LayerMask.NameToLayer("Energy Ground")))
 		{
 			ColliderDistance2D colliderDistance = collision.collider.Distance(collision.otherCollider);
