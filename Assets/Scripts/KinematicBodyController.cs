@@ -56,41 +56,50 @@ public class KinematicBodyController : MonoBehaviour
 	{
 		Velocity += Physics2D.gravity * gravityScale * Time.fixedDeltaTime;
 
+		int layerMask = Physics2D.GetLayerCollisionMask(gameObject.layer);
+
 		if ((Constraints & RigidbodyConstraints2D.FreezePositionX) == 0)
+		{
 			transform.position += new Vector3(Velocity.x * Time.fixedDeltaTime, 0);
-		if ((Constraints & RigidbodyConstraints2D.FreezePositionY) == 0)
-			transform.position += new Vector3(0, Velocity.y * Time.fixedDeltaTime);
+
+			Collider2D[] hits = Physics2D.OverlapBoxAll(transform.position, boxCollider.size, 0, layerMask);
+			foreach (Collider2D hit in hits)
+			{
+				if (hit == boxCollider || hit.isTrigger)
+					continue;
+
+				ColliderDistance2D colliderDistance = hit.Distance(boxCollider);
+				if (colliderDistance.isOverlapped)
+				{
+					Vector2 translate = colliderDistance.pointA - colliderDistance.pointB;
+					translate.y = 0;
+					transform.Translate(translate);
+				}
+			}
+		}
 
 		Grounded = false;
-
-		int layerMask = Physics2D.GetLayerCollisionMask(gameObject.layer);
-		Collider2D[] hits = Physics2D.OverlapBoxAll(transform.position, boxCollider.size, 0, layerMask);
-		foreach (Collider2D hit in hits)
+		if ((Constraints & RigidbodyConstraints2D.FreezePositionY) == 0)
 		{
-			if (hit == boxCollider || hit.isTrigger)
-				continue;
+			transform.position += new Vector3(0, Velocity.y * Time.fixedDeltaTime);
 
-			ColliderDistance2D colliderDistance = hit.Distance(boxCollider);
-			Debug.Log(Vector2.Angle(colliderDistance.normal, Vector2.up));
-			if (colliderDistance.isOverlapped)
+			Collider2D[] hits = Physics2D.OverlapBoxAll(transform.position, boxCollider.size, 0, layerMask);
+			foreach (Collider2D hit in hits)
 			{
-				transform.Translate(colliderDistance.pointA - colliderDistance.pointB);
+				if (hit == boxCollider || hit.isTrigger)
+					continue;
 
-				if (Velocity.y < 0 && (Vector2.Angle(colliderDistance.normal, Vector2.up) < 45))
+				ColliderDistance2D colliderDistance = hit.Distance(boxCollider);
+				if (colliderDistance.isOverlapped)
 				{
+					Vector2 translate = colliderDistance.pointA - colliderDistance.pointB;
+					translate.x = 0;
+					transform.Translate(translate);
 
-					Velocity = new Vector2(Velocity.x, 0);
-					Grounded = true;
-				}
-				else
-				{
-					Vector2 pointA = Position + (Vector2.down * (Size.y / 2)) + (Vector2.left * ((Size.x / 2) - (3f / 16f)));
-					Vector2 pointB = Position + (Vector2.down * ((Size.y / 2) + (1f / 16f))) + (Vector2.right * ((Size.x / 2) - (3f / 16f)));
-					if (Physics2D.OverlapArea(pointA, pointB, layerMask))
+					if (Vector2.Angle(colliderDistance.normal, Vector2.up) < 1)
 					{
-						//ColliderDistance2D colliderDistance = hit.Distance(boxCollider);
-						Velocity = new Vector2(Velocity.x, 0);
 						Grounded = true;
+						Velocity = new Vector2(Velocity.x, 0);
 					}
 				}
 			}
@@ -105,6 +114,9 @@ public class KinematicBodyController : MonoBehaviour
 	public void MoveX(float input, float speed, float acceleration)
 	{
 		float newVelocityX = Mathf.MoveTowards(Velocity.x, speed * input, acceleration * Time.deltaTime);
+
+		if (Mathf.Abs(newVelocityX) < 0.1)
+			newVelocityX = 0;
 
 		Velocity = new Vector2(newVelocityX, Velocity.y);
 	}
