@@ -31,14 +31,13 @@ public class MovingPlatform : MonoBehaviour
         }
     }
 
-    void OnCollisionStay2D(Collision2D col)
+    void OnCollisionEnter2D(Collision2D col)
     {
-        target = col.gameObject;
-        offset = target.transform.position - transform.position;
+        col.collider.transform.SetParent(transform);
     }
 
     void OnCollisionExit2D(Collision2D col)
     {
-        target = null;
+        col.collider.transform.SetParent(null);
     }
 }
