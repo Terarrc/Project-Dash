@@ -109,7 +109,7 @@ MonoBehaviour:
     - {x: -1, y: 0, z: 0}
     - {x: 1, y: 0, z: 0}
     m_Sprites:
-    - {fileID: -7708920532220806285, guid: 275cdf240b9bd3246b19a334aa5457f2, type: 3}
+    - {fileID: 6623730380747189143, guid: 275cdf240b9bd3246b19a334aa5457f2, type: 3}
     m_GameObject: {fileID: 0}
     m_AnimationSpeed: 1
     m_PerlinScale: 0.5
