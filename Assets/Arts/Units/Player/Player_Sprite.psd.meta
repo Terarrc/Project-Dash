@@ -86,6 +86,15 @@ TextureImporter:
   - first:
       213: -4166829048666513478
     second: Player_Double_Jump_2
+  - first:
+      213: -7600265256946680111
+    second: Player_Ground_Slide_0
+  - first:
+      213: 6354203551396270062
+    second: Player_Ground_Slide_1
+  - first:
+      213: 6861930250978813414
+    second: Player_Ground_Slide_2
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -597,6 +606,69 @@ TextureImporter:
       bones: []
       spriteID: c11296afaf8170c4d8cad36b526ffc29
       internalID: -4166829048666513478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Ground_Slide_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 896
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a8d39de35d569b46a63f3eb83a4e49b
+      internalID: -7600265256946680111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Ground_Slide_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 896
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: edd2acccb6e00b546beb1e17c3ccabaf
+      internalID: 6354203551396270062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Ground_Slide_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 896
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de7378bbdf61e7d4ab19c8b672b2e039
+      internalID: 6861930250978813414
       vertices: []
       indices: 
       edges: []
