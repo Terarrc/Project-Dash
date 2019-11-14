@@ -5,6 +5,9 @@ using UnityEngine;
 public class Player : Unit
 {
 	#region variables
+	protected PlayerController playerController;
+	protected EnterRoomController enterRoomController;
+
 	public SpriteRenderer doubleJumpParticle;
 	public SpriteRenderer dashParticle;
 
@@ -24,12 +27,14 @@ public class Player : Unit
 		{
 			return room;
 		}
-		set
+		private set
 		{
 			room = value;
 			IsDashing = false;
 			IsJumping = false;
 			IsDoubleJumping = false;
+			canDash = true;
+			canDoubleJump = true;
 			body.velocity = Vector2.zero;
 		}
  }
@@ -201,9 +206,12 @@ public class Player : Unit
 	}
 	#endregion
 
-	void Start()
+	new void Awake()
 	{
+		base.Awake();
 
+		playerController = GetComponent<PlayerController>();
+		enterRoomController = GetComponent<EnterRoomController>();
 	}
 
 	new void Update()
@@ -297,6 +305,27 @@ public class Player : Unit
 				IsWallSliding = true;
 			}	
 		} 
+	}
+
+	public void SetVelocity(Vector2 velocity)
+	{
+		body.velocity = velocity;
+	}
+
+	public void EnterRoom(Room room, Vector2 direction)
+	{
+		Room = room;
+		playerController.enabled = false;
+		enterRoomController.enabled = true;
+		enterRoomController.EntryDirection = direction;
+	}
+
+	public void EnterRoomOver()
+	{
+		enterRoomController.enabled = false;
+		playerController.enabled = true;
+
+		SetRespawnPoint(transform.position);
 	}
 
 	public void SetRespawnPoint(Vector3 position)

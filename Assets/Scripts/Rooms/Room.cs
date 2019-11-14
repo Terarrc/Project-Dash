@@ -39,32 +39,28 @@ public class Room : MonoBehaviour
 
 	}
 
-	private void OnTriggerEnter2D(Collider2D collision)
+	private void OnTriggerEnter2D(Collider2D collider)
 	{
-		Player player = collision.gameObject.GetComponent<Player>();
+		Player player = collider.gameObject.GetComponent<Player>();
 		if (player != null)
 		{
-			player.Room = this;
+			Vector2 direction = Vector2.zero;
 
-			Transform closestSpawn = null;
+			ColliderDistance2D colliderDistance = collider.Distance(boxCollider);
 
-			foreach (Transform child in transform)
-			{
-				child.gameObject.SetActive(true);
-				if (child.CompareTag("Spawn"))
-				{
-					if (closestSpawn == null)
-						closestSpawn = child;
-					else if ((player.transform.position - child.position).magnitude < (player.transform.position - closestSpawn.position).magnitude)
-						closestSpawn = child;
-				}
-			}
+			float angle = Vector2.Angle(colliderDistance.normal, Vector2.up);
 
-			if (closestSpawn != null)
-			{
-				player.transform.position = closestSpawn.position;
-				player.SetRespawnPoint(closestSpawn.position);
-			}
+			if (angle < 45)
+				direction = Vector2.up;
+			else if (angle > 135)
+				direction = Vector2.down;
+			else if (collider.transform.position.x < boxCollider.transform.position.x)
+				direction = Vector2.right;
+			else
+				direction = Vector2.left;
+
+
+			player.EnterRoom(this, direction);
 		}
 	}
 
