@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: {x: 10, y: 0}
-  acceleration: {x: 200, y: 200}
+  acceleration: {x: 200, y: 100}
   verticalMovement: 0
   jumpSpeed: 22
   faction: 0

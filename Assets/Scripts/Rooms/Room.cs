@@ -44,12 +44,15 @@ public class Room : MonoBehaviour
 		Player player = collider.gameObject.GetComponent<Player>();
 		if (player != null)
 		{
-			Vector2 direction = Vector2.zero;
+			foreach (Transform child in transform)
+				child.gameObject.SetActive(true);
+
 
 			ColliderDistance2D colliderDistance = collider.Distance(boxCollider);
 
 			float angle = Vector2.Angle(colliderDistance.normal, Vector2.up);
 
+			Vector2 direction;
 			if (angle < 45)
 				direction = Vector2.up;
 			else if (angle > 135)
