@@ -108,8 +108,8 @@ public class Player : Unit
             isSlideJumping = value;
             if (value)
             {
-                IsSlideJumping = false;
-                body.velocity = new Vector2(body.velocity.x * GetDirection().x, slideJumpSpeed);
+                IsGroundSliding = false;
+                body.velocity = new Vector2(body.velocity.x, slideJumpSpeed);
                 timerSlideJump = slideJumpTime;
             }
         }
@@ -355,7 +355,7 @@ public class Player : Unit
 
         if (IsSlideJumping)
         {
-            Debug.Log("checking timer");
+            Debug.Log(timerSlideJump);
 
             timerSlideJump -= Time.deltaTime;
             if (timerSlideJump <= 0)
