@@ -97,7 +97,7 @@ public class Unit : MonoBehaviour
 		if (animator != null)
 			animator.logWarnings = false;
 
-		LayerGround = (1 << LayerMask.NameToLayer("Ground")) + (1 << LayerMask.NameToLayer("Energy Ground")) + (1 << LayerMask.NameToLayer("Energy Field")) + (1 << LayerMask.NameToLayer("One Way Platform"));
+		LayerGround = (1 << LayerMask.NameToLayer("Ground")) + (1 << LayerMask.NameToLayer("Energy Ground")) +  (1 << LayerMask.NameToLayer("One Way Platform"));
 	}
 
 	protected void Update()
@@ -125,7 +125,7 @@ public class Unit : MonoBehaviour
 		float angle = Vector2.Angle(colliderDistance.normal, Vector2.up);
 
 		// Check if the collision is less than 50° with the vertical, and check if the collision is done from the bottom
-		if ((angle < 50) && (collision.GetContact(0).point.y - body.position.y < 0) && body.velocity.y < 0.01f)
+		if ((angle < 50) && (collision.GetContact(0).point.y - body.position.y < 0) && ((collision.gameObject.layer & LayerGround) != 0))
 		{
 			IsGrounded = true;
 		}

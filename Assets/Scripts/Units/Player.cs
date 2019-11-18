@@ -17,7 +17,9 @@ public class Player : Unit
 	public float groundedDashDelay;
 	public float wallJumpSpeed;
 	public float wallJumpSpeedX;
+    public float slideJumpSpeed;
 	public float wallSlideSpeed;
+    public float groundSlideSpeed;
 	public float bufferGroundedTime;
 
 	// In which room the player is
@@ -69,7 +71,7 @@ public class Player : Unit
 		}
 	}
 
-	// in this timer, the player can't stuck to a wall again
+	// in this timer, the player can't stick to a wall again
 	private float wallJumpTime = 0.2f;
 	private float timerWallJump;
 	private bool isWallJumping;
@@ -91,8 +93,30 @@ public class Player : Unit
 		}
 	}
 
-	// Dash variables
-	private bool canDash;
+    // in this timer, the player can't stick to a slide again
+    private float slideJumpTime = 0.2f;
+    private float timerSlideJump;
+    private bool isSlideJumping;
+    protected bool IsSlideJumping
+    {
+        get
+        {
+            return isSlideJumping;
+        }
+        set
+        {
+            isSlideJumping = value;
+            if (value)
+            {
+                IsSlideJumping = false;
+                body.velocity = new Vector2(body.velocity.x * GetDirection().x, slideJumpSpeed);
+                timerSlideJump = slideJumpTime;
+            }
+        }
+    }
+
+    // Dash variables
+    private bool canDash;
 	private bool isDashing = false;
 	private bool IsDashing
 	{
@@ -165,7 +189,32 @@ public class Player : Unit
 		}
 	}
 
-	private float timerDropping;
+    private bool isGroundSliding;
+    protected bool IsGroundSliding
+    {
+        get
+        {
+            return isGroundSliding;
+        }
+        set
+        {
+            isGroundSliding = value;
+            if (value)
+            {
+                body.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+                if (animator != null)
+                    animator.SetBool("Ground Slide", true);
+            }
+            else
+            {
+                body.constraints = RigidbodyConstraints2D.FreezeRotation;
+                if (animator != null)
+                    animator.SetBool("Ground Slide", false);
+            }
+        }
+    }
+
+    private float timerDropping;
 	private bool isDropping;
 	public bool IsDropping
 	{
@@ -275,25 +324,52 @@ public class Player : Unit
 			if (!touchEnergyField || isGrounded)
 				IsWallSliding = false;
 			else
-				body.velocity = new Vector2(body.velocity.x, Mathf.MoveTowards(body.velocity.y, -wallSlideSpeed, acceleration.y * Time.deltaTime));
+				body.velocity = new Vector2(0, -wallSlideSpeed);
 		}
 
-		if (IsWallJumping)
+        if (IsGroundSliding)
+        {
+            int layerEnergy = (1 << LayerMask.NameToLayer("Energy Field")) + (1 << LayerMask.NameToLayer("Energy Ground"));
+            Vector2 v = new Vector2(body.position.x, body.position.y - boxCollider.bounds.size.y / 2);
+            bool touchEnergyField = Physics2D.OverlapCircle(v, boxCollider.bounds.size.x / 2, layerEnergy);
+
+            if (!touchEnergyField)
+                IsGroundSliding = false;
+            else
+            {
+                if(GetDirection() == Vector2.right)
+                    body.velocity = new Vector2(groundSlideSpeed, 0);
+                else
+                    body.velocity = new Vector2(-groundSlideSpeed, 0);
+            }
+                
+        }
+
+        // Timers for energy slide
+        if (IsWallJumping)
 		{
-			timerWallJump -= Time.deltaTime;
+            timerWallJump -= Time.deltaTime;
 			if (timerWallJump <= 0)
 				IsWallJumping = false;
 		}
-	}
+
+        if (IsSlideJumping)
+        {
+            Debug.Log("checking timer");
+
+            timerSlideJump -= Time.deltaTime;
+            if (timerSlideJump <= 0)
+                IsSlideJumping = false;
+        }
+    }
 
 	protected new void OnCollisionStay2D(Collision2D collision)
 	{
 		base.OnCollisionStay2D(collision);
 
-		if (!IsWallSliding && !IsWallJumping && !IsGrounded && (collision.gameObject.layer == LayerMask.NameToLayer("Energy Field") || collision.gameObject.layer == LayerMask.NameToLayer("Energy Ground")))
+		if (!IsWallSliding && !IsGroundSliding && !IsWallJumping && !IsSlideJumping && !IsGrounded && (collision.gameObject.layer == LayerMask.NameToLayer("Energy Field") || collision.gameObject.layer == LayerMask.NameToLayer("Energy Ground")))
 		{
 			ColliderDistance2D colliderDistance = collision.collider.Distance(collision.otherCollider);
-
 			float angle = Vector2.Angle(colliderDistance.normal, Vector2.up);
 
 			// Check if the collision is horizontal
@@ -301,9 +377,17 @@ public class Player : Unit
 			{
 				sprite.flipX = collision.GetContact(0).point.x - Position.x > 0;
 				IsWallSliding = true;
-			}	
-		} 
-	}
+			}
+
+            // Check if the collision is vertical
+            if (angle > -1 && angle < 1)
+            {
+                //sprite.flipX = collision.GetContact(0).point.x - Position.x > 0;
+                IsGroundSliding = true;
+            }
+        }
+
+    }
 
 	public void SetVelocity(Vector2 velocity)
 	{
@@ -340,7 +424,7 @@ public class Player : Unit
 
 	public override bool Move(Vector2 input)
 	{
-		if (IsDashing || IsWallSliding)
+		if (IsDashing || IsWallSliding || IsGroundSliding)
 			return false;
 
 		return base.Move(input);
@@ -353,6 +437,12 @@ public class Player : Unit
 			IsWallJumping = true;
 			return true;
 		}
+
+        if (IsGroundSliding)
+        {
+            IsSlideJumping = true;
+            return true;
+        }
 
 		// Check if we are grounded from the buffer
 		if (timerBufferGrounded > 0 || IsGrounded)
