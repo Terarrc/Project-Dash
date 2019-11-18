@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: {x: 10, y: 0}
-  acceleration: {x: 200, y: 0}
+  acceleration: {x: 200, y: 200}
   verticalMovement: 0
   jumpSpeed: 22
   faction: 0
@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 722da8604231c7c4c8db889030d06db1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  analogMovement: 1
+  analogMovement: 0
   bufferTime: 0.1
 --- !u!114 &6806454965819347750
 MonoBehaviour:

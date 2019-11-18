@@ -275,7 +275,7 @@ public class Player : Unit
 			if (!touchEnergyField || isGrounded)
 				IsWallSliding = false;
 			else
-				body.velocity = new Vector2(0, -wallSlideSpeed);
+				body.velocity = new Vector2(body.velocity.x, Mathf.MoveTowards(body.velocity.y, -wallSlideSpeed, acceleration.y * Time.deltaTime));
 		}
 
 		if (IsWallJumping)

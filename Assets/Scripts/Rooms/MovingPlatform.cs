@@ -13,9 +13,9 @@ public class MovingPlatform : MonoBehaviour
     int idx = 0;
     bool reverse = false;
 
-    private void Update()
+    private void FixedUpdate()
     {
-        transform.position = Vector3.MoveTowards(transform.position, points[idx], speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, points[idx], speed * Time.fixedDeltaTime);
 
         if(transform.position == points[idx])
         {
