@@ -44,8 +44,6 @@ public class Unit : MonoBehaviour
 
 	public float AttackRange { get; set; }
 
-
-
 	protected bool isJumping;
 	protected bool IsJumping
 	{

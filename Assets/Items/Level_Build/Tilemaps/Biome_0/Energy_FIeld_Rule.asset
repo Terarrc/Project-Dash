@@ -22,8 +22,8 @@ MonoBehaviour:
     - {x: 0, y: 1, z: 0}
     - {x: 0, y: -1, z: 0}
     m_Sprites:
-    - {fileID: -6302382665998311393, guid: e3645bed231523141b49a93d72736442, type: 3}
-    - {fileID: -1840032104905651567, guid: e3645bed231523141b49a93d72736442, type: 3}
+    - {fileID: -1706084216362820205, guid: 275cdf240b9bd3246b19a334aa5457f2, type: 3}
+    - {fileID: -762470507989373169, guid: 275cdf240b9bd3246b19a334aa5457f2, type: 3}
     m_GameObject: {fileID: 0}
     m_AnimationSpeed: 10
     m_PerlinScale: 0.5

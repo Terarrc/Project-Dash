@@ -273,9 +273,7 @@ public class Player : Unit
 			bool touchEnergyField = Physics2D.OverlapCircle(body.position + (boxCollider.bounds.size.x / 2) * -GetDirection(), boxCollider.bounds.size.x / 2, layerEnergy);
 
 			if (!touchEnergyField || isGrounded)
-			{
 				IsWallSliding = false;
-			}
 			else
 				body.velocity = new Vector2(0, -wallSlideSpeed);
 		}
