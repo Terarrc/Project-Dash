@@ -424,7 +424,7 @@ public class Player : Unit
 
 	public override bool Move(Vector2 input)
 	{
-		if (IsDashing || IsWallSliding || IsGroundSliding)
+		if (IsDashing || IsWallSliding || IsGroundSliding || IsSlideJumping)
 			return false;
 
 		return base.Move(input);
