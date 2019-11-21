@@ -355,8 +355,6 @@ public class Player : Unit
 
         if (IsSlideJumping)
         {
-            Debug.Log(timerSlideJump);
-
             timerSlideJump -= Time.deltaTime;
             if (timerSlideJump <= 0)
                 IsSlideJumping = false;
@@ -424,10 +422,24 @@ public class Player : Unit
 
 	public override bool Move(Vector2 input)
 	{
-		if (IsDashing || IsWallSliding || IsGroundSliding || IsSlideJumping || IsWallJumping)
+		if (IsDashing || IsWallSliding || IsGroundSliding)
 			return false;
 
-		return base.Move(input);
+		if (!IsGrounded && ((input.x < 0 && body.velocity.x < 0) || (input.x > 0 && body.velocity.x > 0)))
+			body.velocity = new Vector2(Mathf.MoveTowards(body.velocity.x, speed.x * input.x, acceleration.x / 20 * Time.deltaTime), body.velocity.y);
+		else
+			body.velocity = new Vector2(Mathf.MoveTowards(body.velocity.x, speed.x * input.x, acceleration.x * Time.deltaTime), body.velocity.y);
+
+		if (input.x != 0)
+			sprite.flipX = input.x > 0 ? false : true;
+
+		if (animator != null)
+		{
+			animator.SetBool("Moving X", input.x != 0);
+			animator.SetBool("Moving Y", input.y != 0);
+		}
+
+		return true;
 	}
 
 	public override bool Jump()
