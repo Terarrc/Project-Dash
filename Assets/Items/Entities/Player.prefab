@@ -50,10 +50,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c38a32dbd4f1cda4a8ae4f8de8459502, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  body: {fileID: 0}
   speed: {x: 10, y: 0}
   acceleration: {x: 200, y: 100}
   verticalMovement: 0
-  jumpSpeed: 22
+  jumpSpeed: 23
   faction: 0
   doubleJumpParticle: {fileID: 3872488329964344648, guid: e90816ef545d863489422df59b00a038,
     type: 3}
@@ -63,11 +64,11 @@ MonoBehaviour:
   dashSpeed: 30
   dashDuration: 0.2
   groundedDashDelay: 0.5
-  wallJumpSpeed: 20
-  wallJumpSpeedX: 20
+  wallJumpSpeed: 14
+  wallJumpSpeedX: 36
   slideJumpSpeed: 20
   wallSlideSpeed: 1
-  groundSlideSpeed: 10
+  groundSlideSpeed: 30
   bufferGroundedTime: 0.075
 --- !u!114 &4490090770297310930
 MonoBehaviour:
