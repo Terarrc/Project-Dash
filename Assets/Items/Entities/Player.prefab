@@ -64,7 +64,7 @@ MonoBehaviour:
   dashDuration: 0.2
   groundedDashDelay: 0.5
   wallJumpSpeed: 20
-  wallJumpSpeedX: 30
+  wallJumpSpeedX: 20
   slideJumpSpeed: 20
   wallSlideSpeed: 1
   groundSlideSpeed: 10
