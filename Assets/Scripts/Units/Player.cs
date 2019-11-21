@@ -94,7 +94,7 @@ public class Player : Unit
 	}
 
     // in this timer, the player can't stick to a slide again
-    private readonly float slideJumpTime = 0.2f;
+    private readonly float slideJumpTime = 0.35f;
     private float timerSlideJump;
     private bool isSlideJumping;
     protected bool IsSlideJumping
