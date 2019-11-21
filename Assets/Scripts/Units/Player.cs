@@ -72,7 +72,7 @@ public class Player : Unit
 	}
 
 	// in this timer, the player can't stick to a wall again
-	private float wallJumpTime = 0.2f;
+	private readonly float wallJumpTime = 0.2f;
 	private float timerWallJump;
 	private bool isWallJumping;
 	protected bool IsWallJumping
@@ -94,7 +94,7 @@ public class Player : Unit
 	}
 
     // in this timer, the player can't stick to a slide again
-    private float slideJumpTime = 0.2f;
+    private readonly float slideJumpTime = 0.2f;
     private float timerSlideJump;
     private bool isSlideJumping;
     protected bool IsSlideJumping

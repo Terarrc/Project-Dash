@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
 {
-    GameObject target;
-    Vector2 offset;
-
     // Public variables
     public float speed;
     public List<Vector3> points;
@@ -38,6 +35,9 @@ public class MovingPlatform : MonoBehaviour
 
     void OnCollisionExit2D(Collision2D col)
     {
-        col.collider.transform.SetParent(null);
+		if (col.collider.GetComponent<Player>() != null)
+			col.collider.transform.SetParent(null);
+		else
+			col.collider.transform.SetParent(transform.parent);
     }
 }
