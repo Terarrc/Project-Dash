@@ -9,7 +9,7 @@ public class Unit : MonoBehaviour
 {
 	public enum Faction { Robot, Demon };
 
-	protected Rigidbody2D body;
+	public Rigidbody2D body;
 	protected BoxCollider2D boxCollider;
 	protected SpriteRenderer sprite;
 	protected Animator animator;
