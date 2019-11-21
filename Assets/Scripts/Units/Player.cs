@@ -425,8 +425,8 @@ public class Player : Unit
 		if (IsDashing || IsWallSliding || IsGroundSliding)
 			return false;
 
-		if (!IsGrounded && ((input.x < 0 && body.velocity.x < 0) || (input.x > 0 && body.velocity.x > 0)))
-			body.velocity = new Vector2(Mathf.MoveTowards(body.velocity.x, speed.x * input.x, acceleration.x / 20 * Time.deltaTime), body.velocity.y);
+		if (!IsGrounded && isSlideJumping && ((input.x < 0 && GetDirection().x < 0) || (input.x > 0 && GetDirection().x > 0)))
+			body.velocity = body.velocity;// new Vector2(Mathf.MoveTowards(body.velocity.x, speed.x * input.x, acceleration.x / 20 * Time.deltaTime), body.velocity.y);
 		else
 			body.velocity = new Vector2(Mathf.MoveTowards(body.velocity.x, speed.x * input.x, acceleration.x * Time.deltaTime), body.velocity.y);
 
