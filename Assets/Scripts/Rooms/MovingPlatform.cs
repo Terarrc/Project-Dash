@@ -12,9 +12,9 @@ public class MovingPlatform : MonoBehaviour
 
     private void FixedUpdate()
     {
-        transform.position = Vector3.MoveTowards(transform.position, points[idx], speed * Time.fixedDeltaTime);
+        transform.localPosition = Vector3.MoveTowards(transform.localPosition, points[idx], speed * Time.fixedDeltaTime);
 
-        if(transform.position == points[idx])
+        if(transform.localPosition == points[idx])
         {
             if (reverse && idx > 0)
                 idx--;
@@ -35,9 +35,12 @@ public class MovingPlatform : MonoBehaviour
 
     void OnCollisionExit2D(Collision2D col)
     {
-		if (col.collider.GetComponent<Player>() != null)
-			col.collider.transform.SetParent(null);
-		else
-			col.collider.transform.SetParent(transform.parent);
+		if (gameObject.activeSelf)
+		{
+			if (col.collider.GetComponent<Player>() != null)
+				col.collider.transform.SetParent(null);
+			else
+				col.collider.transform.SetParent(transform.parent);
+		}
     }
 }
