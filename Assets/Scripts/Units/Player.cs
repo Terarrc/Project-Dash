@@ -314,9 +314,23 @@ public class Player : Unit
 
 				timerDashParticles = 0.03f;
 			}
-		}
 
-		if (IsWallSliding)
+            // Draw Overlap with energy field to reset dash 
+            if (isDashing)
+            {
+                int layerEnergy = (1 << LayerMask.NameToLayer("Energy Field"));
+                bool inEnergyField = Physics2D.OverlapBox(body.position, new Vector2(boxCollider.bounds.size.x / 2, boxCollider.bounds.size.y / 2), layerEnergy);
+
+                if (inEnergyField) // BUG : always true when dashing, idk why, Flouz help
+                {
+                    Debug.Log("In energy field");
+                    canDash = true;
+                }
+                    
+            }          
+        }
+
+        if (IsWallSliding)
 		{
 			int layerEnergy = (1 << LayerMask.NameToLayer("Energy Field")) + (1 << LayerMask.NameToLayer("Energy Ground"));
 			bool touchEnergyField = Physics2D.OverlapCircle(body.position + (boxCollider.bounds.size.x / 2) * -GetDirection(), boxCollider.bounds.size.x / 2, layerEnergy);
@@ -361,7 +375,16 @@ public class Player : Unit
         }
     }
 
-	protected new void OnCollisionStay2D(Collision2D collision)
+    // Draw Gizmos
+    private void OnDrawGizmos()
+    {
+        /*
+        Gizmos.color = new Color(1, 0, 0, 0.5f);
+        Gizmos.DrawCube(body.position, new Vector2(boxCollider.bounds.size.x / 2, boxCollider.bounds.size.y / 2));   
+        */
+    }
+
+    protected new void OnCollisionStay2D(Collision2D collision)
 	{
 		base.OnCollisionStay2D(collision);
 
@@ -370,8 +393,11 @@ public class Player : Unit
 			ColliderDistance2D colliderDistance = collision.collider.Distance(collision.otherCollider);
 			float angle = Vector2.Angle(colliderDistance.normal, Vector2.up);
 
-			// Check if the collision is horizontal
-			if (angle > 89 && angle < 91)
+            // Reset Dash
+            canDash = true;
+
+            // Check if the collision is horizontal
+            if (angle > 89 && angle < 91)
 			{
 				sprite.flipX = collision.GetContact(0).point.x - Position.x > 0;
 				IsWallSliding = true;
