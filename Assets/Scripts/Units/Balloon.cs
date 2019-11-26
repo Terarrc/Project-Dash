@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Balloon : Unit
 {
+	public float bounceJumpSpeed;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,7 +29,7 @@ public class Balloon : Unit
 				Unit unit = hit.GetComponent<Unit>();
 				if (unit != null && unit.Position.y - (unit.Size.y / 2) > Position.y + (Size.y / 4))
 				{
-					unit.body.velocity = new Vector2(unit.body.velocity.x, 20);
+					unit.body.velocity = new Vector2(unit.body.velocity.x, bounceJumpSpeed);
 				}
 			}
 		}

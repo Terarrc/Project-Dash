@@ -104,6 +104,7 @@ MonoBehaviour:
   verticalMovement: 1
   jumpSpeed: 0
   faction: 1
+  bounceJumpSpeed: 22
 --- !u!114 &5216503432188815412
 MonoBehaviour:
   m_ObjectHideFlags: 0
