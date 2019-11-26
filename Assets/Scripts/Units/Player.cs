@@ -297,7 +297,6 @@ public class Player : Unit
 
 		if (IsDashing)
 		{
-			canDash = false;
 			body.velocity = dashSpeed * GetDirection();
 
 			timerDash -= Time.deltaTime;
@@ -319,13 +318,12 @@ public class Player : Unit
             if (isDashing)
             {
                 int layerEnergy = (1 << LayerMask.NameToLayer("Energy Field"));
-                bool inEnergyField = Physics2D.OverlapBox(body.position, new Vector2(boxCollider.bounds.size.x / 2, boxCollider.bounds.size.y / 2), layerEnergy);
+                bool inEnergyField = Physics2D.OverlapBox(Position, new Vector2(Size.x / 2, Size.y / 2), 0, layerEnergy);
 
                 if (inEnergyField) // BUG : always true when dashing, idk why, Flouz help
                 {
-                    Debug.Log("In energy field");
-                    canDash = true;
-                }
+					ToucheEnergyField();
+				}
                     
             }          
         }
@@ -393,8 +391,8 @@ public class Player : Unit
 			ColliderDistance2D colliderDistance = collision.collider.Distance(collision.otherCollider);
 			float angle = Vector2.Angle(colliderDistance.normal, Vector2.up);
 
-            // Reset Dash
-            canDash = true;
+			// Reset Dash
+			ToucheEnergyField();
 
             // Check if the collision is horizontal
             if (angle > 89 && angle < 91)
@@ -444,6 +442,11 @@ public class Player : Unit
 				playerHealth.RespawnPoint = position;
 			}
 		}
+	}
+
+	private void ToucheEnergyField()
+	{
+		canDash = true;
 	}
 
 	public override bool Move(Vector2 input)
