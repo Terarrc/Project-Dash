@@ -22,6 +22,11 @@ public class Player : Unit
     public float groundSlideSpeed;
 	public float bufferGroundedTime;
 
+    // Power Acquired
+    private bool DashAcquired;
+    private bool DoubleJumpAcquired;
+    private bool EnergySlideAcquired;
+
 	// In which room the player is
 	private Room room;
 	public Room Room {
@@ -39,7 +44,7 @@ public class Player : Unit
 			canDoubleJump = true;
 			body.velocity = Vector2.zero;
 		}
- }
+    }
 
 
 	private float timerBufferGrounded;
@@ -261,6 +266,11 @@ public class Player : Unit
 
 		playerController = GetComponent<PlayerController>();
 		enterRoomController = GetComponent<EnterRoomController>();
+
+        // Read Save Variables
+        DoubleJumpAcquired = false;
+        DashAcquired = false;
+        EnergySlideAcquired = false;
 	}
 
 	new void Update()
@@ -320,15 +330,15 @@ public class Player : Unit
                 int layerEnergy = (1 << LayerMask.NameToLayer("Energy Field"));
                 bool inEnergyField = Physics2D.OverlapBox(Position, new Vector2(Size.x / 2, Size.y / 2), 0, layerEnergy);
 
-                if (inEnergyField) // BUG : always true when dashing, idk why, Flouz help
+                if (inEnergyField)
                 {
-					ToucheEnergyField();
+					TouchEnergyField();
 				}
                     
             }          
         }
 
-        if (IsWallSliding)
+        if (EnergySlideAcquired && IsWallSliding)
 		{
 			int layerEnergy = (1 << LayerMask.NameToLayer("Energy Field")) + (1 << LayerMask.NameToLayer("Energy Ground"));
 			bool touchEnergyField = Physics2D.OverlapCircle(body.position + (boxCollider.bounds.size.x / 2) * -GetDirection(), boxCollider.bounds.size.x / 2, layerEnergy);
@@ -339,7 +349,7 @@ public class Player : Unit
 				body.velocity = new Vector2(0, Mathf.MoveTowards(body.velocity.y, -wallSlideSpeed, acceleration.y * Time.deltaTime));
 		}
 
-        if (IsGroundSliding)
+        if (EnergySlideAcquired && IsGroundSliding)
         {
             int layerEnergy = (1 << LayerMask.NameToLayer("Energy Field")) + (1 << LayerMask.NameToLayer("Energy Ground"));
             Vector2 v = new Vector2(body.position.x, body.position.y - boxCollider.bounds.size.y / 2);
@@ -391,8 +401,9 @@ public class Player : Unit
 			ColliderDistance2D colliderDistance = collision.collider.Distance(collision.otherCollider);
 			float angle = Vector2.Angle(colliderDistance.normal, Vector2.up);
 
-			// Reset Dash
-			ToucheEnergyField();
+			// Reset Dash 
+            if(collision.gameObject.layer == LayerMask.NameToLayer("Energy Field"))
+			TouchEnergyField();
 
             // Check if the collision is horizontal
             if (angle > 89 && angle < 91)
@@ -444,8 +455,15 @@ public class Player : Unit
 		}
 	}
 
-	private void ToucheEnergyField()
+	private void TouchEnergyField()
 	{
+        if (!EnergySlideAcquired)
+        {
+            health.Kill(null);
+        }
+
+        // Apply resets when crossing/touching an energy field
+        canDoubleJump = true;
 		canDash = true;
 	}
 
@@ -492,7 +510,7 @@ public class Player : Unit
 			return true;
 		}
 
-		else if (canDoubleJump && !IsDashing)
+		else if (DoubleJumpAcquired && canDoubleJump && !IsDashing)
 		{
 			IsDoubleJumping = true;
 			return true;
@@ -516,7 +534,7 @@ public class Player : Unit
 
 	private bool Dash()
 	{
-		if (canDash)
+		if (DashAcquired && canDash)
 		{
 			IsDashing = true;
 			return true;
