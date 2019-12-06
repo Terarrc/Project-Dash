@@ -268,9 +268,9 @@ public class Player : Unit
 		enterRoomController = GetComponent<EnterRoomController>();
 
         // Read Save Variables
-        DoubleJumpAcquired = false;
+        DoubleJumpAcquired = true;
         DashAcquired = false;
-        EnergySlideAcquired = false;
+        EnergySlideAcquired = true;
 	}
 
 	new void Update()

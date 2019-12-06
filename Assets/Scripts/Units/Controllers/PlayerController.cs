@@ -44,8 +44,7 @@ public class PlayerController : Controller
 		// Decrease timer buffer
 		if (timerBuffer > 0)
 		{
-			float time = Time.deltaTime;
-			timerBuffer -= time;
+			timerBuffer -= Time.deltaTime;
 			if (timerBuffer <= 0)
 			{
 				Buffer = BufferedInput.none;

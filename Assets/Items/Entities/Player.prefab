@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c38a32dbd4f1cda4a8ae4f8de8459502, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  body: {fileID: 0}
+  body: {fileID: 5779869371375558129}
   speed: {x: 10, y: 0}
   acceleration: {x: 200, y: 100}
   verticalMovement: 0
@@ -60,15 +60,15 @@ MonoBehaviour:
     type: 3}
   dashParticle: {fileID: 1458038487322518881, guid: 5eae381317a47a24788031057eefc062,
     type: 3}
-  doubleJumpSpeed: 22
+  doubleJumpSpeed: 23
   dashSpeed: 30
   dashDuration: 0.2
   groundedDashDelay: 0.5
-  wallJumpSpeed: 14
-  wallJumpSpeedX: 36
-  slideJumpSpeed: 20
+  wallJumpSpeed: 20
+  wallJumpSpeedX: 30
+  slideJumpSpeed: 23
   wallSlideSpeed: 1
-  groundSlideSpeed: 30
+  groundSlideSpeed: 35
   bufferGroundedTime: 0.075
 --- !u!114 &4490090770297310930
 MonoBehaviour:
