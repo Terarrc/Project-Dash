@@ -11,4 +11,9 @@ public class Controller : MonoBehaviour
 	{
 		unit = gameObject.GetComponent<Unit>();
 	}
+
+	virtual public void Reset()
+	{
+
+	}
 }

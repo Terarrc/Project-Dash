@@ -112,6 +112,11 @@ public class Unit : MonoBehaviour
 		}
 	}
 
+	public virtual void Reset()
+	{
+		SetDirectionX(1);
+	}
+
 	protected void FixedUpdate()
 	{
 		// Called before unity physic check, including collision

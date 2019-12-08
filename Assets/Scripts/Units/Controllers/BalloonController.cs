@@ -9,6 +9,12 @@ public class BalloonController : Controller
 	int idx = 0;
 	bool reverse = false;
 
+	override public void Reset()
+	{
+		idx = 0;
+		reverse = false;
+	}
+
 	private void Update()
 	{
 		transform.localPosition = Vector3.MoveTowards(transform.localPosition, points[idx], unit.speed.x * Time.deltaTime);

@@ -42,6 +42,12 @@ public class Health : MonoBehaviour
 		}
 	}
 
+	public void Reset()
+	{
+		currentHealth = maxHealth;
+		timerRed = 0;
+	}
+
 	public float ApplyDamage(float amount, DamageType damageType, GameObject source)
 	{
 		if (timerRed > 0)
@@ -92,6 +98,6 @@ public class Health : MonoBehaviour
 			Instantiate(deathEffect, transform.position, Quaternion.identity);
 		}
 
-		Destroy(gameObject);
+		gameObject.SetActive(false);
 	}
 }

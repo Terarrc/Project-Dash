@@ -28,7 +28,13 @@ public class MovingPlatform : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D col)
+	public void Reset()
+	{
+		idx = 0;
+		reverse = false;
+	}
+
+	void OnCollisionEnter2D(Collision2D col)
     {
         col.collider.transform.SetParent(transform);
     }

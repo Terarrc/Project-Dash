@@ -13,6 +13,11 @@ public class PineConeController : Controller
 	public enum State { MovingUp, MovingDown, Falling }
 	private State state = State.MovingUp;
 
+	override public void Reset()
+	{
+		state = State.MovingUp;
+	}
+
     // Start is called before the first frame update
     void Start()
     {

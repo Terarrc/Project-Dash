@@ -45,7 +45,14 @@ public class Room : MonoBehaviour
 		if (player != null)
 		{
 			foreach (Transform child in transform)
+			{
 				child.gameObject.SetActive(true);
+
+				Resetable resetable = child.GetComponent<Resetable>();
+				if (resetable != null)
+					resetable.Reset();
+			}
+
 
 
 			ColliderDistance2D colliderDistance = collider.Distance(boxCollider);

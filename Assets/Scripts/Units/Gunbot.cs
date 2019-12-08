@@ -62,7 +62,7 @@ public class Gunbot : Unit
 			return false;
 		else
 		{
-			Projectile createdProjectile = Instantiate(projectile, new Vector3(transform.position.x + (GetDirection().x * 0.875f), transform.position.y + (6f / 16f), 0), Quaternion.identity);
+			Projectile createdProjectile = Instantiate(projectile, new Vector3(transform.position.x, transform.position.y + (6f / 16f), 0), Quaternion.identity);
 			createdProjectile.faction = Faction.Robot;
 			createdProjectile.SetVelocity((GetDirection() * 20) + (Vector2.up * Random.Range(-0.1f, 0.1f)));
 

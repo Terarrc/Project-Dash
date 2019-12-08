@@ -14,6 +14,11 @@ public class PatrollerController : Controller
 	private Unit aggro;
 	private int layerAggro;
 
+	override public void Reset()
+	{
+		state = State.PatrolLeft;
+	}
+
 	private new void Awake()
 	{
 		base.Awake();
@@ -110,7 +115,7 @@ public class PatrollerController : Controller
 
 	private bool AttackEnemy()
 	{
-		if (aggro == null)
+		if (!aggro.isActiveAndEnabled)
 		{
 			state = State.LostAggro;
 			return false;

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5473771734148899818}
   - component: {fileID: 7466538931974738265}
   - component: {fileID: 2618240247473718942}
+  - component: {fileID: 5572618508742186406}
   - component: {fileID: 9043854793488160862}
   - component: {fileID: 4529806560665437121}
   - component: {fileID: 2155699079555041960}
@@ -31,7 +32,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1070596028329852921}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.1350727, y: -1.8220766, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -49,6 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa78a1ea5ddb5024da5036fffb289b16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  body: {fileID: 0}
   speed: {x: 8, y: 8}
   acceleration: {x: 200, y: 200}
   verticalMovement: 0
@@ -86,6 +88,18 @@ MonoBehaviour:
   ratioPhysic: 1
   ratioEnergetic: 1
   ratioSuperEnergetic: 1
+--- !u!114 &5572618508742186406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1070596028329852921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a60c20f1be422f444a560bb7b4466694, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &9043854793488160862
 SpriteRenderer:
   m_ObjectHideFlags: 0
